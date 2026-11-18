@@ -623,12 +623,26 @@ input{user-select:text;-webkit-user-select:text}
 @media (max-width:360px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
+<script>
+(function(){
+  function fix(){
+    var g=0;
+    if(window.navigator.standalone===true){
+      var land=window.matchMedia&&matchMedia('(orientation: landscape)').matches;
+      var full=land?Math.min(screen.width,screen.height):Math.max(screen.width,screen.height);
+      g=Math.round(full-window.innerHeight);if(g<0||g>120)g=0;
+    }
+    document.documentElement.style.setProperty('--vfix',g+'px');
+  }
+  fix();window.addEventListener('resize',fix);window.addEventListener('orientationchange',function(){setTimeout(fix,300)});window.addEventListener('pageshow',fix);
+})();
+</script>
 <style>
 html{height:100%}
-body{position:fixed;inset:0;height:auto;padding-top:env(safe-area-inset-top,0px)}
-.menu-wrap{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
-.controls{padding-bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 6px))}
-.view>.stage:last-child{margin-bottom:max(16px,env(safe-area-inset-bottom,0px))}
+body{position:fixed;top:0;left:0;right:0;bottom:auto;height:calc(100% + var(--vfix,0px));padding-top:env(safe-area-inset-top,0px)}
+.menu-wrap{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px) / 2)}
+.controls{padding-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
+.view>.stage:last-child{margin-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
 </style>
 </head>
 <body>
@@ -2234,7 +2248,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.14';
+const APP_VERSION='1.15';
 $('verLine').textContent=`หาคนโดน เวอร์ชัน ${APP_VERSION} · ${document.querySelectorAll('.tile').length} เกม`;
 $('verSet').textContent=`เวอร์ชัน ${APP_VERSION}`;
 $('sCouple').onchange=e=>{cfg.couple=e.target.checked;save();renderS()};

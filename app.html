@@ -2209,7 +2209,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.14';
+const APP_VERSION='1.15';
 $('verLine').textContent=`หาคนโดน เวอร์ชัน ${APP_VERSION} · ${document.querySelectorAll('.tile').length} เกม`;
 $('verSet').textContent=`เวอร์ชัน ${APP_VERSION}`;
 $('sCouple').onchange=e=>{cfg.couple=e.target.checked;save();renderS()};
