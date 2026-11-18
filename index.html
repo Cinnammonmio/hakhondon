@@ -690,6 +690,155 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 .vbug .controls{padding-bottom:8px}
 .vbug .view>.stage:last-child{margin-bottom:8px}
 .vbug .gfoot{gap:0}
+
+/* ---------- v1.21: 15 new games ---------- */
+.pcol{gap:10px}
+.pcol .board{max-height:26cqh}
+.parea{position:relative;width:100%;flex:1 1 auto;min-height:0;container-type:size;border-radius:24px;background:radial-gradient(circle at 50% 40%,#2a1650,#140a26);border:1px solid var(--line);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.parea button{-webkit-tap-highlight-color:transparent}
+.pmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;text-align:center;padding:12px}
+.pmid.top{justify-content:flex-start;padding-top:9%}
+.pmid.bottom{justify-content:flex-end;padding-bottom:5%}
+.pmid b{font-size:min(7cqw,26px)}
+.pmid small{color:var(--muted);font-size:15px}
+.pmid .pbig{font-size:min(20cqw,18cqh,96px);line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 4px 24px rgba(0,0,0,.5)}
+.pcv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+/* wires */
+.wibox{position:relative;width:min(94cqw,460px);height:min(98cqh,560px);display:flex;flex-direction:column;gap:10px;padding:14px 12px;border-radius:24px;background:linear-gradient(#3a2a52,#21162f);border:2px solid #4b3a66;box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 12px 30px rgba(0,0,0,.4)}
+.wihead{display:flex;align-items:center;justify-content:center;gap:14px}
+.wihead i{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#d9dbe3,#6c7080)}
+.wiled{min-width:5.2ch;padding:6px 16px;border-radius:12px;background:#0b0612;border:2px solid #4b3a66;font:700 min(9cqw,40px)/1 ui-monospace,Menlo,Consolas,monospace;color:#ff4d4d;text-align:center;text-shadow:0 0 12px rgba(255,77,77,.8);font-variant-numeric:tabular-nums}
+.wiled.hot{animation:wblink .5s steps(2) infinite}
+@keyframes wblink{50%{opacity:.35}}
+.wires{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-around;gap:4px}
+.wire{flex:1;min-height:0;max-height:64px;position:relative;padding:0 18px;border:0;background:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.wire::before,.wire::after{content:"";position:absolute;top:50%;width:18px;height:22px;margin-top:-11px;border-radius:5px;background:linear-gradient(#cfd3dc,#8c919c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+.wire::before{left:0}.wire::after{right:0}
+.wire svg{width:100%;height:100%;display:block;overflow:visible}
+.wire path{fill:none;stroke:var(--wc);stroke-width:7;stroke-linecap:round;vector-effect:non-scaling-stroke;transition:transform .35s cubic-bezier(.3,1.5,.5,1);filter:drop-shadow(0 2px 2px rgba(0,0,0,.4))}
+.wire.cut{pointer-events:none}
+.wire.cut .wl{transform:translate(-8px,4px) rotate(7deg);transform-origin:4px 20px}
+.wire.cut .wr{transform:translate(8px,4px) rotate(-7deg);transform-origin:296px 20px}
+.wibox.boom{animation:shake .5s;background:linear-gradient(#7a2a1a,#2a0f0a)}
+/* gacha */
+.gamach{position:relative;width:min(84cqw,58cqh,380px);display:flex;flex-direction:column;align-items:center}
+.gamach.shake{animation:shake .5s}
+.gadome{position:relative;z-index:1;width:100%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.32),rgba(255,255,255,.06) 40%,rgba(120,80,200,.16));border:4px solid rgba(255,255,255,.35);box-shadow:inset 0 -10px 30px rgba(0,0,0,.35),0 10px 30px rgba(0,0,0,.4);overflow:hidden}
+.cap{position:absolute;width:20%;aspect-ratio:1;border-radius:50%;background:linear-gradient(var(--cc) 50%,#f4f1fa 50%);box-shadow:inset -3px -4px 6px rgba(0,0,0,.25),inset 2px 3px 4px rgba(255,255,255,.5);transition:top .55s cubic-bezier(.3,1.4,.5,1),left .55s ease,transform .55s ease}
+.gabody{position:relative;z-index:2;width:86%;margin-top:-6%;aspect-ratio:1/.68;border-radius:18px 18px 26px 26px;background:linear-gradient(#ff4fa3,#c2185b);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),inset 0 -6px 0 rgba(0,0,0,.2),0 10px 24px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:space-around;padding:9% 6% 4%}
+.gaknob{position:relative;width:40%;aspect-ratio:1;border-radius:50%;border:0;padding:0;background:radial-gradient(circle at 40% 35%,#fff,#e6dcf5 60%,#b9a8d6);box-shadow:0 5px 0 #8a76ad,0 8px 14px rgba(0,0,0,.35);touch-action:manipulation}
+.gaknob:active{transform:translateY(3px);box-shadow:0 2px 0 #8a76ad,0 4px 10px rgba(0,0,0,.35)}
+.gaknob i{position:absolute;left:43%;top:10%;width:14%;height:80%;border-radius:6px;background:#c2185b}
+.gaknob.turn i{animation:gknob .7s ease-in-out}
+@keyframes gknob{to{transform:rotate(360deg)}}
+.gatray{position:relative;width:34%;aspect-ratio:1;border-radius:16px;background:#2a0f22;box-shadow:inset 0 6px 12px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
+.tcap{position:relative;width:68%;aspect-ratio:1;animation:gdrop .45s cubic-bezier(.3,1.6,.5,1)}
+.tcap b{position:absolute;left:0;right:0;height:50%;background:var(--cc);transition:transform .35s}
+.tcap b:first-child{top:0;border-radius:99px 99px 0 0}
+.tcap b:last-child{bottom:0;background:#f4f1fa;border-radius:0 0 99px 99px}
+.tcap.open b:first-child{transform:translateY(-45%) rotate(-25deg)}
+.tcap.open b:last-child{transform:translateY(15%) rotate(10deg)}
+@keyframes gdrop{from{transform:translateY(-120%) scale(.6);opacity:0}}
+.gacard{position:absolute;z-index:3;left:50%;top:36%;transform:translate(-50%,-50%);min-width:72%;padding:18px 20px;border-radius:22px;text-align:center;background:var(--panel);border:2px solid var(--line);box-shadow:0 16px 40px rgba(0,0,0,.5);pointer-events:none;animation:garise .35s cubic-bezier(.3,1.5,.5,1)}
+@keyframes garise{from{transform:translate(-50%,-30%) scale(.8);opacity:0}}
+.gacard b{display:block;font-size:min(12cqw,48px);line-height:1.15}
+.gacard small{color:var(--muted);font-size:16px}
+.gacard.safe b{color:#7ee081}.gacard.lose{border-color:var(--danger)}.gacard.lose b{color:#ff5a4e}.gacard.skip b{color:#4fd1ff}.gacard.rev b{color:var(--gold)}
+/* whack */
+.whhud{position:absolute;z-index:2;top:10px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:baseline;font-size:17px;color:var(--muted);pointer-events:none}
+.whhud .wht{font-size:min(9cqw,30px);color:var(--ink);font-variant-numeric:tabular-nums}
+.whhud .whs{color:var(--gold);font-size:22px}
+.whgrid{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);width:min(94cqw,80cqh);aspect-ratio:1;display:grid;grid-template-columns:repeat(3,1fr);gap:4%}
+.whole{position:relative;padding:0;border:0;background:none;touch-action:none}
+.whole::after{content:"";position:absolute;left:6%;right:6%;bottom:6%;height:26%;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#05020c,#1e0f36 70%);box-shadow:inset 0 4px 8px rgba(0,0,0,.6),0 2px 0 rgba(255,255,255,.08)}
+.wclip{position:absolute;z-index:1;left:0;right:0;top:0;bottom:19%;overflow:hidden}
+.wpop{position:absolute;left:12%;right:12%;bottom:0;height:88%;transform:translateY(105%);transition:transform .14s ease-out}
+.whole.up .wpop{transform:none}
+.wpop .mimon,.wpop .wbomb{position:absolute;inset:0;width:100%;height:100%}
+.wpop .wbomb{display:none}
+.whole.bomb .wpop .mimon{display:none}
+.whole.bomb .wpop .wbomb{display:block}
+.whole.hit .wpop .mimon{color:#ffe066}
+.whole.boom::after{background:radial-gradient(#ff8a3d,#8a1f18)}
+/* pour */
+.stream{position:absolute;left:50%;top:0;width:12px;height:0;margin-left:-6px;background:linear-gradient(90deg,#3db2ff,#a8ecff,#3db2ff);border-radius:0 0 6px 6px;opacity:.9;transition:height .15s}
+.stream.on{height:94%}
+.glass{position:absolute;z-index:1;left:50%;bottom:6%;transform:translateX(-50%);width:min(52cqw,44cqh);height:74%;border:4px solid rgba(255,255,255,.75);border-top:0;border-radius:6px 6px 26px 26px;overflow:hidden;background:rgba(255,255,255,.04)}
+.water{position:absolute;left:0;right:0;bottom:0;height:0;background:linear-gradient(#5ad1ff,#2a7fe0);box-shadow:inset 0 6px 0 rgba(255,255,255,.3)}
+.gline{position:absolute;z-index:2;left:0;right:0;height:0;border-top:3px dashed var(--gold)}
+.gline span{position:absolute;right:6px;top:-24px;font-size:14px;color:var(--gold);font-weight:700}
+/* taps */
+.taphud{position:absolute;top:7%;left:0;right:0;text-align:center;pointer-events:none}
+.taphud b{display:block;font-size:min(22cqw,20cqh,110px);line-height:1;font-variant-numeric:tabular-nums}
+.taphud small{color:var(--muted);font-size:18px;font-variant-numeric:tabular-nums}
+.tapmon{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(60cqw,50cqh);aspect-ratio:1;padding:0;border:0;background:none;touch-action:none}
+.tapmon .mimon{width:100%;height:100%}
+.tapmon.sq .mimon{animation:tsq .12s ease-out}
+@keyframes tsq{40%{transform:scale(1.08,.88) translateY(6%)}}
+/* memgrid */
+.mggrid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(92cqw,92cqh);aspect-ratio:1;display:grid;grid-template-columns:repeat(var(--n),1fr);gap:min(2.4cqw,10px)}
+.mgc{padding:0;border:0;border-radius:14px;background:var(--panel2);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25);transition:background .15s;touch-action:none}
+.mgc.lit{background:#ffe066;box-shadow:0 0 18px rgba(255,224,102,.7)}
+.mgc.ok{background:#3fd17a}
+.mgc.bad{background:var(--danger);animation:shake .4s}
+.mgc.miss{outline:3px dashed #ffe066;outline-offset:-5px}
+/* shell */
+.shrow{position:absolute;left:4%;right:4%;top:50%;height:min(44cqh,40cqw);transform:translateY(-50%)}
+.cup{position:absolute;top:0;bottom:0;width:min(21cqw,30cqh);transform:translateX(-50%);padding:0;border:0;background:none;touch-action:none}
+.cup.up{transform:translate(-50%,-14%)}
+.cup.dn{transform:translate(-50%,8%)}
+.cup::before{content:"";position:absolute;left:-6%;right:-6%;bottom:-6%;height:12%;border-radius:50%;background:rgba(0,0,0,.35)}
+.cupmon{position:absolute;left:10%;right:10%;bottom:0;aspect-ratio:1;display:none}
+.cup.has .cupmon{display:block}
+.cupmon .mimon{width:100%;height:100%}
+.cupbody{position:absolute;left:0;right:0;bottom:0;height:80%;background:linear-gradient(90deg,#9d1a8f,#e879f9 45%,#f5c2fb 55%,#9d1a8f);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);transition:transform .3s ease}
+.cupbody::after{content:"";position:absolute;left:0;right:0;bottom:0;height:12%;background:#f5c2fb}
+.cup.lift .cupbody{transform:translateY(-62%)}
+/* countflash */
+.cffield{position:absolute;inset:0}
+.cfm{position:absolute;transform:translate(-50%,-50%);display:block}
+.cfm .mimon{width:100%;height:100%;color:inherit}
+.cfq{position:absolute;top:44px;left:0;right:0;text-align:center;font-size:min(7cqw,28px);font-weight:700}
+.parea .tbar{position:absolute;left:8%;right:8%;width:auto;top:18px}
+.parea .mchoices{position:absolute;left:6%;right:6%;bottom:6%;width:auto}
+/* gonogo */
+.gnhud{position:absolute;top:14px;left:0;right:0;display:flex;justify-content:center;gap:8px;pointer-events:none}
+.gnhud i{width:14px;height:14px;border-radius:50%;background:var(--panel2);border:1px solid var(--line)}
+.gnhud i.ok{background:#3fd17a;border-color:#7ee081}
+.gnmon{position:absolute;left:50%;top:50%;width:min(56cqw,50cqh);aspect-ratio:1;transform:translate(-50%,-50%) scale(.3);opacity:0;transition:transform .12s ease-out,opacity .1s;pointer-events:none}
+.gnmon.on{opacity:1;transform:translate(-50%,-50%)}
+.gnmon.hit{transform:translate(-50%,-50%) scale(.82)}
+.gnmon .mimon{width:100%;height:100%}
+.gnmon.go .mimon{color:#3fd17a}
+.gnmon.red .mimon{color:#ff4d4d}
+/* chainmath */
+.cmstep{position:absolute;top:44px;left:0;right:0;text-align:center;color:var(--muted);font-size:18px}
+.cmshow{position:absolute;top:22%;left:0;right:0;text-align:center;font-size:min(26cqw,24cqh,140px);font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.cmshow.pop{animation:pop .3s}
+/* pairs */
+.pahud{position:absolute;top:8px;left:0;right:0;text-align:center;font-size:min(8cqw,28px);font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none}
+.pagrid{position:absolute;left:50%;top:calc(50% + 18px);transform:translate(-50%,-50%);width:min(94cqw,calc(94cqh - 44px));aspect-ratio:1;display:grid;grid-template-columns:repeat(4,1fr);gap:3%}
+.pacard{position:relative;padding:0;border:0;border-radius:12px;background:linear-gradient(135deg,#7b3fe4,#ff4fa3);box-shadow:inset 0 0 0 3px rgba(255,255,255,.18);touch-action:none}
+.pacard::after{content:"";position:absolute;inset:30%;border-radius:50%;border:3px solid rgba(255,255,255,.35)}
+.pacard svg{position:absolute;left:16%;top:16%;width:68%;height:68%;opacity:0}
+.pacard.open{background:#f6efff;animation:paflip .2s}
+.pacard.open::after{display:none}
+.pacard.open svg{opacity:1}
+.pacard.done{background:#d9f7e4;box-shadow:inset 0 0 0 3px #3fd17a}
+@keyframes paflip{from{transform:scaleX(.1)}}
+/* darts */
+.dahud{position:absolute;z-index:2;top:10px;left:16px;right:16px;display:flex;justify-content:space-between;font-size:17px;color:var(--muted);pointer-events:none}
+.dahud b{color:var(--ink);font-size:20px}
+.daboard{position:absolute;left:50%;top:calc(50% + 14px);transform:translate(-50%,-50%);width:min(92cqw,calc(90cqh - 40px));aspect-ratio:1}
+.daboard svg{width:100%;height:100%;display:block}
+.dax,.day{position:absolute;display:none;background:#7ee8ff;box-shadow:0 0 10px #7ee8ff;pointer-events:none}
+.dax{top:-3%;bottom:-3%;width:3px;margin-left:-1.5px;left:50%}
+.day{left:-3%;right:-3%;height:3px;margin-top:-1.5px;top:50%}
+.dart{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:#fff;border:3px solid #1a0e30;box-shadow:0 2px 6px rgba(0,0,0,.5);animation:pop .3s}
+.dart::after{content:attr(data-p);position:absolute;left:50%;bottom:120%;transform:translateX(-50%);font-weight:700;font-size:16px;color:var(--gold);text-shadow:0 1px 3px #000}
+/* steady */
+.sdt{position:absolute;left:50%;top:50%;width:22cqmin;height:22cqmin;border-radius:50%;transform:translate(-50%,-50%);border:4px solid #ff4fa3;background:radial-gradient(rgba(255,79,163,.35),rgba(255,79,163,.08));box-shadow:0 0 24px rgba(255,79,163,.5);pointer-events:none}
+.sdt.in{border-color:#3fd17a;background:radial-gradient(rgba(63,209,122,.45),rgba(63,209,122,.1));box-shadow:0 0 30px rgba(63,209,122,.6)}
 @media (max-width:360px){.tiles{grid-auto-columns:calc((100% - 10px) / 2.3)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
@@ -773,6 +922,21 @@ body{padding-top:env(safe-area-inset-top,0px)}
       <button class="tile" data-mode="hard" data-go="stroop" style="--c:#ff7eb6"><span class="ic"><svg viewBox="0 0 48 48"><rect x="4" y="9" width="40" height="30" rx="9" fill="none" stroke="currentColor" stroke-width="3"/><text x="24" y="31" font-size="15" font-weight="700" text-anchor="middle" fill="#3db2ff" font-family="Mitr,system-ui,sans-serif">แดง</text></svg></span><span class="tn">สีหลอกตา</span></button>
       <button class="tile" data-mode="hard" data-go="odd" style="--c:#5ee0c8"><span class="ic"><svg viewBox="0 0 48 48"><rect x="5.0" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="5.0" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="1"/><rect x="5.0" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/></svg></span><span class="tn">หาสีที่ต่าง</span></button>
       <button class="tile" data-mode="hard" data-go="schulte" style="--c:#ffb347"><span class="ic"><svg viewBox="0 0 48 48"><rect x="5" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="14" y="19" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">3</text><rect x="25" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="34" y="19" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">1</text><rect x="5" y="25" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="14" y="39" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">4</text><rect x="25" y="25" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="34" y="39" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">2</text></svg></span><span class="tn">เรียงเลข 1–16</span></button>
+      <button class="tile" data-mode="luck" data-go="wires" style="--c:#ff9f1c"><span class="ic"><svg viewBox="0 0 48 48"><path d="M5 12c7-5 13 5 19 0s12 5 19 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/><path d="M5 24c5-4 9 2 13 1M30 23c4-1 8 5 13 1" fill="none" stroke="#ff4d4d" stroke-width="3.5" stroke-linecap="round"/><path d="M5 36c7-5 13 5 19 0s12 5 19 0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" opacity=".55"/><path d="M24 17l1.6 4.2 4.2-1-3.1 3.6 3.1 3.1-4.2-.5L24 31l-1-4.3-4.2 1 3.1-3.6-3.1-3.1 4.2.6z" fill="#ffd04d"/></svg></span><span class="tn">ตัดสายไฟ</span></button>
+      <button class="tile" data-mode="luck" data-go="gacha" style="--c:#f78fb3"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="18" r="14" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="18" cy="22" r="4.5" fill="currentColor"/><circle cx="28.5" cy="22.5" r="4.5" fill="#fff" opacity=".85"/><circle cx="23" cy="13.5" r="4" fill="currentColor" opacity=".6"/><rect x="11" y="30" width="26" height="15" rx="4" fill="currentColor"/><circle cx="19.5" cy="37.5" r="3.6" fill="#fff"/><rect x="27" y="34" width="6.5" height="6.5" rx="1.6" fill="#3a1030"/></svg></span><span class="tn">ตู้กาชา</span></button>
+      <button class="tile" data-mode="skill" data-go="whack" style="--c:#a0e85b"><span class="ic"><svg viewBox="0 0 48 48"><ellipse cx="21" cy="41" rx="17" ry="5" fill="currentColor" opacity=".4"/><path d="M9 41c0-12 5-19 12-19s12 7 12 19z" fill="currentColor"/><circle cx="17" cy="31" r="2.6" fill="#fff"/><circle cx="25" cy="31" r="2.6" fill="#fff"/><rect x="29" y="4" width="16" height="9" rx="2.5" fill="#fff" transform="rotate(28 37 8.5)"/><path d="M35.5 12.5L30 25" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg></span><span class="tn">ทุบมิมอน</span></button>
+      <button class="tile" data-mode="skill" data-go="circle" style="--c:#7aa2ff"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4" opacity=".6"/><path d="M27 7.5C37 8 42 15 41.5 24.5S33 41.5 23 41 6.5 33 7 23.5 14 8 24 7.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5"/><circle cx="27" cy="7.5" r="3.2" fill="#fff"/></svg></span><span class="tn">วาดวงกลม</span></button>
+      <button class="tile" data-mode="skill" data-go="pour" style="--c:#5ad1ff"><span class="ic"><svg viewBox="0 0 48 48"><path d="M12 11h24l-3 31H15z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M14.1 27.5h19.8L32.6 40H15.4z" fill="currentColor"/><path d="M10 21h28" stroke="#ffd04d" stroke-width="2.5" stroke-dasharray="3.5 2.5"/><path d="M24 2v20" stroke="currentColor" stroke-width="3" stroke-linecap="round" opacity=".55"/></svg></span><span class="tn">เทน้ำ</span></button>
+      <button class="tile" data-mode="skill" data-go="taps" style="--c:#ff5fd2"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="27" r="8.5" fill="currentColor"/><circle cx="24" cy="27" r="14.5" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".5"/><circle cx="24" cy="27" r="20" fill="none" stroke="currentColor" stroke-width="2" opacity=".25"/><path d="M24 2v4.5M9 8.5l3.2 3.2M39 8.5l-3.2 3.2" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span><span class="tn">รัวนิ้ว</span></button>
+      <button class="tile" data-mode="hard" data-go="memgrid" style="--c:#ffe066"><span class="ic"><svg viewBox="0 0 48 48"><rect x="5" y="5" width="10" height="10" rx="2.5" fill="currentColor"/><rect x="19" y="5" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/><rect x="33" y="5" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/><rect x="5" y="19" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/><rect x="19" y="19" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/><rect x="33" y="19" width="10" height="10" rx="2.5" fill="currentColor"/><rect x="5" y="33" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/><rect x="19" y="33" width="10" height="10" rx="2.5" fill="currentColor"/><rect x="33" y="33" width="10" height="10" rx="2.5" fill="currentColor" opacity=".28"/></svg></span><span class="tn">จำตำแหน่ง</span></button>
+      <button class="tile" data-mode="hard" data-go="shell" style="--c:#e879f9"><span class="ic"><svg viewBox="0 0 48 48"><path d="M3 40l3.5-17h8L18 40z" fill="currentColor" opacity=".5"/><path d="M30 40l3.5-17h8L45 40z" fill="currentColor" opacity=".5"/><path d="M16.5 25l3.5-17h8l3.5 17z" fill="currentColor"/><circle cx="24" cy="36.5" r="5" fill="#fff"/><path d="M2 43.5h44" stroke="currentColor" stroke-width="2" opacity=".4"/></svg></span><span class="tn">สลับแก้ว</span></button>
+      <button class="tile" data-mode="hard" data-go="countflash" style="--c:#67e8f9"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="10" cy="12" r="5" fill="currentColor"/><circle cx="24" cy="8" r="4" fill="currentColor" opacity=".6"/><circle cx="37" cy="14" r="5" fill="currentColor"/><circle cx="14" cy="27" r="4" fill="currentColor" opacity=".6"/><circle cx="9" cy="40" r="4.5" fill="currentColor"/><rect x="22" y="22" width="22" height="22" rx="6" fill="#fff"/><text x="33" y="39" font-size="17" font-weight="700" text-anchor="middle" fill="#0e3a44">5</text></svg></span><span class="tn">นับไว</span></button>
+      <button class="tile" data-mode="hard" data-go="gonogo" style="--c:#4ade80"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="14.5" cy="24" r="11" fill="currentColor"/><circle cx="33.5" cy="24" r="11" fill="#ff5a5a"/><path d="M9.5 24.5l3.5 3.5 6.5-7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M29 19.5l9 9M38 19.5l-9 9" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span><span class="tn">เขียวกด แดงห้าม</span></button>
+      <button class="tile" data-mode="hard" data-go="chainmath" style="--c:#fca5a5"><span class="ic"><svg viewBox="0 0 48 48"><rect x="2" y="15" width="18" height="18" rx="5" fill="currentColor"/><rect x="28" y="15" width="18" height="18" rx="5" fill="currentColor" opacity=".6"/><path d="M11 19.5v9M6.5 24h9M33 20l8 8M41 20l-8 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M20 24h8" stroke="currentColor" stroke-width="3" stroke-dasharray="2 2"/></svg></span><span class="tn">บวกต่อเนื่อง</span></button>
+      <button class="tile" data-mode="hard" data-go="pairs" style="--c:#a78bfa"><span class="ic"><svg viewBox="0 0 48 48"><rect x="3" y="10" width="19" height="27" rx="3.5" fill="#fff" transform="rotate(-8 12.5 23.5)"/><rect x="26" y="10" width="19" height="27" rx="3.5" fill="#fff" transform="rotate(8 35.5 23.5)"/><path d="M12.5 29s-5.5-3.3-5.5-7.2a2.9 2.9 0 0 1 5.5-1.1 2.9 2.9 0 0 1 5.5 1.1c0 3.9-5.5 7.2-5.5 7.2zM35.5 29s-5.5-3.3-5.5-7.2a2.9 2.9 0 0 1 5.5-1.1 2.9 2.9 0 0 1 5.5 1.1c0 3.9-5.5 7.2-5.5 7.2z" fill="currentColor"/></svg></span><span class="tn">จับคู่ไพ่</span></button>
+      <button class="tile" data-mode="hard" data-go="darts" style="--c:#fb7185"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="21" cy="27" r="18" fill="currentColor" opacity=".35"/><circle cx="21" cy="27" r="11.5" fill="currentColor" opacity=".75"/><circle cx="21" cy="27" r="5" fill="#fff"/><path d="M22 26L40 8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M37.5 3.5h7v7l-3-2-2-2z" fill="#fff"/></svg></span><span class="tn">ปาเป้า</span></button>
+      <button class="tile" data-mode="hard" data-go="dodge" style="--c:#fdba74"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="12" cy="11" r="6" fill="currentColor"/><circle cx="34" cy="7" r="5" fill="currentColor" opacity=".6"/><path d="M12 21v4M34 16v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" opacity=".5"/><path d="M13 44c0-8 4.5-13 10.5-13S34 36 34 44z" fill="#fff"/><circle cx="20.5" cy="38" r="1.9" fill="#2a1438"/><circle cx="26.5" cy="38" r="1.9" fill="#2a1438"/><path d="M38 37h7M39 42h5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".6"/></svg></span><span class="tn">หลบระเบิด</span></button>
+      <button class="tile" data-mode="hard" data-go="steady" style="--c:#34d399"><span class="ic"><svg viewBox="0 0 48 48"><path d="M5 40C11 22 23 36 29 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="3 3.5" opacity=".6" stroke-linecap="round"/><circle cx="33" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="3.5"/><circle cx="33" cy="16" r="4.5" fill="#fff"/></svg></span><span class="tn">นิ้วนิ่ง</span></button>
     </div>
   </div>
 </section>
@@ -1076,6 +1240,195 @@ body{padding-top:env(safe-area-inset-top,0px)}
     <h2 id="wGame"></h2>
     <p id="wMsg"></p>
   </div></div>
+</section>
+
+<!-- ===== WIRES ===== -->
+<section class="view" id="v-wires" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ตัดสายไฟ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="wiInfo"></div>
+  <div class="stage"><div class="wibox" id="wiBox">
+    <div class="wihead"><i></i><div class="wiled" id="wiLed">8.0</div><i></i></div>
+    <div class="wires" id="wiWires"></div>
+  </div></div>
+  <div class="controls"><button class="ghost resetbtn" onclick="doReset(()=>G.wires.init())">เริ่มรอบใหม่</button></div>
+</section>
+
+<!-- ===== GACHA ===== -->
+<section class="view" id="v-gacha" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ตู้กาชา</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="gaInfo"></div>
+  <div class="stage"><div class="gamach" id="gaMach">
+    <div class="gadome" id="gaDome"></div>
+    <div class="gabody"><button class="gaknob" id="gaKnob" aria-label="หมุนตู้กาชา"><i></i></button><div class="gatray" id="gaTray"></div></div>
+    <div class="gacard" id="gaCard" hidden></div>
+  </div></div>
+  <div class="controls"><button class="ghost resetbtn" onclick="doReset(()=>G.gacha.init())">เริ่มรอบใหม่</button></div>
+</section>
+
+<!-- ===== WHACK ===== -->
+<section class="view" id="v-whack" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ทุบมิมอน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="whInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="whArea"></div>
+    <div class="sk-sub" id="whSub"></div>
+    <ol class="board" id="whBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="whBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== CIRCLE ===== -->
+<section class="view" id="v-circle" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>วาดวงกลม</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="ciInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="ciArea"></div>
+    <div class="sk-sub" id="ciSub"></div>
+    <ol class="board" id="ciBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="ciBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== POUR ===== -->
+<section class="view" id="v-pour" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เทน้ำ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="poInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="poArea"></div>
+    <div class="sk-sub" id="poSub"></div>
+    <ol class="board" id="poBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="poBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== TAPS ===== -->
+<section class="view" id="v-taps" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>รัวนิ้ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="tpInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="tpArea"></div>
+    <div class="sk-sub" id="tpSub"></div>
+    <ol class="board" id="tpBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="tpBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== PAIRS ===== -->
+<section class="view" id="v-pairs" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จับคู่ไพ่</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="paInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="paArea"></div>
+    <div class="sk-sub" id="paSub"></div>
+    <ol class="board" id="paBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="paBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== DARTS ===== -->
+<section class="view" id="v-darts" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ปาเป้า</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="daInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="daArea"></div>
+    <div class="sk-sub" id="daSub"></div>
+    <ol class="board" id="daBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="daBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== DODGE ===== -->
+<section class="view" id="v-dodge" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>หลบระเบิด</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="doInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="doArea"></div>
+    <div class="sk-sub" id="doSub"></div>
+    <ol class="board" id="doBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="doBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== STEADY ===== -->
+<section class="view" id="v-steady" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>นิ้วนิ่ง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="sdInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="sdArea"></div>
+    <div class="sk-sub" id="sdSub"></div>
+    <ol class="board" id="sdBoard" hidden></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="sdBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== MEMGRID ===== -->
+<section class="view" id="v-memgrid" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จำตำแหน่ง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="mgInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="mgArea"></div>
+    <div class="sk-sub" id="mgSub"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="mgBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== SHELL ===== -->
+<section class="view" id="v-shell" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>สลับแก้ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="shInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="shArea"></div>
+    <div class="sk-sub" id="shSub"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="shBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== COUNTFLASH ===== -->
+<section class="view" id="v-countflash" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>นับไว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="cfInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="cfArea"></div>
+    <div class="sk-sub" id="cfSub"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="cfBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== GONOGO ===== -->
+<section class="view" id="v-gonogo" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เขียวกด แดงห้าม</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="gnInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="gnArea"></div>
+    <div class="sk-sub" id="gnSub"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="gnBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== CHAINMATH ===== -->
+<section class="view" id="v-chainmath" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>บวกต่อเนื่อง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="cmInfo"></div>
+  <div class="stage"><div class="sk-col pcol">
+    <div class="parea" id="cmArea"></div>
+    <div class="sk-sub" id="cmSub"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="cmBtn">พร้อม</button></div>
 </section>
 
 <!-- ===== RESULT ===== -->
@@ -2155,6 +2508,311 @@ G.sushi=(()=>{
   return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:(a,d)=>{if(a==='eat'&&board.children[d.i])eat(d.i,board.children[d.i])},turn:()=>st==='play'?turn:null};
 })();
 
+/* ================= v1.21: 15 new games ================= */
+const MI_SVG=(cls='',href='#mimon')=>`<svg class="mimon ${cls}" viewBox="0 0 120 120" aria-hidden="true"><use href="${href}"/></svg>`;
+const shuffleArr=a=>{for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+function sizeCanvas(cv){const r=cv.getBoundingClientRect(),d=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);const c=cv.getContext('2d');c.setTransform(d,0,0,d,0,0);return{c,W:r.width,H:r.height}}
+
+// เกมแข่งคะแนน: ทุกคนเล่นคนละตา (ออนไลน์: แต่ละเครื่องเล่นคนของตัวเอง) คนที่แย่สุดโดน
+const clearArea=a=>{a.onpointerdown=a.onpointermove=a.onpointerup=a.onpointercancel=a.onpointerleave=null};
+function scoreGame(gid,px,opt){
+  const info=$(px+'Info'),btn=$(px+'Btn'),board=$(px+'Board'),area=$(px+'Area'),sub=$(px+'Sub');
+  let q=[],qi=0,st='ready',res=[],worst=-1,to=null;
+  const idx=()=>q[qi],better=(a,b)=>opt.better==='high'?a>b:a<b;
+  function paint(){
+    if(st==='wait'){info.innerHTML=`ส่งผลแล้ว รอเครื่องอื่น · ครบ <b>${res.length}/${players}</b> คน`;btn.disabled=true;btn.textContent='รอเครื่องอื่น…';return}
+    if(st==='done')return;
+    info.innerHTML=`ตาของ <b>${nameH(idx())}</b> · คนที่ ${qi+1}/${q.length}`+(NET.on?' ในเครื่องนี้':'');
+    if(st==='ready'){btn.disabled=false;btn.textContent='เริ่ม';sub.textContent=opt.hint;opt.stop&&opt.stop();clearArea(area);opt.prep(area)}}
+  function drawBoard(){const s=res.slice().sort((a,b)=>opt.better==='high'?b.v-a.v:a.v-b.v);
+    board.innerHTML=s.map((r,k)=>`<li class="${r.i===worst?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${esc(opt.fmt(r.v))}</span><span class="d"></span></li>`).join('');board.hidden=!res.length||st==='play'}
+  function score(d){if(res.some(r=>r.i===d.i))return;res.push(d);drawBoard();if(NET.on){if(st==='wait')paint();if(res.length>=players)finish()}}
+  btn.onclick=()=>{
+    if(st==='ready'){st='play';board.hidden=true;btn.disabled=true;btn.textContent='กำลังเล่น…';sub.textContent='';actx();
+      opt.play(area,(v,msg)=>{if(st!=='play')return;st='shown';sub.textContent=msg||opt.fmt(v);tone(880,.15,'triangle',.08);buzz(20);
+        btn.disabled=false;btn.textContent=qi<q.length-1?`ส่งต่อให้ ${name(q[qi+1])} →`:(NET.on?'เสร็จแล้ว':'ดูผล');
+        act(gid,'score',{i:idx(),v},score)})}
+    else if(st==='shown'){board.hidden=!res.length;if(qi<q.length-1){qi++;st='ready';paint()}else if(NET.on){st='wait';paint();if(res.length>=players)finish()}else finish()}};
+  function finish(){if(st==='done'||!res.length)return;st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(better(w.v,r.v))w=r});worst=w.i;drawBoard();
+    to=setTimeout(()=>showResult({word:opt.word,who:`${name(w.i)} ${opt.fmt(w.v)}`,loser:w.i,again:init}),700)}
+  function init(){stop();q=myQueue();qi=0;st=q.length?'ready':'wait';res=[];worst=-1;board.innerHTML='';board.hidden=true;if(st==='wait'){clearArea(area);opt.prep(area)}paint()}
+  function stop(){clearTimeout(to);opt.stop&&opt.stop()}
+  return{init,stop,refresh:()=>{paint();drawBoard()},net:(a,d)=>{if(a==='score')score(d)}};
+}
+// เกมผลัดกันเล่น: ผ่านแล้วส่งต่อและยากขึ้น คนแรกที่พลาดโดน (ออนไลน์เล่นที่เครื่องหัวห้อง)
+function elimGame(gid,px,opt){
+  const info=$(px+'Info'),btn=$(px+'Btn'),area=$(px+'Area'),sub=$(px+'Sub');
+  let level=1,turn=0,st='ready',to=null;
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · ระดับ <b>${level}</b>`}
+  function ready(m){st='ready';btn.disabled=false;btn.textContent='พร้อม';sub.textContent=opt.hint;opt.stop&&opt.stop();clearArea(area);opt.prep(area,level);paint(m)}
+  btn.onclick=()=>{if(st!=='ready')return;actx();st='play';btn.disabled=true;btn.textContent='กำลังเล่น…';sub.textContent='';
+    opt.round(level,area,()=>{if(st!=='play')return;st='pause';const prev=turn;turn=(turn+1)%players;level++;tone(880,.12,'triangle',.08);buzz(15);
+        to=setTimeout(()=>ready(`<b style="color:#7ee081">${nameH(prev)} ผ่าน!</b>`),950)},
+      why=>{if(st!=='play')return;st='over';tone(140,.45,'sawtooth',.14,50);buzz([80,40,140]);sub.textContent=why||'';
+        to=setTimeout(()=>showResult({word:opt.word,who:`${name(turn)} ${why||''} ที่ระดับ ${level}`,loser:turn,again:()=>init((turn+1)%players)}),1200)})};
+  function init(s=0){stop();level=1;turn=s%players;ready()}
+  function stop(){clearTimeout(to);opt.stop&&opt.stop()}
+  return{init:()=>init(0),stop,refresh:()=>paint()};
+}
+
+/* ---------- 22. Cut the wire (luck, synced) ---------- */
+G.wires=(()=>{
+  const COLS=['#ff4d4d','#3db2ff','#ffd04d','#3fd17a','#a37bff','#ff8a3d','#f4f4f4','#ff6fb5','#2fd6c9','#c08a5a'];
+  const box=$('wiBox'),wl=$('wiWires'),led=$('wiLed'),info=$('wiInfo');
+  let n=8,bad=-1,turn=0,st='play',cuts=0,lim=8,t0=0,raf=0,to=[],sentTO=false;
+  function build(){n=Math.min(10,Math.max(6,players+4));
+    wl.innerHTML=Array.from({length:n},(_,i)=>`<button class="wire" data-i="${i}" style="--wc:${COLS[i%COLS.length]}" aria-label="สายเส้นที่ ${i+1}"><svg viewBox="0 0 300 40" preserveAspectRatio="none" aria-hidden="true"><path class="wl" d="M4 20C50 ${4+grnd(10)} 100 ${26+grnd(10)} 150 20"/><path class="wr" d="M150 20C200 ${4+grnd(10)} 250 ${26+grnd(10)} 296 20"/></svg></button>`).join('');
+    wl.querySelectorAll('.wire').forEach(b=>b.addEventListener('click',()=>{if(st!=='play'||b.classList.contains('cut'))return;if(!mayAct(turn))return;act('wires','cut',{i:+b.dataset.i},d=>cutWire(d.i))}))}
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · ตัด 1 เส้นใน <b>${lim.toFixed(1)}</b> วิ`}
+  function loop(){if(st!=='play')return;const left=lim-(performance.now()-t0)/1000;led.textContent=Math.max(0,left).toFixed(1);led.classList.toggle('hot',left<2.5);
+    if(left<=0){if(!NET.on)return boom('ตัดไม่ทันเวลา');if(NET.host&&!sentTO){sentTO=true;act('wires','timeout',{})}}
+    raf=requestAnimationFrame(loop)}
+  function cutWire(i){if(st!=='play')return;const b=wl.children[i];if(!b||b.classList.contains('cut'))return;b.classList.add('cut');tone(1500,.05,'square',.06);noise(.08,.3,6000);
+    if(i===bad)return boom('ตัดโดนสายระเบิด');
+    cuts++;buzz(12);const prev=turn;turn=(turn+1)%players;lim=Math.max(3,8-cuts*.5);t0=performance.now();sentTO=false;paint(`${nameH(prev)} รอด`)}
+  function boom(why){if(st!=='play')return;st='boom';cancelAnimationFrame(raf);box.classList.add('boom');led.textContent='BOOM';noise(1.2,.8,900);tone(90,.7,'sawtooth',.2,30);buzz([250,80,300]);flash('#ffe8b0');paint();
+    to.push(setTimeout(()=>showResult({word:'ตูม!',who:`${name(turn)} ${why}`,loser:turn,again:()=>init((turn+1)%players)}),1100))}
+  function init(s=0){stop();turn=s%players;st='play';cuts=0;lim=8;sentTO=false;box.classList.remove('boom');build();bad=grnd(n);t0=performance.now();paint();loop()}
+  function stop(){cancelAnimationFrame(raf);to.forEach(clearTimeout);to=[]}
+  return{init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:(a,d)=>{if(a==='cut')cutWire(d.i);else if(a==='timeout')boom('ตัดไม่ทันเวลา')},turn:()=>st==='play'?turn:null};
+})();
+
+/* ---------- 23. Gacha (luck, synced) ---------- */
+G.gacha=(()=>{
+  const dome=$('gaDome'),knob=$('gaKnob'),tray=$('gaTray'),info=$('gaInfo'),card=$('gaCard'),mach=$('gaMach');
+  const CAPS=['#ff6fb5','#4fd1ff','#ffd04d','#7ee081','#b98cff','#ff8a5c'];
+  const TXT={safe:['รอด!','ไม่โดน ส่งต่อ'],lose:['โดน!','แคปซูลซวย'],skip:['ข้าม!','คนถัดไปไม่ต้องหมุน'],rev:['กลับทิศ!','วนอีกทาง']};
+  let caps=[],turn=0,dir=1,st='play',to=[];
+  function build(){const n=Math.max(8,Math.min(14,players*2+2)),types=Array(n).fill('safe'),sl=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=grnd(i+1);[sl[i],sl[j]]=[sl[j],sl[i]]}
+    types[sl[0]]='lose';types[sl[1]]='skip';if(players>2)types[sl[2]]='rev';
+    caps=types.map(t=>({t,c:CAPS[grnd(CAPS.length)],x:14+grnd(72),y:42+grnd(40),r:grnd(360)}));draw()}
+  function draw(){dome.innerHTML=caps.map(c=>`<i class="cap" style="--cc:${c.c};left:${c.x}%;top:${c.y}%;transform:translate(-50%,-50%) rotate(${c.r}deg)"></i>`).join('')}
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${caps.length} แคปซูล`+(players>2?` · วน${dir===1?'ตามเข็ม':'ทวนเข็ม'}`:'')}
+  function spin(){if(st!=='play'||!caps.length)return;st='spin';const c=caps.shift();card.hidden=true;caps.forEach(k=>{k.x=14+rnd(72);k.y=42+rnd(40);k.r=rnd(360)});const out=dome.firstElementChild;if(out)out.remove();
+    [...dome.children].forEach((e,k)=>{const p=caps[k];if(!p)return;e.style.left=p.x+'%';e.style.top=p.y+'%';e.style.transform=`translate(-50%,-50%) rotate(${p.r}deg)`});
+    knob.classList.remove('turn');void knob.offsetWidth;knob.classList.add('turn');mach.classList.remove('shake');void mach.offsetWidth;mach.classList.add('shake');
+    for(let k=0;k<5;k++)to.push(setTimeout(()=>tone(260+k*40,.05,'square',.04),k*120));
+    to.push(setTimeout(()=>{tray.innerHTML=`<i class="tcap" style="--cc:${c.c}"><b></b><b></b></i>`;tone(500,.08,'triangle',.07)},700));
+    to.push(setTimeout(()=>{const tc=tray.firstElementChild;if(tc)tc.classList.add('open');const [h,s]=TXT[c.t];card.className='gacard '+c.t;card.innerHTML=`<b>${h}</b><small>${s}</small>`;card.hidden=false;
+      if(c.t==='lose'){st='over';noise(.5,.6,1500);tone(150,.5,'sawtooth',.15,50);buzz([100,50,180]);flash('#ff5a4e');
+        to.push(setTimeout(()=>showResult({word:'แคปซูลซวย!',who:`${name(turn)} หมุนได้แคปซูลซวย`,loser:turn,again:()=>init((turn+dir+players)%players)}),1200));return}
+      const prev=turn;let step=1;if(c.t==='skip'){step=2;tone(700,.1,'square',.07)}else if(c.t==='rev'){dir*=-1;tone(600,.2,'triangle',.08,300)}else tone(880,.12,'triangle',.08);
+      turn=((turn+dir*step)%players+players)%players;st='play';paint(`${nameH(prev)} ${h}`);to.push(setTimeout(()=>{if(st==='play')card.hidden=true},1600))},1300))}
+  knob.onclick=()=>{if(st!=='play')return;if(!mayAct(turn))return;act('gacha','spin',{},()=>spin())};
+  function init(s=0){stop();turn=s%players;dir=1;st='play';card.hidden=true;tray.innerHTML='';build();paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return{init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:a=>{if(a==='spin')spin()},turn:()=>st==='play'?turn:null};
+})();
+
+/* ---------- 24. Whack-a-Mimon (skill, score) ---------- */
+let whT=[],whRaf=0;
+const BOMB_SVG='<svg class="wbomb" viewBox="0 0 48 48" aria-hidden="true"><circle cx="22" cy="28" r="15" fill="#2b2f3a"/><path d="M30 15c3-5 7-4 9-8" stroke="#c9a46a" stroke-width="3" fill="none"/><circle cx="39.5" cy="6.5" r="3.2" fill="#ffd04d"/><circle cx="16" cy="22" r="4" fill="#fff" opacity=".3"/></svg>';
+G.whack=scoreGame('whack','wh',{better:'high',word:'ทุบน้อยสุด!',fmt:v=>`ทุบได้ ${v} ตัว`,hint:'มิมอนโผล่ตรงไหนรีบแตะ ห้ามแตะระเบิด (−2) · 12 วินาที',
+  prep(a){a.innerHTML=`<div class="whhud"><b class="wht">12.0</b><span>คะแนน <b class="whs">0</b></span></div><div class="whgrid">${Array.from({length:9},(_,i)=>`<button class="whole" aria-label="หลุม ${i+1}"><span class="wclip"><span class="wpop">${MI_SVG()}${BOMB_SVG}</span></span></button>`).join('')}</div>`},
+  play(a,done){const holes=[...a.querySelectorAll('.whole')],hud=a.querySelector('.wht'),sc=a.querySelector('.whs');let score=0,over=false;const t0=performance.now(),DUR=12;
+    holes.forEach(h=>{h.onpointerdown=e=>{e.preventDefault();if(over||!h.classList.contains('up'))return;h.classList.remove('up');
+      if(h.classList.contains('bomb')){score=Math.max(0,score-2);h.classList.add('boom');buzz(70);tone(150,.2,'sawtooth',.1);whT.push(setTimeout(()=>h.classList.remove('boom'),300))}
+      else{score++;h.classList.add('hit');tone(480+score*12,.06,'triangle',.07);buzz(10);whT.push(setTimeout(()=>h.classList.remove('hit'),250))}
+      sc.textContent=score}});
+    function spawn(){if(over)return;const e=(performance.now()-t0)/1000,iv=Math.max(360,820-e*42),free=holes.filter(h=>!h.classList.contains('up'));
+      if(free.length){const h=free[rnd(free.length)];h.classList.toggle('bomb',Math.random()<.2);h.classList.add('up');whT.push(setTimeout(()=>h.classList.remove('up'),iv*1.3))}
+      whT.push(setTimeout(spawn,iv*(.5+Math.random()*.5)))}
+    (function tick(){const left=DUR-(performance.now()-t0)/1000;hud.textContent=Math.max(0,left).toFixed(1);
+      if(left<=0){over=true;holes.forEach(h=>h.classList.remove('up'));done(score,`ทุบได้ ${score} ตัว`);return}whRaf=requestAnimationFrame(tick)})();
+    spawn()},
+  stop(){whT.forEach(clearTimeout);whT=[];cancelAnimationFrame(whRaf)}});
+
+/* ---------- 25. Perfect circle (skill, score) ---------- */
+function roundness(pts){const n=pts.length;let cx=0,cy=0;pts.forEach(p=>{cx+=p.x;cy+=p.y});cx/=n;cy/=n;
+  const rs=pts.map(p=>Math.hypot(p.x-cx,p.y-cy)),r=rs.reduce((a,b)=>a+b,0)/n,sd=Math.sqrt(rs.reduce((a,b)=>a+(b-r)**2,0)/n),cv=sd/(r||1);
+  const ang=pts.map(p=>Math.atan2(p.y-cy,p.x-cx)).sort((a,b)=>a-b);let gap=ang[0]+2*Math.PI-ang[n-1];for(let i=1;i<n;i++)gap=Math.max(gap,ang[i]-ang[i-1]);
+  const close=Math.hypot(pts[0].x-pts[n-1].x,pts[0].y-pts[n-1].y)/(r||1);
+  let s=100-cv*260;if(gap>.6)s-=(gap-.6)*45;if(close>.35)s-=(close-.35)*30;if(r<40)s-=(40-r)*1.5;
+  return{score:Math.max(0,Math.min(100,s)),cx,cy,r}}
+G.circle=scoreGame('circle','ci',{better:'high',word:'วงเบี้ยวสุด!',fmt:v=>`กลม ${v.toFixed(1)}%`,hint:'วาดวงกลมนิ้วเดียวให้กลมที่สุด ปล่อยนิ้วเมื่อวาดครบรอบ',
+  prep(a){a.innerHTML='<canvas class="pcv"></canvas><div class="pmid"><b>วาดวงกลม</b><small>นิ้วเดียว ปล่อยนิ้วคือจบ</small></div>'},
+  play(a,done){const cv=a.querySelector('canvas'),mid=a.querySelector('.pmid'),{c,W,H}=sizeCanvas(cv);let pts=[],drawing=false;mid.innerHTML='<b>เริ่มวาดได้เลย</b>';
+    const draw=()=>{c.clearRect(0,0,W,H);if(pts.length<2)return;c.lineWidth=6;c.lineCap='round';c.lineJoin='round';c.strokeStyle='#ff6fc0';c.shadowColor='rgba(255,79,163,.6)';c.shadowBlur=12;
+      c.beginPath();c.moveTo(pts[0].x,pts[0].y);pts.forEach(p=>c.lineTo(p.x,p.y));c.stroke();c.shadowBlur=0};
+    const pos=e=>{const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};
+    cv.onpointerdown=e=>{e.preventDefault();try{cv.setPointerCapture(e.pointerId)}catch(_){}pts=[pos(e)];drawing=true;mid.innerHTML=''};
+    cv.onpointermove=e=>{if(!drawing)return;const p=pos(e),l=pts[pts.length-1];if(Math.hypot(p.x-l.x,p.y-l.y)>2){pts.push(p);draw()}};
+    cv.onpointerup=cv.onpointercancel=()=>{if(!drawing)return;drawing=false;
+      if(pts.length<25){pts=[];draw();mid.innerHTML='<b>สั้นไป วาดใหม่</b><small>วาดให้ครบรอบ</small>';return}
+      const R=roundness(pts),s=+R.score.toFixed(1);draw();c.setLineDash([6,6]);c.lineWidth=2;c.strokeStyle='rgba(255,255,255,.7)';c.beginPath();c.arc(R.cx,R.cy,R.r,0,Math.PI*2);c.stroke();c.setLineDash([]);
+      cv.onpointerdown=cv.onpointermove=cv.onpointerup=cv.onpointercancel=null;mid.innerHTML=`<b class="pbig">${s.toFixed(1)}%</b>`;done(s,`กลม ${s.toFixed(1)}%`)}}});
+
+/* ---------- 26. Pour to the line (skill, score) ---------- */
+let poRaf=0;
+G.pour=scoreGame('pour','po',{better:'low',word:'เทพลาดสุด!',fmt:v=>`ห่างเส้น ${v.toFixed(1)}%`,hint:'กดค้างที่แก้วเพื่อเทน้ำ ปล่อยให้น้ำหยุดตรงเส้นที่สุด · เทได้ครั้งเดียว',
+  prep(a){const tg=35+rnd(45);a.dataset.tg=tg;a.innerHTML=`<div class="stream"></div><div class="glass"><div class="water"><i></i></div><div class="gline" style="bottom:${tg}%"><span>${tg}%</span></div></div><div class="pmid top"><b>กดค้างเพื่อเท</b></div>`},
+  play(a,done){const tg=+a.dataset.tg,w=a.querySelector('.water'),sm=a.querySelector('.stream'),mid=a.querySelector('.pmid');let lv=0,pour=false,used=false,fin=false,last=0,v=0;
+    const finish=()=>{if(fin)return;fin=true;pour=false;a.onpointerdown=a.onpointerup=a.onpointercancel=a.onpointerleave=null;const extra=Math.min(3,v*.07),from=lv,t1=performance.now();
+      (function drain(){const k=Math.min(1,(performance.now()-t1)/260);lv=from+extra*k;w.style.height=Math.min(100,lv)+'%';if(k<1){poRaf=requestAnimationFrame(drain);return}
+        sm.classList.remove('on');const over=lv>100,d=over?100:Math.abs(lv-tg);
+        mid.innerHTML=over?'<b>ล้นแก้ว!</b>':`<b class="pbig">${d.toFixed(1)}%</b><small>ห่างจากเส้น</small>`;done(+d.toFixed(1),over?'ล้นแก้ว!':`ห่างเส้น ${d.toFixed(1)}%`)})()};
+    a.onpointerdown=e=>{e.preventDefault();if(used)return;used=true;pour=true;sm.classList.add('on');mid.innerHTML='';last=performance.now();
+      (function tick(){if(!pour)return;const now=performance.now(),dt=(now-last)/1000;last=now;v=Math.min(42,Math.max(14,v+dt*30));lv+=v*dt;w.style.height=Math.min(100,lv)+'%';
+        if(lv>=103){finish();return}poRaf=requestAnimationFrame(tick)})()};
+    a.onpointerup=a.onpointercancel=a.onpointerleave=()=>{if(pour)finish()}},
+  stop(){cancelAnimationFrame(poRaf)}});
+
+/* ---------- 27. Tap frenzy (skill, score) ---------- */
+let tpRaf=0;
+G.taps=scoreGame('taps','tp',{better:'high',word:'รัวช้าสุด!',fmt:v=>`รัวได้ ${v} ครั้ง`,hint:'แตะมิมอนรัวๆ ให้ได้มากที่สุดใน 5 วินาที · เริ่มนับเมื่อแตะครั้งแรก',
+  prep(a){a.innerHTML=`<div class="taphud"><b>0</b><small>5.0 วิ</small></div><button class="tapmon" aria-label="แตะมิมอน">${MI_SVG()}</button>`},
+  play(a,done){const b=a.querySelector('.tapmon'),n=a.querySelector('.taphud b'),t=a.querySelector('.taphud small');let c=0,t0=0,over=false;
+    b.onpointerdown=e=>{e.preventDefault();if(over)return;
+      if(!t0){t0=performance.now();(function tick(){const left=5-(performance.now()-t0)/1000;t.textContent=Math.max(0,left).toFixed(1)+' วิ';if(left<=0){over=true;b.onpointerdown=null;done(c,`รัวได้ ${c} ครั้ง`);return}tpRaf=requestAnimationFrame(tick)})()}
+      c++;n.textContent=c;b.classList.remove('sq');void b.offsetWidth;b.classList.add('sq');if(c%5===0)tone(400+c*6,.03,'triangle',.04)}},
+  stop(){cancelAnimationFrame(tpRaf)}});
+
+/* ---------- 28. Memory grid (hard, elimination) ---------- */
+let mgT=[];
+const mgSize=L=>L<=2?3:L<=5?4:5;
+G.memgrid=elimGame('memgrid','mg',{word:'จำผิด!',hint:'จำช่องที่สว่าง แล้วแตะให้ครบ ผ่านแล้วส่งต่อ ช่องจะเยอะขึ้นเรื่อยๆ',
+  prep(a,L){const n=mgSize(L);a.innerHTML=`<div class="mggrid" style="--n:${n}">${'<button class="mgc" disabled></button>'.repeat(n*n)}</div>`},
+  round(L,a,pass,fail){const n=mgSize(L),k=Math.min(n*n-3,2+L),cells=[...a.querySelectorAll('.mgc')],lit=new Set(shuffleArr([...Array(n*n).keys()]).slice(0,k));let found=0;
+    lit.forEach(i=>cells[i].classList.add('lit'));tone(660,.1,'triangle',.07);
+    mgT.push(setTimeout(()=>{lit.forEach(i=>cells[i].classList.remove('lit'));
+      cells.forEach((c,i)=>{c.disabled=false;c.onpointerdown=e=>{e.preventDefault();if(c.classList.contains('ok'))return;
+        if(lit.has(i)){c.classList.add('ok');found++;tone(500+found*60,.06,'triangle',.06);if(found===k){cells.forEach(x=>x.disabled=true);pass()}}
+        else{c.classList.add('bad');cells.forEach((x,j)=>{x.disabled=true;if(lit.has(j)&&!x.classList.contains('ok'))x.classList.add('miss')});fail('จำผิดช่อง')}}})},900+k*170))},
+  stop(){mgT.forEach(clearTimeout);mgT=[]}});
+
+/* ---------- 29. Shell game (hard, elimination) ---------- */
+let shT=[];
+G.shell=elimGame('shell','sh',{word:'เดาผิดแก้ว!',hint:'ดูว่ามิมอนอยู่ใต้แก้วไหน ตามให้ทันตอนสลับ แล้วแตะแก้วนั้น',
+  prep(a,L){const c=L>=4?4:3;a.innerHTML=`<div class="shrow">${Array.from({length:c},(_,i)=>`<button class="cup" style="left:${(i+.5)*100/c}%" disabled aria-label="แก้วใบที่ ${i+1}"><span class="cupmon">${MI_SVG()}</span><span class="cupbody"></span></button>`).join('')}</div>`},
+  round(L,a,pass,fail){const cups=[...a.querySelectorAll('.cup')],c=cups.length,slot=cups.map((_,i)=>i),win=rnd(c),swaps=3+L*2,d=Math.max(170,480-L*35);
+    const setPos=()=>cups.forEach((cp,i)=>{cp.style.left=(slot[i]+.5)*100/c+'%'});
+    cups.forEach((cp,i)=>{cp.classList.toggle('has',i===win);cp.style.transition='none'});setPos();cups[win].classList.add('lift');let t=1000;
+    shT.push(setTimeout(()=>cups[win].classList.remove('lift'),t));t+=520;
+    for(let s=0;s<swaps;s++){shT.push(setTimeout(()=>{const x=rnd(c);let y=rnd(c-1);if(y>=x)y++;const ix=slot.indexOf(x),iy=slot.indexOf(y);slot[ix]=y;slot[iy]=x;
+      cups.forEach(cp=>cp.style.transition=`left ${d}ms ease-in-out,transform ${Math.round(d/2)}ms ease`);cups[ix].classList.add('up');cups[iy].classList.add('dn');setPos();tone(300+rnd(200),.04,'triangle',.04);
+      shT.push(setTimeout(()=>{cups[ix].classList.remove('up');cups[iy].classList.remove('dn')},d))},t));t+=d+40}
+    shT.push(setTimeout(()=>{cups.forEach((cp,i)=>{cp.disabled=false;cp.onpointerdown=e=>{e.preventDefault();cups.forEach(x=>x.disabled=true);cp.classList.add('lift');
+      if(i===win)pass();else{shT.push(setTimeout(()=>cups[win].classList.add('lift'),350));fail('เลือกแก้วผิด')}}})},t+80))},
+  stop(){shT.forEach(clearTimeout);shT=[]}});
+
+/* ---------- 30. Count flash (hard, elimination) ---------- */
+let cfT=[],cfRaf=0;
+G.countflash=elimGame('countflash','cf',{word:'นับผิด!',hint:'มิมอนจะโผล่แป๊บเดียว นับให้ทันแล้วเลือกจำนวนที่ถูก',
+  prep(a){a.innerHTML='<div class="cffield"></div><div class="cfq" hidden></div><div class="tbar cfbar" hidden><i></i></div><div class="mchoices cfch" hidden></div>'},
+  round(L,a,pass,fail){const f=a.querySelector('.cffield'),q=a.querySelector('.cfq'),ch=a.querySelector('.cfch'),bar=a.querySelector('.cfbar'),bi=bar.firstElementChild;
+    const want=3+L*2+rnd(3),show=Math.max(450,1150-L*70),r=a.getBoundingClientRect(),S=Math.max(26,Math.min(54,Math.sqrt(r.width*r.height/(want*3.2)))),pts=[];
+    for(let tries=0;pts.length<want&&tries<4000;tries++){const x=S/2+Math.random()*(r.width-S),y=S/2+Math.random()*(r.height-S);if(pts.every(p=>Math.hypot(p.x-x,p.y-y)>S*.95))pts.push({x,y})}
+    const n=pts.length;f.innerHTML=pts.map(p=>`<span class="cfm" style="left:${p.x}px;top:${p.y}px;width:${S}px;height:${S}px;color:hsl(${rnd(360)} 85% 68%)">${MI_SVG()}</span>`).join('');tone(700,.08,'triangle',.06);
+    cfT.push(setTimeout(()=>{f.innerHTML='';const opts=new Set([n]);while(opts.size<4){const v=n+(rnd(2)?1:-1)*(1+rnd(3));if(v>0)opts.add(v)}
+      q.hidden=ch.hidden=bar.hidden=false;q.textContent='มีมิมอนกี่ตัว?';ch.innerHTML=shuffleArr([...opts]).map(v=>`<button data-v="${v}">${v}</button>`).join('');
+      const lim=6,t0=performance.now();let fin=false;
+      (function tick(){if(fin)return;const e=(performance.now()-t0)/1000;bi.style.transform=`scaleX(${Math.max(0,1-e/lim)})`;if(e>=lim){fin=true;fail(`ตอบไม่ทัน (มี ${n} ตัว)`);return}cfRaf=requestAnimationFrame(tick)})();
+      ch.querySelectorAll('button').forEach(b=>b.onpointerdown=e=>{e.preventDefault();if(fin)return;fin=true;cancelAnimationFrame(cfRaf);ch.querySelectorAll('button').forEach(x=>{if(+x.dataset.v===n)x.classList.add('right')});
+        if(+b.dataset.v===n)pass();else{b.classList.add('wrong');fail(`นับผิด (มี ${n} ตัว)`)}})},show))},
+  stop(){cfT.forEach(clearTimeout);cfT=[];cancelAnimationFrame(cfRaf)}});
+
+/* ---------- 31. Go / no-go (hard, elimination) ---------- */
+let gnT=[];
+G.gonogo=elimGame('gonogo','gn',{word:'พลาด!',hint:'มิมอนเขียวรีบแตะ มิมอนแดงห้ามแตะ ผ่านครบ 8 ครั้งแล้วส่งต่อ',
+  prep(a){a.innerHTML=`<div class="gnhud">${'<i></i>'.repeat(8)}</div><div class="gnmon">${MI_SVG()}</div><div class="pmid bottom"><small>เขียว = แตะ · แดง = ห้ามแตะ</small></div>`},
+  round(L,a,pass,fail){const m=a.querySelector('.gnmon'),hud=a.querySelector('.gnhud'),win=Math.max(300,760-L*50),pRed=.3+Math.min(.2,L*.02);let k=0,state='blank',over=false;
+    const setHud=()=>hud.innerHTML=Array.from({length:8},(_,i)=>`<i class="${i<k?'ok':''}"></i>`).join('');setHud();m.className='gnmon';
+    const end=(ok,why)=>{over=true;gnT.forEach(clearTimeout);gnT=[];a.onpointerdown=null;ok?pass():fail(why)};
+    function next(){if(over)return;if(k>=8)return end(true);state='blank';m.className='gnmon';
+      gnT.push(setTimeout(()=>{if(over)return;const red=Math.random()<pRed;state=red?'red':'go';m.className='gnmon on '+state;
+        gnT.push(setTimeout(()=>{if(over)return;if(state==='go')return end(false,'แตะไม่ทัน');if(state==='red'){k++;setHud();next()}},win))},300+Math.random()*Math.max(350,700-L*30)))}
+    a.onpointerdown=e=>{e.preventDefault();if(over)return;
+      if(state==='go'){state='hit';k++;setHud();tone(880,.06,'triangle',.06);m.className='gnmon on go hit';gnT.forEach(clearTimeout);gnT=[];gnT.push(setTimeout(next,220))}
+      else if(state==='red'){m.className='gnmon on red hit';end(false,'แตะตอนแดง')}else if(state==='blank')end(false,'แตะก่อนมิมอนโผล่')};
+    next()},
+  stop(){gnT.forEach(clearTimeout);gnT=[]}});
+
+/* ---------- 32. Chain math (hard, elimination) ---------- */
+let cmT=[],cmRaf=0;
+G.chainmath=elimGame('chainmath','cm',{word:'คิดผิด!',hint:'จำเลขเริ่มต้น แล้วคิดตามทีละขั้นในใจ สุดท้ายเลือกคำตอบ',
+  prep(a){a.innerHTML='<div class="cmstep">เลขเริ่มต้นจะขึ้นตรงนี้</div><div class="cmshow">?</div><div class="tbar cmbar" hidden><i></i></div><div class="mchoices cmch" hidden></div>'},
+  round(L,a,pass,fail){const sh=a.querySelector('.cmshow'),stp=a.querySelector('.cmstep'),ch=a.querySelector('.cmch'),bar=a.querySelector('.cmbar'),bi=bar.firstElementChild;
+    const pickOp=v=>{for(let g=0;g<40;g++){const t=rnd(L>=3?3:2),n=1+rnd(9);if(t===0&&v+n<=99)return['+'+n,v+n];if(t===1&&v-n>=0)return['−'+n,v-n];if(t===2){const m=L>=6&&v<=8?3:2;if(v>1&&v*m<=99)return['×'+m,v*m]}}return['+1',v+1]};
+    let v=2+rnd(9);const start=v,K=3+Math.floor(L/2),dt=Math.max(650,1250-L*60),seq=[];for(let i=0;i<K;i++){const [op,nv]=pickOp(v);seq.push(op);v=nv}const ans=v;
+    sh.textContent=start;stp.textContent='เริ่มที่';let t=dt;
+    seq.forEach((op,i)=>{cmT.push(setTimeout(()=>{sh.textContent=op;stp.textContent=`ขั้นที่ ${i+1}/${K}`;sh.classList.remove('pop');void sh.offsetWidth;sh.classList.add('pop');tone(500+i*60,.05,'triangle',.05)},t));t+=dt});
+    cmT.push(setTimeout(()=>{sh.textContent='= ?';stp.textContent='ผลลัพธ์คือ';const opts=new Set([ans]);while(opts.size<4){const d=(rnd(2)?1:-1)*(rnd(3)===0?10:1+rnd(3));if(ans+d>=0)opts.add(ans+d)}
+      ch.hidden=bar.hidden=false;ch.innerHTML=shuffleArr([...opts]).map(x=>`<button data-v="${x}">${x}</button>`).join('');const lim=7,t0=performance.now();let fin=false;
+      (function tick(){if(fin)return;const e=(performance.now()-t0)/1000;bi.style.transform=`scaleX(${Math.max(0,1-e/lim)})`;if(e>=lim){fin=true;fail(`คิดไม่ทัน (= ${ans})`);return}cmRaf=requestAnimationFrame(tick)})();
+      ch.querySelectorAll('button').forEach(b=>b.onpointerdown=e=>{e.preventDefault();if(fin)return;fin=true;cancelAnimationFrame(cmRaf);ch.querySelectorAll('button').forEach(x=>{if(+x.dataset.v===ans)x.classList.add('right')});
+        if(+b.dataset.v===ans){sh.textContent=ans;pass()}else{b.classList.add('wrong');fail(`คิดผิด (= ${ans})`)}})},t))},
+  stop(){cmT.forEach(clearTimeout);cmT=[];cancelAnimationFrame(cmRaf)}});
+
+/* ---------- 33. Memory pairs (hard, score) ---------- */
+let paRaf=0,paT=[];
+const SHAPES=[['#ff4d6d','<circle cx="20" cy="20" r="13"/>'],['#3db2ff','<rect x="8" y="8" width="24" height="24" rx="4"/>'],['#ffd04d','<path d="M20 6l15 27H5z"/>'],['#3fd17a','<path d="M20 5l4.4 9 9.9 1.4-7.2 7 1.7 9.8L20 27.6l-8.8 4.6 1.7-9.8-7.2-7 9.9-1.4z"/>'],['#ff6fb5','<path d="M20 34S6 25 6 15a7 7 0 0 1 14-2 7 7 0 0 1 14 2c0 10-14 19-14 19z"/>'],['#a37bff','<path d="M20 4l14 16-14 16L6 20z"/>'],['#ff8a3d','<path d="M15 6h10v9h9v10h-9v9H15v-9H6V15h9z"/>'],['#2fd6c9','<path d="M26 6a14 14 0 1 0 8 23A11 11 0 0 1 26 6z"/>']];
+G.pairs=scoreGame('pairs','pa',{better:'low',word:'จับคู่ช้าสุด!',fmt:v=>`ใช้เวลา ${v.toFixed(1)} วิ`,hint:'เปิดไพ่ทีละ 2 ใบ จับคู่ให้ครบ 8 คู่เร็วที่สุด',
+  prep(a){a.innerHTML=`<div class="pahud">0.0</div><div class="pagrid">${'<button class="pacard" disabled><i></i></button>'.repeat(16)}</div>`},
+  play(a,done){const order=shuffleArr([...Array(16).keys()].map(i=>i>>1)),cards=[...a.querySelectorAll('.pacard')],hud=a.querySelector('.pahud');let first=null,lock=false,matched=0;const t0=performance.now();
+    cards.forEach((cd,k)=>{const s=SHAPES[order[k]];cd.disabled=false;cd.className='pacard';cd.dataset.s=order[k];cd.innerHTML=`<svg viewBox="0 0 40 40" fill="${s[0]}" aria-hidden="true">${s[1]}</svg>`;
+      cd.onpointerdown=e=>{e.preventDefault();if(lock||cd.classList.contains('open'))return;cd.classList.add('open');tone(600,.04,'triangle',.05);
+        if(!first){first=cd;return}const f=first;first=null;
+        if(f.dataset.s===cd.dataset.s){f.classList.add('done');cd.classList.add('done');matched++;tone(900,.08,'triangle',.07);buzz(10);
+          if(matched===8){cancelAnimationFrame(paRaf);const t=(performance.now()-t0)/1000;hud.textContent=t.toFixed(1);done(+t.toFixed(2),`ใช้เวลา ${t.toFixed(1)} วิ`)}}
+        else{lock=true;paT.push(setTimeout(()=>{f.classList.remove('open');cd.classList.remove('open');lock=false},650))}}});
+    (function tick(){hud.textContent=((performance.now()-t0)/1000).toFixed(1);if(matched<8)paRaf=requestAnimationFrame(tick)})()},
+  stop(){cancelAnimationFrame(paRaf);paT.forEach(clearTimeout);paT=[]}});
+
+/* ---------- 34. Darts (hard, score) ---------- */
+let daRaf=0,daT=[];
+G.darts=scoreGame('darts','da',{better:'high',word:'แต้มน้อยสุด!',fmt:v=>`ได้ ${v} แต้ม`,hint:'แตะครั้งแรกล็อกเส้นแนวตั้ง แตะครั้งที่สองล็อกเส้นแนวนอน · ปา 3 ลูก',
+  prep(a){a.innerHTML=`<div class="dahud"><span>ลูกที่ <b class="dan">1</b>/3</span><span>รวม <b class="das">0</b></span></div><div class="daboard"><svg viewBox="0 0 200 200" aria-hidden="true">${[[100,'#2b1749'],[75,'#ff4fa3'],[50,'#2b1749'],[30,'#ffd04d'],[10,'#ff4d4d']].map(([r,c])=>`<circle cx="100" cy="100" r="${r*.98}" fill="${c}" stroke="#fff" stroke-opacity=".3"/>`).join('')}<text x="100" y="12" font-size="8" fill="#fff" fill-opacity=".6" text-anchor="middle">5</text><text x="100" y="37" font-size="8" fill="#fff" fill-opacity=".7" text-anchor="middle">10</text><text x="100" y="60" font-size="8" fill="#fff" fill-opacity=".7" text-anchor="middle">20</text><text x="100" y="80" font-size="8" fill="#1a0e30" text-anchor="middle">30</text></svg><i class="dax"></i><i class="day"></i></div>`},
+  play(a,done){const bd=a.querySelector('.daboard'),vx=a.querySelector('.dax'),vy=a.querySelector('.day'),nEl=a.querySelector('.dan'),sEl=a.querySelector('.das');
+    let dart=0,phase='x',lx=50,ly=50,total=0,t0=performance.now(),sp=1.6;vx.style.display='block';vy.style.display='none';
+    (function tick(){const t=(performance.now()-t0)/1000;if(phase==='x'){lx=50+50*Math.sin(t*sp*2.2);vx.style.left=lx+'%'}else if(phase==='y'){ly=50+50*Math.sin(t*sp*2.6+.7);vy.style.top=ly+'%'}daRaf=requestAnimationFrame(tick)})();
+    a.onpointerdown=e=>{e.preventDefault();
+      if(phase==='x'){phase='y';vy.style.display='block';t0=performance.now();tone(700,.04,'triangle',.05);return}
+      if(phase!=='y')return;phase='wait';const d=Math.hypot((lx-50)/50,(ly-50)/50),pts=d<.1?50:d<.3?30:d<.5?20:d<.75?10:d<=1?5:0;total+=pts;
+      const m=document.createElement('i');m.className='dart';m.style.left=lx+'%';m.style.top=ly+'%';m.dataset.p=pts;bd.appendChild(m);sEl.textContent=total;
+      tone(pts>=30?1000:pts?700:200,.12,'triangle',.08);buzz(pts>=30?[20,20,40]:15);dart++;
+      if(dart>=3){cancelAnimationFrame(daRaf);a.onpointerdown=null;vx.style.display=vy.style.display='none';done(total,`ได้ ${total} แต้ม`);return}
+      daT.push(setTimeout(()=>{phase='x';vy.style.display='none';sp+=.45;t0=performance.now();nEl.textContent=dart+1},650))}},
+  stop(){cancelAnimationFrame(daRaf);daT.forEach(clearTimeout);daT=[]}});
+
+/* ---------- 35. Dodge the bombs (hard, score) ---------- */
+let doRaf=0;
+G.dodge=scoreGame('dodge','do',{better:'high',word:'หลบได้น้อยสุด!',fmt:v=>`หลบได้ ${v.toFixed(1)} วิ`,hint:'ลากนิ้วซ้ายขวาให้มิมอนหลบระเบิดที่ตกลงมา ยิ่งนานยิ่งเร็ว',
+  prep(a){a.innerHTML='<canvas class="pcv"></canvas><div class="pmid"><b>ลากนิ้วเพื่อหลบ</b></div>'},
+  play(a,done){const cv=a.querySelector('canvas'),mid=a.querySelector('.pmid'),{c,W,H}=sizeCanvas(cv);mid.innerHTML='';
+    const R=Math.min(26,W*.07),py=H-R-14;let px=W/2,tx=W/2,bombs=[],last=performance.now(),spawnT=.6;const t0=last;
+    const setX=e=>{const r=cv.getBoundingClientRect();tx=Math.max(R,Math.min(W-R,e.clientX-r.left))};
+    a.onpointerdown=e=>{e.preventDefault();setX(e)};a.onpointermove=e=>{if(e.buttons||e.pointerType!=='mouse')setX(e)};
+    function mimon(x,y){c.save();c.translate(x,y);c.fillStyle='#ffe3f3';[[-1,1],[1,1]].forEach(([s])=>{c.beginPath();c.moveTo(s*R*.72,-R*.5);c.lineTo(s*R*.55,-R*1.18);c.lineTo(s*R*.2,-R*.82);c.fill()});
+      c.fillStyle='#ff70c4';c.beginPath();c.arc(0,0,R,0,Math.PI*2);c.fill();c.fillStyle='#fff';[-.36,.36].forEach(ex=>{c.beginPath();c.arc(ex*R,-.1*R,R*.25,0,Math.PI*2);c.fill()});
+      c.fillStyle='#2a1438';[-.33,.39].forEach(ex=>{c.beginPath();c.arc(ex*R,-.06*R,R*.13,0,Math.PI*2);c.fill()});c.restore()}
+    function bomb(b){c.fillStyle='#2b2f3a';c.beginPath();c.arc(b.x,b.y,b.r,0,Math.PI*2);c.fill();c.strokeStyle='#c9a46a';c.lineWidth=3;c.beginPath();c.moveTo(b.x+b.r*.5,b.y-b.r*.8);c.quadraticCurveTo(b.x+b.r,b.y-b.r*1.6,b.x+b.r*1.3,b.y-b.r*1.4);c.stroke();c.fillStyle='#ffd04d';c.beginPath();c.arc(b.x+b.r*1.3,b.y-b.r*1.4,3.5,0,Math.PI*2);c.fill()}
+    (function tick(){const now=performance.now(),dt=Math.min(.04,(now-last)/1000),e=(now-t0)/1000;last=now;
+      px+=(tx-px)*Math.min(1,dt*14);spawnT-=dt;
+      if(spawnT<=0){spawnT=Math.max(.18,.75-e*.035);const r=R*(.55+Math.random()*.35);bombs.push({x:r+Math.random()*(W-2*r),y:-r,r,v:H*(.32+e*.03)*(.85+Math.random()*.3)})}
+      bombs.forEach(b=>b.y+=b.v*dt);bombs=bombs.filter(b=>b.y<H+b.r);
+      c.clearRect(0,0,W,H);bombs.forEach(bomb);mimon(px,py);c.fillStyle='rgba(255,255,255,.9)';c.font='700 22px Mitr,system-ui,sans-serif';c.textAlign='center';c.fillText(e.toFixed(1),W/2,32);
+      if(bombs.some(b=>Math.hypot(b.x-px,b.y-py)<b.r+R*.82)){a.onpointerdown=a.onpointermove=null;flash('#ff5a4e');noise(.5,.6,1200);done(+e.toFixed(1),`หลบได้ ${e.toFixed(1)} วิ`);return}
+      doRaf=requestAnimationFrame(tick)})()},
+  stop(){cancelAnimationFrame(doRaf)}});
+
+/* ---------- 36. Steady finger (hard, score) ---------- */
+let sdRaf=0;
+G.steady=scoreGame('steady','sd',{better:'high',word:'หลุดวงบ่อยสุด!',fmt:v=>`อยู่ในวง ${v.toFixed(0)}%`,hint:'แตะค้างที่วงแล้วลากตามให้นิ้วอยู่ในวงตลอด 8 วินาที',
+  prep(a){a.innerHTML='<div class="sdt"></div><div class="pmid top"><b>แตะวงเพื่อเริ่ม</b></div>'},
+  play(a,done){const tg=a.querySelector('.sdt'),mid=a.querySelector('.pmid'),r=a.getBoundingClientRect(),W=r.width,H=r.height,RAD=Math.min(W,H)*.11;
+    tg.style.width=tg.style.height=RAD*2+'px';let fx=-999,fy=-999,touching=false,started=false,t0=0,last=0,inside=0;
+    const at=e=>{const sp=.7+e*.12;return[W/2+(W/2-RAD-6)*Math.sin(e*sp*1.3),H/2+(H/2-RAD-6)*Math.sin(e*sp*1.7)]};
+    let [tx,ty]=at(0);const place=()=>{tg.style.left=tx+'px';tg.style.top=ty+'px'};place();
+    const pos=e=>{const b=a.getBoundingClientRect();fx=e.clientX-b.left;fy=e.clientY-b.top};
+    a.onpointerdown=e=>{e.preventDefault();pos(e);touching=true;if(!started&&Math.hypot(fx-tx,fy-ty)<RAD*1.2){started=true;t0=last=performance.now();mid.innerHTML='';run()}};
+    a.onpointermove=e=>{if(touching)pos(e)};a.onpointerup=a.onpointercancel=()=>{touching=false};
+    function run(){const now=performance.now(),e=(now-t0)/1000,dt=(now-last)/1000;last=now;[tx,ty]=at(e);place();
+      const inn=touching&&Math.hypot(fx-tx,fy-ty)<RAD;if(inn)inside+=dt;tg.classList.toggle('in',inn);
+      if(e>=8){a.onpointerdown=a.onpointermove=a.onpointerup=a.onpointercancel=null;const pct=Math.min(100,inside/8*100);mid.innerHTML=`<b class="pbig">${pct.toFixed(0)}%</b>`;done(+pct.toFixed(1),`อยู่ในวง ${pct.toFixed(0)}%`);return}
+      sdRaf=requestAnimationFrame(run)}},
+  stop(){cancelAnimationFrame(sdRaf)}});
+
+
 /* ---------- how to play ---------- */
 const HELP={
   croc:{t:'จระเข้งับนิ้ว',s:['แตะลูกเต๋าเพื่อทอย ได้แต้มเท่าไหร่ต้องกดฟันเท่านั้นซี่','ฟันมีซี่เดียวที่งับ สุ่มใหม่ทุกรอบ','กดรอดครบแล้ว ตาจะส่งต่อให้คนถัดไป','ใครกดโดนซี่ที่งับ แพ้'],tip:'กราฟด้านล่างคือโอกาสออกของแต่ละหน้า ปรับได้ที่ปุ่มตั้งค่าในหน้าหลัก'},
@@ -2181,13 +2839,30 @@ Object.assign(HELP,{
   mcolor:{t:'มิมอนเปลี่ยนสี',s:['ทุกคนแตะจอคนละจุด จะได้ปุ่มสีของตัวเอง','กดเริ่ม มิมอนจะหมุนเปลี่ยนสีอยู่กลางจอ','มิมอนหยุดเป็นสีของใคร คนนั้นรีบกดปุ่มตัวเอง','กดตอนมิมอนยังหมุน หรือกดผิดสี โดน · กดช้า โดน'],tip:'ยิ่งเล่นนาน เวลาให้กดยิ่งน้อย และตั้งแต่รอบ 3 มิมอนจะแกล้งหยุดหลอก ของจริงต้องมีวงเวลาขึ้นรอบตัว'}
 });
 HELP.sushi={t:'ซูชิวาซาบิ',s:['ผลัดกันแตะกินซูชิคนละ 1 ชิ้น','มีชิ้นเดียวที่แอบใส่วาซาบิไว้ สุ่มใหม่ทุกรอบ','ใครกินโดนชิ้นวาซาบิ แพ้'],tip:'ถ้ามีซูชิจริงอยู่บนโต๊ะ ให้คนรับกรรมกินซูชิป้ายวาซาบิเยอะๆ 1 คำ'};
+Object.assign(HELP,{
+  wires:{t:'ตัดสายไฟ',s:['ผลัดกันตัดสายไฟคนละ 1 เส้น','มีเส้นเดียวที่ต่อกับระเบิด','ต้องตัดให้ทันเวลาบนจอ ยิ่งตัดไปเวลายิ่งน้อย','ตัดโดนสายระเบิด หรือตัดไม่ทัน แพ้'],tip:'เวลาเริ่มที่ 8 วินาที ลดลงทีละครึ่งวินาที ต่ำสุด 3 วินาที'},
+  gacha:{t:'ตู้กาชา',s:['ผลัดกันหมุนตู้คนละ 1 ครั้ง','แคปซูลส่วนใหญ่รอด มีแคปซูลข้ามตาและกลับทิศปนอยู่','ใครหมุนได้แคปซูลซวย แพ้'],tip:'แคปซูลข้าม: คนถัดไปไม่ต้องหมุน · กลับทิศ: วนอีกทาง'},
+  whack:{t:'ทุบมิมอน',s:['ทุกคนเล่นคนละตา ตาละ 12 วินาที','มิมอนโผล่จากหลุมตรงไหน รีบแตะ ได้ 1 คะแนน','แตะระเบิดโดนหัก 2 คะแนน','ใครคะแนนน้อยสุด แพ้'],tip:''},
+  circle:{t:'วาดวงกลม',s:['ทุกคนเล่นคนละตา','วาดวงกลมด้วยนิ้วเดียวให้กลมที่สุด','ปล่อยนิ้วแล้วเครื่องจะให้คะแนนความกลม','ใครกลมน้อยสุด แพ้'],tip:'วาดให้ครบรอบและปิดวงให้สนิท จะได้คะแนนดี'},
+  pour:{t:'เทน้ำ',s:['ทุกคนเล่นคนละตา','กดค้างที่แก้วเพื่อเทน้ำ ปล่อยนิ้วเพื่อหยุด','ให้น้ำหยุดตรงเส้นสีเหลืองที่สุด เทได้ครั้งเดียว','ใครห่างเส้นมากสุด แพ้'],tip:'ปล่อยนิ้วแล้วน้ำยังไหลลงอีกนิด และเทนานน้ำจะไหลเร็วขึ้น'},
+  taps:{t:'รัวนิ้ว',s:['ทุกคนเล่นคนละตา','แตะมิมอนรัวๆ ให้ได้มากที่สุดใน 5 วินาที','เวลาเริ่มนับตอนแตะครั้งแรก','ใครรัวได้น้อยสุด แพ้'],tip:''},
+  memgrid:{t:'จำตำแหน่ง',s:['ช่องจะสว่างขึ้นแป๊บเดียว จำให้ได้','แตะช่องที่สว่างให้ครบ','ผ่านแล้วส่งต่อ ช่องและจำนวนที่ต้องจำเพิ่มขึ้น','ใครแตะผิดช่อง แพ้'],tip:''},
+  shell:{t:'สลับแก้ว',s:['ดูว่ามิมอนอยู่ใต้แก้วใบไหน','แก้วจะสลับไปมา ตามให้ทัน','แตะแก้วที่คิดว่ามิมอนอยู่','ผ่านแล้วส่งต่อ สลับเร็วขึ้น ใครเลือกผิด แพ้'],tip:'ตั้งแต่ระดับ 4 จะมีแก้ว 4 ใบ'},
+  countflash:{t:'นับไว',s:['มิมอนจะโผล่เต็มจอแป๊บเดียว','นับให้ทันแล้วเลือกจำนวนที่ถูก','ผ่านแล้วส่งต่อ มิมอนเยอะขึ้น โผล่สั้นลง','ใครนับผิดหรือตอบไม่ทัน แพ้'],tip:''},
+  gonogo:{t:'เขียวกด แดงห้าม',s:['มิมอนจะโผล่ทีละตัว','มิมอนเขียวรีบแตะ มิมอนแดงห้ามแตะ','ผ่าน 8 ครั้งติดกันแล้วส่งต่อ ยิ่งเล่นยิ่งเร็ว','แตะไม่ทัน แตะตอนแดง หรือแตะก่อนโผล่ แพ้'],tip:''},
+  chainmath:{t:'บวกต่อเนื่อง',s:['จำเลขเริ่มต้น','จะมีโจทย์ขึ้นทีละขั้น เช่น +3, −2, ×2 คิดตามในใจ','จบแล้วเลือกผลลัพธ์ให้ถูกก่อนหมดเวลา','ผ่านแล้วส่งต่อ ขั้นเยอะขึ้น ใครผิด แพ้'],tip:''},
+  pairs:{t:'จับคู่ไพ่',s:['ทุกคนเล่นคนละตา','เปิดไพ่ทีละ 2 ใบ ถ้าเหมือนกันจะเปิดค้างไว้','จับคู่ให้ครบ 8 คู่เร็วที่สุด','ใครใช้เวลานานสุด แพ้'],tip:''},
+  darts:{t:'ปาเป้า',s:['ทุกคนเล่นคนละตา คนละ 3 ลูก','เส้นแนวตั้งวิ่งอยู่ แตะเพื่อล็อก','เส้นแนวนอนวิ่งต่อ แตะอีกครั้งเพื่อปา','ใจกลาง 50 แต้ม ใครแต้มรวมน้อยสุด แพ้'],tip:'ลูกถัดไปเส้นจะวิ่งเร็วขึ้น'},
+  dodge:{t:'หลบระเบิด',s:['ทุกคนเล่นคนละตา','ลากนิ้วซ้ายขวาให้มิมอนหลบระเบิดที่ตกลงมา','ยิ่งนานระเบิดยิ่งตกเร็วและถี่','ใครหลบได้สั้นสุด แพ้'],tip:''},
+  steady:{t:'นิ้วนิ่ง',s:['ทุกคนเล่นคนละตา','แตะค้างที่วงแล้วลากตามวงที่เคลื่อนไปมา','เล่น 8 วินาที วงจะเร็วขึ้นเรื่อยๆ','ใครนิ้วอยู่ในวงน้อยสุด แพ้'],tip:'ยกนิ้วขึ้นกลางทางนับว่าอยู่นอกวง'}
+});
 function openHelp(id){const h=HELP[id];if(!h)return;closeSheets();
   $('hTitle').textContent='วิธีเล่น: '+h.t;$('hSteps').innerHTML=h.s.map(x=>`<li>${esc(x)}</li>`).join('');$('hTip').textContent=h.tip||'';
   $('hModal').hidden=false;$('hDone').focus()}
 $('hDone').onclick=$('hClose').onclick=()=>{$('hModal').hidden=true};
 
 /* ---------- menu + routing ---------- */
-const VIEWS=['menu','croc','bomb','finger','bottle','cards','balloon','stop10','react','simon','aim','math','stroop','odd','schulte','mbox','numbomb','hilo','wave','stack','mcolor','sushi','watch'];
+const VIEWS=['menu','croc','bomb','finger','bottle','cards','balloon','stop10','react','simon','aim','math','stroop','odd','schulte','mbox','numbomb','hilo','wave','stack','mcolor','sushi','wires','gacha','whack','circle','pour','taps','memgrid','shell','countflash','gonogo','chainmath','pairs','darts','dodge','steady','watch'];
 let current=null;
 const PEOPLE_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg>';
 function route(){
@@ -2302,7 +2977,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.20';
+const APP_VERSION='1.21';
 // iOS 26 home-screen apps with a see-through status bar get a page that is short by the
 // status-bar height and never draw the strip below it. When that happens the strip
 // already keeps content clear of the home bar, so the extra bottom padding is dropped.
@@ -2317,7 +2992,8 @@ const APP_VERSION='1.20';
 /* home: 3 modes, 12 games per page, dots + swipe between pages */
 const PER_PAGE=12;
 let gMode=(()=>{try{return localStorage.getItem('hk-mode')||'luck'}catch(e){return'luck'}})(),gPage=0,gSwiped=false;
-const tilesOf=m=>[...document.querySelectorAll(`.tile[data-mode="${m}"]`)];
+document.querySelectorAll('#gpool .tile').forEach((t,i)=>t.dataset.k=i);
+const tilesOf=m=>[...document.querySelectorAll(`.tile[data-mode="${m}"]`)].sort((a,b)=>a.dataset.k-b.dataset.k);
 const MODE_KEYS=['luck','skill','hard'],MODE_NAME={luck:'ลุ้นดวง',skill:'ใช้ฝีมือ',hard:'ยากขึ้น'};
 // ทุกหน้าของทุกโหมดเรียงต่อกัน ปัดซ้ายขวาเพื่อไปหน้าถัดไปหรือโหมดถัดไป
 const pageSeq=()=>{const q=[];MODE_KEYS.forEach(m=>{const n=Math.max(1,Math.ceil(tilesOf(m).length/PER_PAGE));for(let k=0;k<n;k++)q.push([m,k])});return q};
@@ -2362,7 +3038,7 @@ $('sReset').onclick=()=>{const b=$('sReset');
 const SB_DEFAULT={url:'https://ylvzzoqjwbkksyhqobbl.supabase.co',key:'sb_publishable_fzUJO66zEMnEa-Gmmq2Prw_qwxDTsRs'};
 const SB_LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.97.0';
 // SYNC: ทุกเครื่องเห็นกระดานเดียวกัน ตาใครคนนั้นกดที่เครื่องตัวเอง · SCORE: แต่ละเครื่องเล่นคนของตัวเองแล้วส่งคะแนน · เกมอื่นเล่นที่เครื่องหัวห้อง
-const SYNC=['croc','bomb','bottle','cards','balloon','mbox','numbomb','hilo','sushi'],SCORE=['stop10','react','schulte'];
+const SYNC=['croc','bomb','bottle','cards','balloon','mbox','numbomb','hilo','sushi','wires','gacha'],SCORE=['stop10','react','schulte','whack','circle','pour','taps','pairs','darts','dodge','steady'];
 const gameName=id=>{const t=document.querySelector(`.tile[data-go="${id}"] .tn`);return t?t.textContent:id};
 function sbCfg(){try{const s=JSON.parse(localStorage.getItem('hk-sb')||'null');if(s&&s.url&&s.key)return s}catch(e){}return SB_DEFAULT.url&&SB_DEFAULT.key?SB_DEFAULT:null}
 NET.dev=(()=>{try{let d=sessionStorage.getItem('hk-dev');if(!d){d=uid()+uid();sessionStorage.setItem('hk-dev',d)}return d}catch(e){return uid()+uid()}})();
