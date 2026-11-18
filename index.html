@@ -1,0 +1,2106 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="หาคนโดน: รวม 21 เกมวงเพื่อน ลุ้นว่าใครโดน มีมิมอนเป็นมาสคอต">
+<meta name="theme-color" content="#13091f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="หาคนโดน">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%;background:#13091f}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
+<title>หาคนโดน</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@600;700&family=Mitr:wght@400;500;700&display=swap">
+<style>
+/* Layout: one-screen party hub, dark purple night-out palette with hot-pink to violet accents. Menu of game cards; each game is a full-height view (header / info / stage sized with container units / controls). Shared result sheet with the "who takes it" roulette. */
+:root{
+  --bg:#13091f; --panel:#1e1035; --panel2:#2b1749; --line:#3f2a66;
+  --ink:#fbf5ff; --muted:#ab9fcc; --gold:#ffd04d; --danger:#ff5a4e;
+  --accent:#ff4fa3; --accent2:#a55cff; --grad:linear-gradient(135deg,#ff4fa3 0%,#b44dff 100%);
+  --skin:#46a052; --skin-dark:#17602f; --lip:#c23c3c; --gum:#6e1717; --throat:#150404;
+  --font:"Mitr","Sukhumvit Set","Noto Sans Thai",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(90vmax 60vmax at 0% -10%,rgba(150,60,255,.28),transparent 60%),radial-gradient(80vmax 55vmax at 110% 0%,rgba(255,60,160,.22),transparent 55%),radial-gradient(90vmax 60vmax at 50% 120%,rgba(110,40,220,.25),transparent 60%),var(--bg);color:var(--ink);font-family:var(--font);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;
+  overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+button:disabled{cursor:default}
+
+.view{height:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column}
+.view.menu{overflow-y:auto;overflow-x:hidden}
+.top{display:flex;align-items:center;gap:8px;padding-block:10px 6px}
+.top h1{flex:1;margin:0;font-size:19px;font-weight:500;text-align:center;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hbtn{width:46px;height:46px;flex:none;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-size:20px;font-weight:500;color:var(--ink);transition:transform .08s}
+.hbtn svg{width:22px;height:22px}
+.pchip{height:46px;flex:none;padding:0 14px;border-radius:99px;background:var(--panel2);color:var(--accent);border:1px solid rgba(255,79,163,.35);font-size:16px;font-weight:500;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:transform .08s}
+.pchip svg{width:20px;height:20px}
+.hbtn:active,.pchip:active,.ghost:active,.ochip:active{transform:scale(.93)}
+input{user-select:text;-webkit-user-select:text}
+.info{text-align:center;font-size:17px;color:var(--muted);padding-block:4px 8px;min-height:2em}
+.info b{color:var(--ink);font-weight:500}
+.stage{flex:1;min-height:0;container-type:size;display:flex;align-items:center;justify-content:center;position:relative}
+.controls{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding-block:12px 16px}
+.big{background:var(--grad);color:#fff;text-shadow:0 1px 2px rgba(80,0,60,.35);font-size:21px;font-weight:500;min-height:60px;padding:12px 24px;border-radius:20px;box-shadow:0 5px 0 #6a23c4,0 12px 28px rgba(255,79,163,.28);transition:transform .08s,box-shadow .08s,opacity .2s}
+.controls .big{flex:1 1 0;max-width:440px}
+.big:not(:disabled):active{transform:translateY(4px);box-shadow:0 1px 0 #6a23c4}
+.big:disabled{opacity:.35;box-shadow:0 5px 0 #6a23c4}
+.ghost{background:var(--panel2);font-size:16px;min-height:52px;padding:10px 18px;border-radius:16px;transition:transform .08s}
+
+/* ---------- Menu ---------- */
+.menu-wrap{display:flex;flex-direction:column;gap:16px;padding-block:22px 28px}
+.hero h1{margin:0;font-size:34px;font-weight:700;line-height:1.1;text-wrap:balance}
+.hero h1 span{color:var(--accent)}
+.hero p{margin:6px 0 0;color:var(--muted);font-size:16px;line-height:1.5}
+.settings{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:4px 14px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.row+.row{border-top:1px solid var(--line)}
+.row div{min-width:0}
+.row strong{display:block;font-weight:500;font-size:16px}
+.row small{display:block;color:var(--muted);font-size:13px;line-height:1.35}
+.stepper{display:flex;align-items:center;gap:8px}
+.stepper button{width:36px;height:36px;border-radius:50%;background:var(--panel2);font-size:20px;line-height:1}
+.stepper output{min-width:1.4em;text-align:center;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.switch{position:relative;width:52px;height:30px;flex:none}
+.switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.switch span{position:absolute;inset:0;border-radius:99px;background:#3d2c5e;transition:.2s;pointer-events:none}
+.switch span::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked+span{background:var(--accent)}
+.switch input:checked+span::after{transform:translateX(22px)}
+.switch input:focus-visible+span{outline:3px solid var(--accent);outline-offset:2px}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.gcard{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;transition:transform .12s,border-color .2s}
+.gcard::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:var(--c)}
+.gcard:active{transform:scale(.97)}
+.gcard:hover{border-color:var(--c)}
+.gcard svg{width:46px;height:46px;color:var(--c)}
+.gcard h3{margin:0;font-size:17px;font-weight:500}
+.gcard p{margin:0;font-size:13px;color:var(--muted);line-height:1.45}
+.gcard em{font-style:normal;font-size:12px;color:var(--c)}
+.prow-wrap{border-bottom:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding-bottom:14px}
+.chip{display:inline-flex;align-items:center;background:var(--panel2);border-radius:99px;max-width:100%;font-size:14px}
+.chip .cn{padding:6px 2px 6px 12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chip .cx{width:30px;height:30px;margin-right:1px;border-radius:50%;color:var(--muted);font-size:17px;line-height:1;flex:none}
+.chip .cx:disabled{visibility:hidden;width:8px}
+.chip.unnamed .cn{color:var(--muted)}
+.addname{display:flex;gap:8px;padding-bottom:12px}
+.addname input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink)}
+.addname input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.addname input::placeholder{color:#7d6fa0}
+.addname button{background:var(--grad);color:#fff;font-weight:500;font-size:16px;padding:0 18px;border-radius:12px;flex:none}
+.addname button:disabled{opacity:.4}
+.sheet.psheet{align-items:stretch;text-align:left;gap:12px;padding-bottom:0}
+.psheet>.big{position:sticky;bottom:0;margin-bottom:14px;box-shadow:0 5px 0 #6a23c4,0 -14px 18px var(--panel)}
+.psheet h4{margin:4px 0 0;font-size:16px;font-weight:500}
+.psheet h3{margin:0;font-size:22px;font-weight:500}
+.psheet h3 span{color:var(--muted);font-size:16px;font-weight:400}
+.psheet>small{color:var(--muted);font-size:13px;line-height:1.4;margin-top:-6px}
+.plist{display:flex;flex-direction:column;gap:8px;padding:2px}
+.prow{display:flex;gap:8px;align-items:center}
+.prow i{font-style:normal;width:30px;height:30px;flex:none;border-radius:50%;background:var(--panel2);display:grid;place-items:center;font-size:14px;font-weight:500;font-variant-numeric:tabular-nums}
+.prow input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink)}
+.prow input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.pdel{width:36px;height:36px;flex:none;border-radius:50%;background:var(--panel2);font-size:20px;line-height:1;color:var(--muted)}
+.pdel:disabled{opacity:.3}
+.addp{border:1.5px dashed var(--accent);color:var(--accent);background:none;padding:12px;font-size:16px}
+.addp:disabled{opacity:.4;border-color:var(--line);color:var(--muted)}
+
+/* ---------- Result sheet ---------- */
+.modal{position:fixed;inset:0;z-index:40;background:rgba(12,4,24,.8);display:flex;align-items:center;justify-content:center;
+  padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));animation:fade .2s}
+.sheet{background:linear-gradient(180deg,#24133f,var(--panel));border:1px solid var(--line);border-radius:24px;padding:22px 18px;width:min(100%,480px);max-height:100%;overflow-y:auto;display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center;animation:rise .4s cubic-bezier(.2,1.5,.4,1)}
+.sheet h2{margin:0;font-size:44px;line-height:1;color:var(--accent);text-shadow:0 4px 0 #4b0f3a}
+.sheet p{margin:0;font-size:18px;line-height:1.4;color:var(--muted)}
+.target{width:100%;padding:16px 14px 20px;border-radius:20px;background:#120820;border:3px solid #4a2a5e;display:flex;flex-direction:column;align-items:center;gap:6px}
+.target small{font-size:14px;color:var(--muted);letter-spacing:.02em}
+.rule{font-size:18px;color:var(--ink);line-height:1.3}
+.rule:empty{display:none}
+.bigname{font-size:clamp(52px,17vw,104px);font-weight:700;line-height:1.05;color:var(--ink);overflow-wrap:anywhere;text-wrap:balance;max-width:100%}
+.bigname.mid{font-size:clamp(36px,11vw,68px)}
+.bigname.many{font-size:clamp(26px,7.5vw,44px)}
+.target.done{border-color:var(--accent);box-shadow:0 0 40px rgba(255,79,163,.25);animation:pop .4s ease}
+.target.done .bigname{color:#ff9ad5;text-shadow:0 4px 0 #5b1670,0 0 30px rgba(255,79,163,.55)}
+.owner{width:100%;display:flex;flex-direction:column;gap:10px}
+.owner small{font-size:16px;color:var(--ink)}
+.ochips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ochip{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:9px 16px;font-size:16px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ochip.skip{background:none;color:var(--muted)}
+
+/* ---------- Seat map ---------- */
+.seatpanel{padding-bottom:6px}
+.seatmap{position:relative;width:min(100%,320px);aspect-ratio:1;margin:6px auto 22px}
+.seatmap::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#3b1f6b,#1f1040);box-shadow:inset 0 0 0 6px #6b3fb0}
+.smid{position:absolute;inset:30%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:12px;color:#cfe3d4;line-height:1.4;pointer-events:none}
+.smid b{font-size:28px;line-height:1;font-weight:500}
+.sbtn{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;width:70px}
+.sbtn i{width:40px;height:40px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:16px;transition:transform .2s,background .2s}
+.sbtn span{font-size:12px;max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sbtn em{position:absolute;bottom:calc(100% - 2px);font-style:normal;font-size:10px;background:var(--accent);color:#fff;padding:1px 6px;border-radius:99px;white-space:nowrap}
+.sbtn.sel i{background:var(--accent);color:#fff;border-color:#fff;transform:scale(1.15)}
+.sbtn.rel i{border-color:var(--accent)}
+.sbtn.swapped i{animation:pop .4s ease}
+.mbtns{display:flex;flex-direction:column;gap:8px;width:100%}
+.mbtns .big{width:100%}
+@keyframes fade{from{opacity:0}}
+@keyframes rise{from{transform:translateY(30px) scale(.9);opacity:0}}
+@keyframes pop{50%{transform:scale(1.07)}}
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:30}
+
+/* ---------- Croc ---------- */
+.mouth{position:relative;container-type:inline-size;width:min(100cqw,calc(100cqh*0.5614),440px);aspect-ratio:1179/2100}
+.mouth.shake{animation:shake .45s ease}
+@keyframes shake{0%,100%{transform:none}20%{transform:translate(-2.5%,1%) rotate(-1.5deg)}40%{transform:translate(2.5%,-1%) rotate(1.5deg)}60%{transform:translate(-1.5%,0) rotate(-.8deg)}80%{transform:translate(1%,0)}}
+.jaw{position:absolute;inset:0;transition:transform .14s cubic-bezier(.6,0,.9,.4)}
+.jaw.upper{clip-path:inset(0 0 47.1% 0);z-index:2}
+.jaw.lower{clip-path:inset(52.9% 0 0 0);z-index:1}
+.mouth.bite .jaw.upper{transform:translateY(7.2%)}
+.mouth.bite .jaw.lower{transform:translateY(-1%)}
+.shell{position:absolute;inset:0;border-radius:22% / 12.4%;background:linear-gradient(180deg,var(--skin) 0%,#3c9147 12%,var(--skin-dark) 55%,#1c6a33 100%);box-shadow:inset 0 2.5cqw 3cqw rgba(255,255,255,.18),inset 0 -2cqw 4cqw rgba(0,0,0,.35)}
+.lip{position:absolute;inset:9% 1.8% 2.8% 1.8%;border-radius:17% / 9.5%;background:linear-gradient(180deg,#a83636 0%,var(--gum) 18%,#3a0909 50%,var(--gum) 82%,var(--lip) 100%);box-shadow:inset 0 1.5cqw 3cqw rgba(0,0,0,.45)}
+.cavity{position:absolute;inset:27% 20% 15% 20%;border-radius:9% / 5%;background:linear-gradient(180deg,var(--throat) 0%,#1d0505 45%,#3e0b0b 75%,#6a1818 100%);box-shadow:inset 0 2cqw 5cqw rgba(0,0,0,.7)}
+.eye{position:absolute;top:2.6%;height:1.2%;width:9.5%;border-radius:50%;background:#123222}
+.eye.l{left:33.5%;transform:rotate(4deg)} .eye.r{left:57%;transform:rotate(-4deg)}
+.tooth{position:absolute;width:14.4%;height:9%;transform:translate(-50%,-50%);transition:transform .12s ease,filter .2s ease;filter:drop-shadow(0 .8cqw .8cqw rgba(0,0,0,.45))}
+.tooth.u{border-radius:48% 48% 50% 50% / 36% 36% 64% 64%;background:radial-gradient(ellipse at 50% 55%,#fff 0,#f2ede6 38%,#d6cbc4 70%,#7c6a66 100%)}
+.tooth.l{border-radius:50% 50% 48% 48% / 64% 64% 36% 36%;background:radial-gradient(ellipse at 50% 42%,#fff 0,#f2ede6 38%,#d6cbc4 70%,#7c6a66 100%)}
+.tooth:active{transform:translate(-50%,-50%) scale(.9)}
+.tooth.pressed{transform:translate(-50%,-50%) scale(.72);filter:brightness(.42);pointer-events:none}
+.tooth.bitten{background:radial-gradient(ellipse at 50% 50%,#ffd2cc 0,var(--danger) 55%,#7a1010 100%)}
+.mouth.locked .tooth:not(.pressed){filter:brightness(.82) drop-shadow(0 .8cqw .8cqw rgba(0,0,0,.45))}
+.mouth.ready .tooth:not(.pressed){animation:glow 1.6s ease-in-out infinite}
+@keyframes glow{50%{filter:drop-shadow(0 0 2cqw rgba(255,79,163,.55))}}
+.center{position:absolute;inset:25% 23% 17% 23%;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3.5cqw;text-align:center;padding:2cqw}
+.turn{font-size:4.6cqw;color:var(--muted);line-height:1.2}
+.turn b{display:block;color:var(--ink);font-size:7cqw;font-weight:700}
+.die{width:27cqw;aspect-ratio:1;border-radius:20%;padding:14%;background:linear-gradient(145deg,#fffdf7,#e6ddd0);box-shadow:0 1.6cqw 0 #b9ab98,0 3cqw 5cqw rgba(0,0,0,.6);display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);place-items:center;transition:transform .15s}
+.die:not(:disabled):active{transform:translateY(1cqw)}
+.die.attn{animation:bob 1.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-1.5cqw) rotate(-4deg)}}
+.die.rolling{animation:roll .7s linear}
+@keyframes roll{50%{transform:rotate(200deg) scale(1.12)}100%{transform:rotate(360deg)}}
+.pip{width:72%;aspect-ratio:1;border-radius:50%}
+.pip.on{background:radial-gradient(circle at 40% 35%,#5a4a43,#1c1412)}
+.die.one .pip.on{background:radial-gradient(circle at 40% 35%,#ff7a6e,#b21d1d)}
+.status{font-size:5cqw;line-height:1.3;min-height:2.6em}
+.status .big-n{color:var(--accent);font-size:12cqw;font-weight:700;display:block;line-height:1;font-variant-numeric:tabular-nums}
+.status .warn{color:var(--danger)}
+.odds{font-size:12px;color:var(--muted);display:flex;gap:4px;align-items:flex-end;background:var(--panel2);border-radius:16px;padding:8px 12px;min-height:56px}
+.odds em{font-style:normal;color:var(--accent);font-size:13px;margin-left:6px;align-self:center}
+.odds span{display:flex;flex-direction:column;align-items:center;gap:2px}
+.odds i{display:block;width:14px;background:var(--accent);border-radius:3px 3px 0 0}
+
+/* ---------- Bomb ---------- */
+.prompt{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:10px 16px;text-align:center;font-size:15px;color:var(--muted);margin-inline:auto;max-width:380px;width:100%}
+.prompt b{display:block;color:#ff9a5c;font-size:24px;font-weight:700;line-height:1.3}
+.holder{text-align:center;font-size:16px;color:var(--muted);padding-top:8px}
+.holder b{color:var(--ink);font-weight:500;font-size:20px}
+.bomb{--k:0;position:relative;width:min(72cqw,62cqh,280px);aspect-ratio:200/220}
+.bomb svg{width:100%;height:100%;display:block;overflow:visible}
+.spark{position:absolute;left:85%;top:9%;width:18%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe27a 28%,#ff8a3d 52%,transparent 70%);opacity:0}
+.bomb.lit .spark{opacity:1;animation:flick .11s infinite alternate}
+@keyframes flick{to{transform:translate(-50%,-50%) scale(1.35)}}
+.bomb.lit{animation:jit .09s infinite alternate}
+@keyframes jit{from{transform:translate(calc(var(--k)*-4px),calc(var(--k)*2px)) rotate(calc(var(--k)*-2deg))}to{transform:translate(calc(var(--k)*4px),calc(var(--k)*-2px)) rotate(calc(var(--k)*2deg))}}
+.bomb.tk svg{animation:tk .12s}
+@keyframes tk{50%{transform:scale(1.035)}}
+.bomb.boom svg,.bomb.boom .spark{opacity:0}
+.blast{position:absolute;inset:-35%;border-radius:50%;background:radial-gradient(circle,#fff 0,#ffe27a 18%,#ff7a3d 42%,rgba(255,60,30,0) 70%);transform:scale(0);pointer-events:none}
+.bomb.boom .blast{animation:blast .8s ease-out forwards}
+@keyframes blast{0%{transform:scale(.2);opacity:1}100%{transform:scale(1.7);opacity:0}}
+
+/* ---------- Finger ---------- */
+.touch{position:absolute;inset:0;border-radius:26px;background:radial-gradient(circle at 50% 40%,#2a1650,#140a26);border:2px dashed var(--line);touch-action:none;overflow:hidden;-webkit-touch-callout:none;transition:background .4s}
+.touch .hint{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--muted);font-size:19px;pointer-events:none;padding:24px;line-height:1.4}
+.touch .hint small{font-size:13px}
+.fcount{position:absolute;top:14px;left:0;right:0;text-align:center;font-size:18px;color:var(--ink);pointer-events:none}
+.dot{position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;border-radius:50%;background:var(--dc);box-shadow:0 0 32px var(--dc);pointer-events:none;transition:transform .25s,opacity .3s}
+.dot::before{content:"";position:absolute;inset:-14px;border-radius:50%;border:4px solid var(--dc);opacity:.5;animation:ring 1s ease-out infinite}
+@keyframes ring{from{transform:scale(.85);opacity:.7}to{transform:scale(1.25);opacity:0}}
+.touch.counting .dot::after{content:"";position:absolute;inset:-28px;border-radius:50%;border:4px solid #fff;animation:closein 3s linear forwards}
+@keyframes closein{from{transform:scale(1.7);opacity:0}to{transform:scale(1);opacity:1}}
+.dot.hl{transform:scale(1.3)}
+.dot.out{opacity:.12;transform:scale(.6)}
+.dot.win{transform:scale(1.8);z-index:2}
+
+/* ---------- Bottle ---------- */
+.table{position:relative;width:min(100cqw,100cqh,440px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#4a2585 0,#311660 60%,#200d42 100%);box-shadow:inset 0 0 0 10px #7c4ddb,inset 0 0 0 14px #4a2590,0 20px 40px rgba(0,0,0,.5)}
+.seat{position:absolute;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:var(--panel2);border:2px solid var(--line);display:grid;place-items:center;font-weight:700;font-size:18px;transition:.25s}
+.seat.hit{background:var(--accent);color:#fff;border-color:#fff;box-shadow:0 0 28px var(--accent);transform:translate(-50%,-50%) scale(1.25)}
+.seat span{position:absolute;top:calc(100% + 2px);left:50%;transform:translateX(-50%);font-size:11px;font-weight:400;color:var(--ink);white-space:nowrap;max-width:78px;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 3px #000}
+.bottle{position:absolute;left:50%;top:50%;width:15%;height:60%;transform:translate(-50%,-50%) rotate(0deg);filter:drop-shadow(0 10px 8px rgba(0,0,0,.45));cursor:pointer}
+.bottle svg{width:100%;height:100%;display:block}
+
+/* ---------- Cards ---------- */
+.cgrid{--rows:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:min(100cqw,calc(100cqh*3/var(--rows)),440px)}
+.pcard{aspect-ratio:3/4;perspective:700px;position:relative}
+.pcard .in{position:absolute;inset:0;transition:transform .5s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.pcard.open .in{transform:rotateY(180deg)}
+.pcard.open{pointer-events:none}
+.face{position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;padding:4px;line-height:1.15}
+.cback{background:repeating-linear-gradient(45deg,#5b3fd1 0 6px,#4a32b3 6px 12px);border:3px solid #8e78ff;color:#e3dcff;font-size:24px;font-weight:700}
+.front{transform:rotateY(180deg);background:#efe9dd;color:#26302a;font-size:15px;font-weight:500}
+.front small{font-size:10px;font-weight:400}
+.front.skull{background:var(--danger);color:#fff}
+.front.x2{background:#ffd04d;color:#2a1e00}
+.front.rev{background:#3fc6c0;color:#05302e}
+.front .g{font-size:24px;font-weight:700}
+.front svg{width:55%;height:auto}
+.pcard.sus{animation:sus .75s ease-in-out}
+@keyframes sus{20%{transform:translateY(-6px) rotate(-4deg)}40%{transform:translateY(-6px) rotate(4deg)}60%{transform:translateY(-8px) rotate(-5deg)}80%{transform:translateY(-8px) rotate(5deg)}}
+
+/* ---------- Balloon ---------- */
+.bal-area{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.bwrap{--w:0;position:relative;width:min(70cqw,64cqh,300px);aspect-ratio:.82;display:flex;align-items:flex-end;justify-content:center;transform-origin:50% 100%;animation:wob 1.6s ease-in-out infinite}
+@keyframes wob{0%,100%{transform:rotate(calc(var(--w)*-3deg))}50%{transform:rotate(calc(var(--w)*3deg))}}
+.balloon{--s:.3;width:100%;height:100%;border-radius:50% 50% 47% 47% / 56% 56% 44% 44%;background:radial-gradient(circle at 34% 28%,#ffd0ca 0,#ff6a5c 16%,#e0332a 55%,#9c1610 100%);transform:scale(var(--s));transform-origin:50% 100%;transition:transform .32s cubic-bezier(.3,1.8,.5,1);position:relative;box-shadow:inset -10px -16px 30px rgba(0,0,0,.25)}
+.balloon::after{content:"";position:absolute;left:50%;bottom:-5%;width:10%;height:6%;transform:translateX(-50%);background:#9c1610;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.balloon.pop{animation:popb .16s ease-out forwards}
+@keyframes popb{to{transform:scale(calc(var(--s)*1.3));opacity:0}}
+.burst{position:absolute;left:50%;bottom:30%;width:120%;aspect-ratio:1;transform:translate(-50%,50%) scale(0);border-radius:50%;background:repeating-conic-gradient(#ffd04d 0 6deg,transparent 6deg 24deg);-webkit-mask:radial-gradient(circle,transparent 30%,#000 32%,#000 60%,transparent 62%);mask:radial-gradient(circle,transparent 30%,#000 32%,#000 60%,transparent 62%);pointer-events:none}
+.bwrap.popped .burst{animation:burst .5s ease-out forwards}
+@keyframes burst{0%{transform:translate(-50%,50%) scale(.3);opacity:1}100%{transform:translate(-50%,50%) scale(1.3);opacity:0}}
+.string{width:2px;height:min(12cqh,70px);background:linear-gradient(#c9bfa8,rgba(201,191,168,0));flex:none}
+
+
+/* ---------- Skill games ---------- */
+.sec{margin:6px 0 -4px;font-size:15px;font-weight:500;color:var(--muted);display:flex;align-items:center;gap:8px}
+.sec::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grad);box-shadow:0 0 10px var(--accent)}
+.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+.sk-col{width:min(100cqw,460px);height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:0}
+.clock{font-size:min(28cqw,24cqh,128px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1;letter-spacing:-.02em}
+.clock.hid{color:var(--muted)}
+.clock.good{color:#7ee081}.clock.bad{color:var(--danger)}
+.sk-sub{color:var(--muted);font-size:16px;text-align:center;min-height:1.4em;line-height:1.4}
+.board{list-style:none;margin:0;padding:0;width:100%;display:flex;flex-direction:column;gap:6px;overflow-y:auto;min-height:0;max-height:34cqh;flex:none}
+.board:empty{display:none}
+.board li{display:grid;grid-template-columns:22px minmax(0,1fr) auto auto;gap:10px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:15px}
+.board .rk{color:var(--muted);font-variant-numeric:tabular-nums}
+.board .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.board .v{font-variant-numeric:tabular-nums;font-weight:500}
+.board .d{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.board li.worst{border-color:var(--danger);background:#2a1414}
+.rpad{width:100%;flex:1 1 auto;min-height:120px;border-radius:24px;background:var(--panel2);border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:16px;touch-action:manipulation;transition:background .06s,border-color .06s}
+.rpad b{font-size:min(11cqw,44px);font-weight:700;line-height:1.15;font-variant-numeric:tabular-nums}
+.rpad small{font-size:15px;opacity:.85;line-height:1.4}
+.rpad.wait{background:#b3261e;border-color:#ff6b5e;color:#fff}
+.rpad.go{background:#1f9e4f;border-color:#6ff09a;color:#fff}
+.rpad.foul{background:#6a3200;border-color:#ff9a3d;color:#fff}
+.simon{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(100cqw,100cqh,420px);aspect-ratio:1}
+.spad{background:var(--pc);opacity:.32;border-radius:18px;transition:opacity .08s,transform .08s,box-shadow .08s;touch-action:manipulation}
+.spad:nth-child(1){border-top-left-radius:100%}.spad:nth-child(2){border-top-right-radius:100%}
+.spad:nth-child(3){border-bottom-left-radius:100%}.spad:nth-child(4){border-bottom-right-radius:100%}
+.simon:not(.locked) .spad{opacity:.62}
+.simon.locked .spad{pointer-events:none}
+.spad.on{opacity:1!important;box-shadow:0 0 44px var(--pc);transform:scale(1.03)}
+.shub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:32%;aspect-ratio:1;border-radius:50%;background:var(--bg);border:8px solid var(--panel2);display:grid;place-items:center;font-size:min(8cqw,34px);font-weight:700;font-variant-numeric:tabular-nums;pointer-events:none}
+.aim{width:min(100cqw,480px);display:flex;flex-direction:column;gap:16px;align-items:center}
+.lvl{font-size:min(16cqw,72px);font-weight:700;line-height:1;text-align:center}
+.lvl small{display:block;font-size:14px;color:var(--muted);font-weight:400;margin-top:6px}
+.track{position:relative;width:100%;height:76px;border-radius:16px;background:var(--panel2);border:3px solid var(--line);overflow:hidden;transition:border-color .15s}
+.zone{position:absolute;top:0;bottom:0;background:linear-gradient(180deg,#46d987,#1f9e4f)}
+.cursor{position:absolute;top:0;bottom:0;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 14px #fff;left:0}
+.track.hit{border-color:#6ff09a}.track.miss{border-color:var(--danger)}
+.mq{font-size:min(15cqw,13cqh,68px);font-weight:700;text-align:center;font-variant-numeric:tabular-nums;line-height:1.1}
+.tbar{width:100%;height:10px;border-radius:99px;background:var(--panel2);overflow:hidden;flex:none}
+.tbar i{display:block;height:100%;background:var(--grad);transform-origin:left center}
+.mchoices{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.mchoices button{background:var(--panel2);border:2px solid var(--line);border-radius:16px;padding:16px 8px;font-size:min(8cqw,32px);font-weight:700;font-variant-numeric:tabular-nums;touch-action:manipulation}
+.mchoices button.right{background:#1f9e4f;border-color:#6ff09a}
+.mchoices button.wrong{background:#8a1f18;border-color:var(--danger)}
+
+/* ---------- Menu (icon grid) ---------- */
+.mhead{display:flex;align-items:center;gap:8px}
+.brand{flex:1;min-width:0;display:flex;align-items:center;gap:12px}
+.mark{width:52px;height:52px;flex:none;border-radius:16px;box-shadow:0 8px 24px rgba(255,79,163,.4)}
+.wm{margin:0;min-width:0;display:flex;flex-direction:column;gap:3px}
+.wm1{font-family:"Anuphan","Mitr",system-ui,sans-serif;font-weight:700;font-size:31px;line-height:1;letter-spacing:-.015em;white-space:nowrap}
+.wm1 b{font-weight:700;color:var(--accent);background:linear-gradient(90deg,#ff5cb4,#c38bff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.wm2{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gopts{display:flex;justify-content:center;padding-block:0 4px}
+.ptog{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 8px 0 14px;border-radius:99px;background:var(--panel);border:1px solid var(--line);font-size:15px;color:var(--muted);transition:transform .08s,border-color .2s,color .2s}
+.ptog:active{transform:scale(.95)}
+.ptog svg{width:18px;height:18px;flex:none}
+.ptog .sw{position:relative;width:38px;height:24px;border-radius:99px;background:#3d2c5e;flex:none;transition:background .2s}
+.ptog .sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.ptog[aria-checked="true"]{color:var(--ink);border-color:rgba(255,79,163,.4)}
+.ptog[aria-checked="true"] svg{color:var(--accent)}
+.ptog[aria-checked="true"] .sw{background:var(--accent)}
+.ptog[aria-checked="true"] .sw::after{transform:translateX(14px)}
+.pbar{display:flex;align-items:center;gap:10px;width:100%;min-height:62px;background:linear-gradient(90deg,rgba(255,79,163,.12),rgba(165,92,255,.08)),var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px 10px 8px 14px;text-align:left;transition:transform .08s}
+.pbar:active{transform:scale(.98)}
+.pbar svg{width:24px;height:24px;color:var(--accent);flex:none}
+.pbar .pn{flex:none;font-weight:500;color:var(--accent);font-size:17px}
+.pbar .pl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:15px}
+.pbar .pe{flex:none;font-size:15px;background:var(--panel2);border-radius:12px;padding:10px 14px}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:22px;padding:14px 6px 12px;min-height:122px;
+  background:linear-gradient(165deg,#2a1748,#1b0f31);border:1px solid var(--line);
+  background:linear-gradient(165deg,color-mix(in srgb,var(--c) 15%,#251442),#1a0e30);border-color:color-mix(in srgb,var(--c) 28%,var(--line));
+  box-shadow:0 6px 16px rgba(0,0,0,.25);transition:transform .12s,box-shadow .2s,border-color .2s;animation:tin .45s cubic-bezier(.2,1.4,.4,1) both}
+.tile:hover{transform:translateY(-3px);border-color:var(--c);box-shadow:0 10px 26px rgba(0,0,0,.35),0 0 22px color-mix(in srgb,var(--c) 30%,transparent)}
+.tile:active{transform:scale(.93);border-color:var(--c)}
+@keyframes tin{from{transform:scale(.9) translateY(6px)}}
+.tiles .tile:nth-child(2){animation-delay:.04s}.tiles .tile:nth-child(3){animation-delay:.08s}.tiles .tile:nth-child(4){animation-delay:.12s}.tiles .tile:nth-child(5){animation-delay:.16s}.tiles .tile:nth-child(6){animation-delay:.2s}
+.tile .ic{width:66px;height:66px;border-radius:20px;display:grid;place-items:center;background:rgba(255,255,255,.06);background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,transparent),0 0 24px color-mix(in srgb,var(--c) 22%,transparent)}
+.tile .ic svg{width:46px;height:46px}
+.tile .tn{font-size:14px;line-height:1.25;text-align:center;text-wrap:balance}
+@media (min-width:480px){.tiles{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---------- Sheets ---------- */
+.shead{display:flex;align-items:center;gap:8px;width:100%}
+.shead h3{flex:1;margin:0;font-size:22px;font-weight:500;text-align:left}
+.shead h3 span{color:var(--muted);font-size:16px;font-weight:400}
+.ssheet,.hsheet{align-items:stretch;text-align:left;padding-bottom:0}
+.ssheet>.big,.hsheet>.big{position:sticky;bottom:0;margin-bottom:14px;box-shadow:0 5px 0 #6a23c4,0 -14px 18px var(--panel)}
+.sgroup{padding-block:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.sgroup h4{margin:0;font-size:17px;font-weight:500}
+.sgroup>small{color:var(--muted);font-size:13px;line-height:1.45}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px}
+.trow>div{min-width:0}
+.trow strong{display:block;font-weight:500;font-size:16px}
+.trow small{display:block;color:var(--muted);font-size:13px;line-height:1.4}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) 46px 34px 46px 44px;align-items:center;gap:4px 6px;padding-block:4px}
+.wrow .wl{font-size:15px;line-height:1.3;min-width:0}
+.wrow .wl small{display:block;color:var(--muted);font-size:11px}
+.wrow button{width:46px;height:46px;border-radius:50%;background:var(--panel2);font-size:22px;line-height:1}
+.wrow button:active{transform:scale(.9);background:#3a2362}
+.wrow output{text-align:center;font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.wrow .pct{font-size:13px;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.wrow .bar{grid-column:1/-1;height:4px;border-radius:2px;background:var(--panel2);overflow:hidden}
+.wrow .bar i{display:block;height:100%;background:var(--grad);transition:width .2s}
+.wrow.off{opacity:.4}
+.sgroup.dim #sRates{opacity:.4;pointer-events:none}
+.presets{display:flex;flex-wrap:wrap;gap:8px}
+.presets button{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:10px 14px;font-size:14px;min-height:46px}
+.presets button.on{border-color:var(--accent);color:var(--accent)}
+.hsheet ol{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:10px;font-size:17px;line-height:1.5}
+.hsheet .tip{background:var(--panel2);border-radius:14px;padding:12px 14px;font-size:14px;color:var(--muted);line-height:1.45}
+.hsheet .tip:empty{display:none}
+.rfoot{display:flex;align-items:center;gap:10px;width:100%;border-top:1px solid var(--line);padding-top:10px;margin-top:2px;font-size:14px;color:var(--muted);text-align:left}
+.rfoot span{flex:1;min-width:0}
+.rfoot .lnk{color:var(--accent);font-size:14px;min-height:46px;padding:0 6px}
+.ochip{min-height:48px}
+
+/* ---------- Players list (drag) ---------- */
+.prow{display:grid;grid-template-columns:44px 30px minmax(0,1fr) 46px;gap:6px;align-items:center;background:var(--panel2);border-radius:14px;padding:4px 4px 4px 0;position:relative}
+.prow .drag{width:44px;height:50px;display:grid;place-items:center;color:var(--muted);touch-action:none;cursor:grab}
+.prow .drag svg{width:22px;height:22px}
+.prow.dragging{z-index:5;background:#3a2362;box-shadow:0 12px 30px rgba(0,0,0,.55);cursor:grabbing}
+.prow i{background:var(--panel)}
+.prow input{min-height:46px}
+.prow .pdel{width:46px;height:46px}
+.prow .pp{grid-column:2/-1;display:flex;align-items:center;gap:8px;font-size:14px;color:#ff8fc4;padding:0 4px 4px 0}
+.prow select{flex:1;min-width:0;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font:inherit;font-size:16px;min-height:46px}
+.sbtn{touch-action:none}
+.sbtn.drag{z-index:6;transition:none}
+.sbtn.drag i{transform:scale(1.2);background:var(--accent);color:#fff}
+.sbtn.target i{box-shadow:0 0 0 4px var(--accent)}
+.sbtn.paired i{border-color:#ff6fb5}
+.plines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.plines line{stroke:#ff6fb5;stroke-width:2;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;opacity:.8}
+
+/* ---------- Harder games ---------- */
+.rulechip{font-size:17px;padding:10px 16px;border-radius:99px;background:var(--panel2);text-align:center}
+.rulechip b{color:var(--accent);font-weight:500}
+.stroop-word{font-size:min(24cqw,17cqh,104px);font-weight:700;line-height:1.05;min-height:1.05em}
+.cbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
+.cbtns button{min-height:68px;border-radius:18px;background:var(--panel2);border:2px solid var(--line);font-size:23px;font-weight:500;touch-action:manipulation}
+.cbtns button.right{background:#1f9e4f;border-color:#6ff09a}
+.cbtns button.wrong{background:#8a1f18;border-color:var(--danger)}
+.pips{display:flex;gap:8px;justify-content:center;min-height:14px}
+.pips i{width:14px;height:14px;border-radius:50%;background:var(--panel2);border:1px solid var(--line)}
+.pips i.ok{background:#7ee081;border-color:#7ee081}
+.ogrid{display:grid;gap:6px;width:min(100cqw,calc(100cqh - 70px),440px);aspect-ratio:1}
+.ogrid button{border-radius:10px;touch-action:manipulation;min-width:0;min-height:0}
+.ogrid button.hit{outline:4px solid #fff;outline-offset:-4px}
+.ogrid.idle button{background:var(--panel2)!important}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100cqw,calc(100cqh - 80px),440px);aspect-ratio:1}
+.sgrid button{border-radius:14px;background:var(--panel2);border:2px solid var(--line);font-size:min(9cqw,34px);font-weight:700;font-variant-numeric:tabular-nums;touch-action:manipulation;transition:opacity .15s}
+.sgrid button.done{opacity:.15}
+.sgrid button.err{background:#8a1f18;border-color:var(--danger)}
+.clock.sm{font-size:min(14cqw,9cqh,54px)}
+
+/* ---------- Mimon ---------- */
+.mimon{display:block;overflow:visible;color:#ff70c4}
+.hello{display:flex;align-items:center;gap:10px}
+.mbtn{width:96px;height:96px;flex:none;filter:drop-shadow(0 10px 16px rgba(255,79,163,.35));touch-action:manipulation}
+.mbtn .mimon{width:100%;height:100%;transform-origin:50% 92%;animation:mbob 2.6s ease-in-out infinite}
+.mbtn.jump .mimon{animation:mjump .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes mbob{0%,100%{transform:none}50%{transform:translateY(-4px) scale(.98,1.03)}}
+@keyframes mjump{0%{transform:scale(1.12,.84)}40%{transform:translateY(-18px) scale(.92,1.08)}100%{transform:none}}
+.bubble{position:relative;flex:1;min-width:0;background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:10px 14px;font-size:17px;line-height:1.35}
+.bubble::before{content:"";position:absolute;left:-7px;top:50%;width:12px;height:12px;background:var(--panel2);border-left:1px solid var(--line);border-bottom:1px solid var(--line);transform:translateY(-50%) rotate(45deg)}
+.bubble b{display:block;font-family:"Anuphan","Mitr",system-ui,sans-serif;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em}
+.rmimon{width:84px;height:84px;margin:-8px 0 -10px;animation:mpop .55s cubic-bezier(.2,1.8,.4,1)}
+@keyframes mpop{from{transform:scale(.4) translateY(20px)}}
+
+/* ---------- Mimon box ---------- */
+.mbox{--sh:0;position:relative;width:min(84cqw,66cqh,330px);aspect-ratio:1/1.08;margin-top:8cqh}
+.mbox .mbody{position:absolute;left:0;right:0;bottom:0;height:76%;border-radius:24px;background:linear-gradient(180deg,#8d5cff,#5a2fc0);box-shadow:inset 0 -10px 0 rgba(0,0,0,.18),inset 0 4px 0 rgba(255,255,255,.18),0 18px 30px rgba(0,0,0,.45);z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:6%;padding:15% 10% 10%;align-content:center}
+.mbox .mbody::before{content:"";position:absolute;left:46%;width:8%;top:0;bottom:0;background:rgba(255,92,180,.45)}
+.mbox .lid{position:absolute;left:-5%;right:-5%;top:17%;height:13%;border-radius:16px;background:linear-gradient(180deg,#ff8acb,#e0409a);box-shadow:0 6px 0 rgba(0,0,0,.18);z-index:3;transform-origin:6% 100%;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.mbox .lid::after{content:"";position:absolute;left:41%;width:18%;top:-36%;height:42%;border-radius:12px 12px 4px 4px;background:#ff5cb4}
+.mbox.open .lid{transform:rotate(-125deg)}
+.mbox .pop{position:absolute;left:50%;top:22%;width:60%;height:auto;aspect-ratio:1;transform:translate(-50%,10%) scale(.3);opacity:0;z-index:1;transition:transform .55s cubic-bezier(.2,1.9,.4,1) .08s,opacity .1s .08s}
+.mbox.open .pop{transform:translate(-50%,-66%) scale(1);opacity:1}
+.mbox.jolt{animation:jolt .35s}
+@keyframes jolt{25%{transform:rotate(calc(var(--sh)*-5deg - 1deg)) translateY(-3px)}50%{transform:rotate(calc(var(--sh)*5deg + 1deg))}75%{transform:rotate(calc(var(--sh)*-3deg))}}
+.hole{position:relative;border-radius:50%;aspect-ratio:1;background:radial-gradient(circle at 50% 40%,#160828 0,#2a1450 60%,#3b1f6b 100%);box-shadow:inset 0 3px 6px rgba(0,0,0,.6);z-index:1;touch-action:manipulation;transition:transform .08s}
+.hole::after{content:"";position:absolute;left:32%;width:36%;bottom:45%;height:0;border-radius:6px 6px 2px 2px;background:var(--pc,#fff);box-shadow:inset -3px 0 0 rgba(0,0,0,.15);transition:height .2s cubic-bezier(.3,1.6,.5,1)}
+.hole.in::after{height:105%}
+.hole.in{cursor:default}
+.hole:not(.in):active{transform:scale(.88)}
+
+/* ---------- Number bomb ---------- */
+.nb{--heat:0;justify-content:flex-start;padding-top:2cqh}
+.nbrange{display:flex;align-items:center;gap:10px;width:100%;font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.nbtrack{position:relative;flex:1;height:14px;border-radius:99px;background:var(--panel2);overflow:hidden}
+.nbtrack b{position:absolute;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,#ff4fa3,#ff6b6b);transition:left .4s,width .4s}
+.nbshow{font-size:min(22cqw,15cqh,96px);font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--ink);color:color-mix(in srgb,#ff5a5a calc(var(--heat)*100%),var(--ink));text-shadow:0 0 calc(var(--heat)*30px) rgba(255,79,79,.7)}
+.nbshow.empty{color:var(--muted)}
+.nb.boom .nbshow{animation:shake .45s;color:#ff5a5a}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}
+.keypad button{min-height:min(9cqh,62px);border-radius:16px;background:var(--panel2);border:1px solid var(--line);font-size:26px;font-weight:500;touch-action:manipulation;transition:transform .06s}
+.keypad button:active{transform:scale(.93);background:#3a2362}
+.keypad .ok{background:var(--grad);border:0;color:#fff;font-size:21px}
+.keypad .del{font-size:22px;color:var(--muted)}
+
+/* ---------- Hi-Lo ---------- */
+.hl{display:flex;gap:min(5cqw,26px);align-items:center;justify-content:center;width:100%}
+.hlcard{position:relative;width:min(40cqw,40cqh,190px);aspect-ratio:5/7;perspective:900px}
+.hlcard .in{position:absolute;inset:0;transition:transform .55s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.hlcard.open .in{transform:rotateY(180deg)}
+.hlcard .face{border-radius:14px;padding:0}
+.hlcard .cback{font-size:min(10cqw,44px)}
+.hlstatic{position:absolute;inset:0;border-radius:14px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.hlface{width:100%;height:100%;border-radius:14px;background:#fbf7ef;color:#1d1430;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.hlface.red{color:#e0245e}
+.hlface .tl,.hlface .br{position:absolute;font-size:min(4.6cqw,19px);line-height:1;font-weight:700;text-align:center}
+.hlface .tl{left:8%;top:6%}.hlface .br{right:8%;bottom:6%;transform:rotate(180deg)}
+.hlface b{font-size:min(15cqw,15cqh,72px);line-height:1;font-weight:700}
+.hlface i{font-style:normal;font-size:min(9cqw,9cqh,42px);line-height:1}
+.hlnote{color:var(--muted);font-size:13px}
+
+/* ---------- Wave ---------- */
+#wvStage{touch-action:none;margin-bottom:4px}
+#wvCanvas{position:absolute;inset:0;width:100%;height:100%;border-radius:26px;background:radial-gradient(circle,#24124a,#140a26)}
+.wvseats{position:absolute;inset:0}
+.wseat{position:absolute;transform:translate(-50%,-50%);border-radius:50%;background:var(--wc);color:#1a0e30;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(255,255,255,.18),0 0 26px var(--wc);touch-action:none;z-index:2}
+.wseat b{font-size:22px;line-height:1;font-variant-numeric:tabular-nums}
+.wseat span{font-size:11px;max-width:86%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.wseat.hit{animation:whit .12s}
+@keyframes whit{50%{transform:translate(-50%,-50%) scale(.86)}}
+.wseat.lose{box-shadow:0 0 0 5px #fff,0 0 40px var(--wc);animation:wlose .5s infinite alternate}
+@keyframes wlose{to{transform:translate(-50%,-50%) scale(1.12)}}
+.wvmid{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;z-index:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-shadow:0 2px 10px rgba(0,0,0,.6);max-width:52%}
+.wvmid b{font-size:min(9cqmin,38px);line-height:1.15;font-weight:700}
+.wvmid b.cd{font-size:min(30cqmin,120px)}
+.wvmid small{font-size:14px;color:var(--muted)}
+
+/* ---------- Stack ---------- */
+#skStage{touch-action:manipulation;margin-bottom:4px}
+#skCanvas{position:absolute;inset:0;width:100%;height:100%;border-radius:26px;background:linear-gradient(180deg,#1a0d33,#2a1452)}
+.skhud{position:absolute;top:14px;left:0;right:0;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px}
+.skhud b{font-size:min(16cqw,64px);line-height:1;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(255,79,163,.55)}
+.skhud small{font-size:14px;color:var(--muted)}
+
+/* ---------- Mimon colours ---------- */
+.mcarea{position:absolute;inset:0;border-radius:26px;background:radial-gradient(circle at 50% 50%,#2a1650,#140a26);border:2px dashed var(--line);touch-action:none;overflow:hidden;-webkit-touch-callout:none;margin-bottom:4px}
+.mcmid{position:absolute;left:50%;top:50%;width:min(38cqmin,170px);aspect-ratio:1;transform:translate(-50%,-50%);pointer-events:none}
+.mcmid .mimon{width:100%;height:100%;transition:color .08s}
+.mcmid .mimon.spin{animation:mspin .45s linear infinite}
+.mcmid .mimon.land{animation:mland .45s cubic-bezier(.2,1.8,.4,1)}
+@keyframes mspin{to{transform:rotate(360deg)}}
+@keyframes mland{0%{transform:scale(.8) rotate(-18deg)}60%{transform:scale(1.15)}100%{transform:none}}
+.mcring{position:absolute;inset:-14%;width:128%;height:128%;transform:rotate(-90deg);opacity:1;overflow:visible}
+.mcring circle{fill:none;stroke-width:5;stroke-linecap:round;transition:opacity .15s}
+#mcRing{opacity:0}
+.mchint{position:absolute;left:12px;right:12px;bottom:14px;text-align:center;font-size:16px;color:var(--ink);pointer-events:none;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.mchint b{font-weight:700}
+.mccd{font-size:44px;line-height:1}
+.mpad{position:absolute;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--pc);box-shadow:0 0 0 5px rgba(255,255,255,.14),0 0 26px var(--pc);display:grid;place-items:center;touch-action:none;transition:transform .1s;z-index:2}
+.mpad span{color:#1a0e30;font-size:14px;font-weight:500}
+.mpad:active{transform:scale(.9)}
+.mpad.good{transform:scale(1.2)}
+.mpad.bad{box-shadow:0 0 0 6px #fff,0 0 44px var(--pc);animation:mpbad .45s infinite alternate}
+@keyframes mpbad{to{transform:scale(1.2)}}
+
+/* ---------- Sushi ---------- */
+.geta{--cols:3;--rows:4;position:relative;width:min(92cqw,calc(80cqh * var(--cols) / var(--rows) * 1.2),460px);padding:6% 5% 7%;border-radius:18px;
+  background:repeating-linear-gradient(90deg,rgba(120,66,24,.10) 0 2px,transparent 2px 26px),linear-gradient(180deg,#e6b37a,#c88c4f);
+  box-shadow:inset 0 -8px 0 rgba(0,0,0,.15),inset 0 3px 0 rgba(255,255,255,.28),0 22px 30px rgba(0,0,0,.45);display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));gap:min(3.5cqw,16px) min(4cqw,18px);margin-bottom:12px}
+.geta::after{content:"";position:absolute;bottom:-12px;left:10%;right:10%;height:12px;background:linear-gradient(90deg,#8a5a2e 0 16%,transparent 16% 84%,#8a5a2e 84%);border-radius:0 0 6px 6px}
+.geta.hotboard{animation:shake .5s}
+.sushi{position:relative;aspect-ratio:60/44;touch-action:manipulation;filter:drop-shadow(0 4px 3px rgba(70,35,0,.35));transition:transform .1s}
+.sushi svg{display:block;width:100%;height:100%}
+.sushi:not(.eat):not(.hot):active{transform:scale(.9)}
+.sushi.eat{animation:eat .5s forwards;pointer-events:none}
+.sushi.eat svg{-webkit-mask:radial-gradient(circle at 92% 12%,transparent 30%,#000 31%);mask:radial-gradient(circle at 92% 12%,transparent 30%,#000 31%)}
+@keyframes eat{0%{transform:none}30%{transform:scale(1.15) translateY(-10%)}100%{transform:scale(.3) translateY(-50%);opacity:0}}
+.sushi .wasabi{position:absolute;left:28%;top:22%;width:44%;aspect-ratio:1.3;border-radius:46% 54% 50% 50%;background:radial-gradient(circle at 35% 30%,#d6f78a,#7ccc3c 55%,#3f8f1f);opacity:0;transform:scale(.3);transition:transform .35s cubic-bezier(.2,1.8,.4,1),opacity .15s;pointer-events:none;box-shadow:0 0 18px rgba(140,230,80,.7)}
+.sushi.hot{z-index:3;animation:hot .9s forwards}
+.sushi.hot .wasabi{opacity:1;transform:scale(1.25)}
+@keyframes hot{0%{transform:none}25%{transform:scale(1.4)}40%{transform:scale(1.35) rotate(-7deg)}55%{transform:scale(1.35) rotate(7deg)}70%{transform:scale(1.35) rotate(-4deg)}100%{transform:scale(1.35)}}
+
+/* ---------- Punishment mode ---------- */
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.seg button{min-height:96px;border-radius:16px;background:var(--panel2);border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:16px;font-weight:500;padding:10px 6px;text-align:center;transition:transform .08s,border-color .2s}
+.seg button:active{transform:scale(.95)}
+.seg button svg{width:34px;height:28px;color:var(--accent)}
+.seg button small{font-size:12px;color:var(--muted);font-weight:400;line-height:1.3}
+.seg button.on{border-color:var(--accent);background:linear-gradient(160deg,rgba(255,79,163,.2),rgba(165,92,255,.12));box-shadow:0 0 18px rgba(255,79,163,.25)}
+.rsushi{width:92px;height:68px;margin:2px 0 -2px;filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+.rsushi .w1,.rsushi .w2{display:none}
+.rsushi[data-k="wasabi"] .w1,.rsushi[data-k="double"] .w1,.rsushi[data-k="double"] .w2{display:inline}
+.ver{margin:6px 0 0;text-align:center;font-size:12px;color:var(--muted);opacity:.85;font-variant-numeric:tabular-nums}
+@media (max-width:360px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="mmShade" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#3a0050" stop-opacity=".32"/></linearGradient>
+<symbol id="mimon" viewBox="0 0 120 120">
+<ellipse cx="60" cy="112" rx="30" ry="4.5" fill="#000" opacity=".22"/>
+<ellipse cx="44" cy="104" rx="10" ry="6" fill="currentColor"/><ellipse cx="76" cy="104" rx="10" ry="6" fill="currentColor"/>
+<path d="M37 34L31 13Q30 8.5 34 11L51 26Z" fill="#ffe3f3"/><path d="M83 34L89 13Q90 8.5 86 11L69 26Z" fill="#ffe3f3"/>
+<ellipse cx="18" cy="72" rx="7" ry="10" fill="currentColor" transform="rotate(-20 18 72)"/><ellipse cx="102" cy="72" rx="7" ry="10" fill="currentColor" transform="rotate(20 102 72)"/>
+<path d="M60 20C88 20 103 42 103 68C103 93 86 106 60 106C34 106 17 93 17 68C17 42 32 20 60 20Z" fill="currentColor"/><path d="M60 20C88 20 103 42 103 68C103 93 86 106 60 106C34 106 17 93 17 68C17 42 32 20 60 20Z" fill="url(#mmShade)"/>
+<ellipse cx="60" cy="85" rx="25" ry="16" fill="#fff" opacity=".16"/>
+<ellipse cx="38" cy="38" rx="9" ry="5.5" fill="#fff" opacity=".42" transform="rotate(-35 38 38)"/>
+<circle cx="45" cy="60" r="11.5" fill="#fff"/><circle cx="75" cy="60" r="11.5" fill="#fff"/>
+<circle cx="46.5" cy="62" r="7" fill="#2a1438"/><circle cx="76.5" cy="62" r="7" fill="#2a1438"/>
+<circle cx="43.6" cy="58.6" r="2.6" fill="#fff"/><circle cx="73.6" cy="58.6" r="2.6" fill="#fff"/>
+<ellipse cx="31" cy="76" rx="6" ry="3.5" fill="#ff2f7d" opacity=".42"/><ellipse cx="89" cy="76" rx="6" ry="3.5" fill="#ff2f7d" opacity=".42"/>
+<path d="M52 77Q60 85 68 77" fill="none" stroke="#2a1438" stroke-width="3.2" stroke-linecap="round"/><path d="M62.6 80.6l2.2 4.6 2.4-5.7z" fill="#fff"/>
+</symbol>
+<symbol id="mimonWow" viewBox="0 0 120 120">
+<ellipse cx="60" cy="112" rx="30" ry="4.5" fill="#000" opacity=".22"/>
+<ellipse cx="44" cy="104" rx="10" ry="6" fill="currentColor"/><ellipse cx="76" cy="104" rx="10" ry="6" fill="currentColor"/>
+<path d="M37 34L31 13Q30 8.5 34 11L51 26Z" fill="#ffe3f3"/><path d="M83 34L89 13Q90 8.5 86 11L69 26Z" fill="#ffe3f3"/>
+<ellipse cx="18" cy="72" rx="7" ry="10" fill="currentColor" transform="rotate(-20 18 72)"/><ellipse cx="102" cy="72" rx="7" ry="10" fill="currentColor" transform="rotate(20 102 72)"/>
+<path d="M60 20C88 20 103 42 103 68C103 93 86 106 60 106C34 106 17 93 17 68C17 42 32 20 60 20Z" fill="currentColor"/><path d="M60 20C88 20 103 42 103 68C103 93 86 106 60 106C34 106 17 93 17 68C17 42 32 20 60 20Z" fill="url(#mmShade)"/>
+<ellipse cx="60" cy="85" rx="25" ry="16" fill="#fff" opacity=".16"/>
+<ellipse cx="38" cy="38" rx="9" ry="5.5" fill="#fff" opacity=".42" transform="rotate(-35 38 38)"/>
+<circle cx="45" cy="60" r="11.5" fill="#fff"/><circle cx="75" cy="60" r="11.5" fill="#fff"/>
+<circle cx="46.5" cy="62" r="7" fill="#2a1438"/><circle cx="76.5" cy="62" r="7" fill="#2a1438"/>
+<circle cx="43.6" cy="58.6" r="2.6" fill="#fff"/><circle cx="73.6" cy="58.6" r="2.6" fill="#fff"/>
+<ellipse cx="31" cy="76" rx="6" ry="3.5" fill="#ff2f7d" opacity=".42"/><ellipse cx="89" cy="76" rx="6" ry="3.5" fill="#ff2f7d" opacity=".42"/>
+<ellipse cx="60" cy="81" rx="6.5" ry="7.5" fill="#2a1438"/><ellipse cx="60" cy="84" rx="3.6" ry="2.6" fill="#ff6b9a"/>
+</symbol>
+</defs></svg>
+<!-- ===== MENU ===== -->
+<section class="view menu" id="v-menu">
+  <div class="menu-wrap">
+    <div class="mhead">
+      <div class="brand"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5cb4"/><stop offset="1" stop-color="#8b4dff"/></linearGradient></defs><rect width="64" height="64" rx="18" fill="url(#lgB)"/><circle cx="32.00" cy="13.00" r="3.1" fill="#fff" fill-opacity=".32"/><circle cx="46.85" cy="20.15" r="6.2" fill="#fff"/><circle cx="50.52" cy="36.23" r="3.1" fill="#fff" fill-opacity=".32"/><circle cx="40.24" cy="49.12" r="3.1" fill="#fff" fill-opacity=".32"/><circle cx="23.76" cy="49.12" r="3.1" fill="#fff" fill-opacity=".32"/><circle cx="13.48" cy="36.23" r="3.1" fill="#fff" fill-opacity=".32"/><circle cx="17.15" cy="20.15" r="3.1" fill="#fff" fill-opacity=".32"/><line x1="32" y1="32" x2="40.21" y2="25.45" stroke="#fff" stroke-width="4.2" stroke-linecap="round"/><circle cx="32" cy="32" r="4.6" fill="#fff"/></svg><h1 class="wm"><span class="wm1">หาคน<b>โดน</b></span><span class="wm2">เกมวงเพื่อน ลุ้นว่าใครโดน</span></h1></div>
+      <button class="hbtn" id="fsBtn" hidden aria-label="เต็มจอ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="hbtn" id="openSettings" aria-label="ตั้งค่า"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 13.4l1.7 1.3-2 3.5-2-.8c-.5.4-1.1.8-1.8 1l-.3 2.1h-4l-.3-2.1c-.7-.2-1.3-.6-1.8-1l-2 .8-2-3.5 1.7-1.3a7.6 7.6 0 0 1 0-2.8L2.9 9.3l2-3.5 2 .8c.5-.4 1.1-.8 1.8-1L9 3.5h4l.3 2.1c.7.2 1.3.6 1.8 1l2-.8 2 3.5-1.7 1.3a7.6 7.6 0 0 1 0 2.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="hello"><button class="mbtn" id="mimonHi" aria-label="มิมอน มาสคอตของแอป"><svg class="mimon " viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></button><div class="bubble"><b>mimon</b><span id="mimonSay">วันนี้ใครโดน?</span></div></div>
+    <button class="pbar" id="openPlayers" aria-label="จัดการผู้เล่น"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg><span class="pn" id="pbN"></span><span class="pl" id="pbL"></span><span class="pe">แก้ไข</span></button>
+    <h2 class="sec">ลุ้นดวง</h2>
+    <div class="tiles">
+      <button class="tile" data-go="croc" style="--c:#46a052"><span class="ic"><svg viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="32" rx="10" fill="currentColor"/><rect x="9" y="14" width="30" height="20" rx="5" fill="#3a0909"/><path d="M12 14l3 6 3-6m3 0l3 6 3-6m3 0l3 6 3-6M12 34l3-6 3 6m3 0l3-6 3 6m3 0l3-6 3 6" fill="#fff"/></svg></span><span class="tn">จระเข้งับนิ้ว</span></button>
+      <button class="tile" data-go="bomb" style="--c:#ff7a3d"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="22" cy="28" r="15" fill="currentColor"/><rect x="25" y="9" width="8" height="7" rx="2" transform="rotate(30 29 12)" fill="currentColor"/><path d="M32 10c3-5 7-4 9-7" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="41" cy="3.5" r="3" fill="#ffd04d"/><circle cx="16" cy="23" r="4" fill="#fff" opacity=".35"/></svg></span><span class="tn">ระเบิดเวลา</span></button>
+      <button class="tile" data-go="finger" style="--c:#ff5fa2"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="14" cy="16" r="6" fill="currentColor"/><circle cx="34" cy="14" r="6" fill="currentColor" opacity=".55"/><circle cx="24" cy="33" r="6" fill="currentColor" opacity=".55"/><circle cx="14" cy="16" r="10.5" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="tn">นิ้วใครโดน</span></button>
+      <button class="tile" data-go="bottle" style="--c:#3fc6c0"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/><path d="M22 6h4v4c0 3 5 6 5 11v18c0 2-1 3-3 3h-8c-2 0-3-1-3-3V21c0-5 5-8 5-11z" fill="currentColor" transform="rotate(35 24 24)"/></svg></span><span class="tn">ขวดหมุน</span></button>
+      <button class="tile" data-go="cards" style="--c:#9b7bff"><span class="ic"><svg viewBox="0 0 48 48"><rect x="6" y="10" width="20" height="28" rx="3" fill="currentColor" opacity=".55" transform="rotate(-12 16 24)"/><rect x="20" y="8" width="20" height="28" rx="3" fill="currentColor" transform="rotate(8 30 22)"/><text x="30" y="27" font-size="14" font-weight="700" text-anchor="middle" fill="#1a1036" transform="rotate(8 30 22)">?</text></svg></span><span class="tn">เปิดไพ่ตัวซวย</span></button>
+      <button class="tile" data-go="balloon" style="--c:#ff5a4e"><span class="ic"><svg viewBox="0 0 48 48"><ellipse cx="24" cy="19" rx="13" ry="15" fill="currentColor"/><path d="M22 35h4l-2-2z" fill="currentColor"/><path d="M24 35c-3 4 3 6 0 11" stroke="#c9bfa8" stroke-width="1.5" fill="none"/><ellipse cx="19" cy="13" rx="3" ry="4.5" fill="#fff" opacity=".4"/></svg></span><span class="tn">ลูกโป่งสูบลม</span></button>
+      <button class="tile" data-go="mbox" style="--c:#b98cff"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="15" r="10" fill="currentColor" opacity=".6"/><circle cx="20.5" cy="14" r="2.2" fill="#fff"/><circle cx="27.5" cy="14" r="2.2" fill="#fff"/><rect x="7" y="21" width="34" height="22" rx="5" fill="currentColor"/><rect x="5" y="18" width="38" height="7" rx="3.5" fill="currentColor" opacity=".75"/><g fill="#1a0e30" opacity=".55"><circle cx="16" cy="31" r="2.4"/><circle cx="24" cy="31" r="2.4"/><circle cx="32" cy="31" r="2.4"/><circle cx="16" cy="38" r="2.4"/><circle cx="24" cy="38" r="2.4"/><circle cx="32" cy="38" r="2.4"/></g></svg></span><span class="tn">กล่องมิมอน</span></button>
+      <button class="tile" data-go="numbomb" style="--c:#ff6b6b"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="22" cy="28" r="16" fill="currentColor"/><path d="M32 14c3-5 7-4 9-8" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="41.5" cy="5.5" r="2.6" fill="#ffd04d"/><text x="22" y="33.5" font-size="14" font-weight="700" text-anchor="middle" fill="#1a0e30" font-family="system-ui,sans-serif">42</text></svg></span><span class="tn">เลขบอมบ์</span></button>
+      <button class="tile" data-go="hilo" style="--c:#4fd1ff"><span class="ic"><svg viewBox="0 0 48 48"><rect x="4" y="11" width="20" height="28" rx="3.5" fill="currentColor" opacity=".5"/><rect x="15" y="7" width="20" height="28" rx="3.5" fill="currentColor"/><text x="25" y="26" font-size="12" font-weight="700" text-anchor="middle" fill="#1a0e30" font-family="system-ui,sans-serif">7</text><path d="M41 15l4.5 6h-9zM41 40l4.5-6h-9z" fill="currentColor"/></svg></span><span class="tn">ไพ่สูงต่ำ</span></button>
+      <button class="tile" data-go="sushi" style="--c:#8be04e"><span class="ic"><svg viewBox="0 0 48 48"><rect x="6" y="24" width="36" height="14" rx="7" fill="#fbf8f0"/><rect x="6" y="31" width="36" height="7" rx="3.5" fill="#e6dcc8"/><path d="M4 25Q5 14 18 13L34 12Q45 13 44 22Q43 27 37 27L10 28Q4 28 4 25Z" fill="#ff8a5c"/><path d="M14 14Q11 20 12 27M23 13Q20 20 21 27M32 13Q29 20 30 27" stroke="#ffd9c4" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M33 40c0-4 4-6 7-6s6 2 6 5-3 5-7 5-6-1-6-4z" fill="currentColor"/></svg></span><span class="tn">ซูชิวาซาบิ</span></button>
+    </div>
+    <h2 class="sec">ใช้ฝีมือ</h2>
+    <div class="tiles">
+      <button class="tile" data-go="stop10" style="--c:#f4c84a"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="24" cy="27" r="17" fill="none" stroke="currentColor" stroke-width="4"/><rect x="20" y="3" width="8" height="5" rx="1.5" fill="currentColor"/><path d="M24 27V16" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="27" r="3" fill="currentColor"/></svg></span><span class="tn">หยุดที่ 10 วิ</span></button>
+      <button class="tile" data-go="react" style="--c:#4fc3ff"><span class="ic"><svg viewBox="0 0 48 48"><path d="M27 3L9 28h13l-3 17 20-27H25z" fill="currentColor"/></svg></span><span class="tn">ไวกว่าแสง</span></button>
+      <button class="tile" data-go="simon" style="--c:#7ee081"><span class="ic"><svg viewBox="0 0 48 48"><path d="M22 4A18 18 0 0 0 4 22h18z" fill="#3bd17a"/><path d="M26 4a18 18 0 0 1 18 18H26z" fill="#ff4d4d"/><path d="M22 44A18 18 0 0 1 4 26h18z" fill="#ffd04d"/><path d="M26 44a18 18 0 0 0 18-18H26z" fill="#3db2ff"/></svg></span><span class="tn">จำลำดับสี</span></button>
+      <button class="tile" data-go="aim" style="--c:#ff8f5e"><span class="ic"><svg viewBox="0 0 48 48"><rect x="3" y="16" width="42" height="16" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><rect x="20" y="17.5" width="10" height="13" fill="currentColor" opacity=".55"/><rect x="26" y="10" width="3" height="28" rx="1.5" fill="currentColor"/></svg></span><span class="tn">เล็งเป้า</span></button>
+      <button class="tile" data-go="math" style="--c:#c3a6ff"><span class="ic"><svg viewBox="0 0 48 48"><text x="24" y="31" font-size="19" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">7×8</text><rect x="4" y="38" width="40" height="4" rx="2" fill="currentColor" opacity=".45"/></svg></span><span class="tn">เลขเร็ว</span></button>
+      <button class="tile" data-go="wave" style="--c:#2ee6c5"><span class="ic"><svg viewBox="0 0 48 48"><circle cx="16" cy="18" r="5.5" fill="currentColor"/><circle cx="16" cy="18" r="11" fill="none" stroke="currentColor" stroke-width="2.6" opacity=".6"/><circle cx="16" cy="18" r="16.5" fill="none" stroke="currentColor" stroke-width="2" opacity=".3"/><circle cx="35" cy="34" r="5" fill="#ff6fc0"/><circle cx="35" cy="34" r="10" fill="none" stroke="#ff6fc0" stroke-width="2.6" opacity=".6"/></svg></span><span class="tn">คลื่นยึดพื้นที่</span></button>
+      <button class="tile" data-go="stack" style="--c:#ffd166"><span class="ic"><svg viewBox="0 0 48 48"><rect x="9" y="37" width="30" height="7" rx="2" fill="currentColor" opacity=".45"/><rect x="11" y="28.5" width="27" height="7" rx="2" fill="currentColor" opacity=".65"/><rect x="13" y="20" width="23" height="7" rx="2" fill="currentColor" opacity=".85"/><rect x="21" y="8" width="21" height="7" rx="2" fill="currentColor"/><path d="M6 11.5h10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" opacity=".55"/></svg></span><span class="tn">ตึกสูง</span></button>
+      <button class="tile" data-go="mcolor" style="--c:#ff6fc0"><span class="ic"><svg viewBox="0 0 120 120"><use href="#mimon"/></svg></span><span class="tn">มิมอนเปลี่ยนสี</span></button>
+    </div>
+    <h2 class="sec">ยากขึ้น</h2>
+    <div class="tiles">
+      <button class="tile" data-go="stroop" style="--c:#ff7eb6"><span class="ic"><svg viewBox="0 0 48 48"><rect x="4" y="9" width="40" height="30" rx="9" fill="none" stroke="currentColor" stroke-width="3"/><text x="24" y="31" font-size="15" font-weight="700" text-anchor="middle" fill="#3db2ff" font-family="Mitr,system-ui,sans-serif">แดง</text></svg></span><span class="tn">สีหลอกตา</span></button>
+      <button class="tile" data-go="odd" style="--c:#5ee0c8"><span class="ic"><svg viewBox="0 0 48 48"><rect x="5.0" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="5.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="5.0" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="18.5" width="11" height="11" rx="3" fill="currentColor" opacity="1"/><rect x="5.0" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="18.5" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/><rect x="32.0" y="32.0" width="11" height="11" rx="3" fill="currentColor" opacity="0.45"/></svg></span><span class="tn">หาสีที่ต่าง</span></button>
+      <button class="tile" data-go="schulte" style="--c:#ffb347"><span class="ic"><svg viewBox="0 0 48 48"><rect x="5" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="14" y="19" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">3</text><rect x="25" y="5" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="34" y="19" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">1</text><rect x="5" y="25" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="14" y="39" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">4</text><rect x="25" y="25" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="34" y="39" font-size="12" font-weight="700" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif">2</text></svg></span><span class="tn">เรียงเลข 1–16</span></button>
+    </div>
+    <p class="ver" id="verLine"></p>
+  </div>
+</section>
+
+<!-- ===== CROC ===== -->
+<section class="view" id="v-croc" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จระเข้งับนิ้ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="stage">
+    <main class="mouth locked" id="mouth" aria-label="ปากจระเข้">
+      <div class="jaw lower" id="lower"><div class="shell"></div><div class="lip"></div><div class="cavity"></div></div>
+      <div class="jaw upper" id="upper"><div class="shell"></div><div class="lip"></div><div class="cavity"></div><i class="eye l"></i><i class="eye r"></i></div>
+      <section class="center" id="center" aria-live="polite"></section>
+    </main>
+  </div>
+  <div class="controls" style="justify-content:space-between">
+    <div class="odds" id="odds" role="img" aria-label="โอกาสออกของลูกเต๋าแต่ละหน้า"></div>
+    <button class="ghost" id="crocReset">เริ่มใหม่</button>
+  </div>
+</section>
+
+<!-- ===== BOMB ===== -->
+<section class="view" id="v-bomb" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ระเบิดเวลา</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="prompt" id="bPrompt"></div>
+  <div class="holder">กำลังถือ: <b id="bHolder"></b></div>
+  <div class="stage">
+    <div class="bomb" id="bomb">
+      <svg viewBox="0 0 200 220" aria-hidden="true">
+        <defs><radialGradient id="bg1" cx="35%" cy="30%"><stop offset="0" stop-color="#5a6272"/><stop offset=".55" stop-color="#262a33"/><stop offset="1" stop-color="#0d0f13"/></radialGradient></defs>
+        <path d="M122 62 C 138 34, 158 44, 170 20" stroke="#c9a46a" stroke-width="7" fill="none" stroke-linecap="round"/>
+        <rect x="100" y="54" width="36" height="26" rx="5" fill="#3a3f4a" transform="rotate(30 118 67)"/>
+        <circle cx="95" cy="135" r="76" fill="url(#bg1)"/>
+        <ellipse cx="66" cy="104" rx="18" ry="12" fill="#fff" opacity=".22" transform="rotate(-30 66 104)"/>
+      </svg>
+      <i class="spark"></i><i class="blast"></i>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="ghost" id="bCat">สุ่มหมวดใหม่</button>
+    <button class="big" id="bMain">จุดชนวน</button>
+  </div>
+</section>
+
+<!-- ===== FINGER ===== -->
+<section class="view" id="v-finger" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>นิ้วใครโดน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info">วางนิ้วค้างไว้ <b>ห้ามยก</b> จนกว่าจะเลือกเสร็จ</div>
+  <div class="stage" style="margin-bottom:16px">
+    <div class="touch" id="touch">
+      <div class="hint" id="fHint">ทุกคนวางนิ้วบนจอค้างไว้<small>2 นิ้วขึ้นไป แล้วรอ 3 วินาที · บนคอมคลิกเพื่อวางจุด</small></div>
+      <div class="fcount" id="fCount"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BOTTLE ===== -->
+<section class="view" id="v-bottle" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ขวดหมุน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info">นั่งตามเลขรอบวง <b>เรียงตามเข็มนาฬิกา</b></div>
+  <div class="stage">
+    <div class="table" id="table">
+      <div class="bottle" id="bottle" role="button" aria-label="หมุนขวด">
+        <svg viewBox="0 0 40 150" aria-hidden="true">
+          <path d="M15 6h10v6c0 8 1 14 6 22c5 8 7 14 7 24v82c0 5-3 8-8 8H10c-5 0-8-3-8-8V58c0-10 2-16 7-24c5-8 6-14 6-22z" fill="#2f9e5a" stroke="#1b6b3a" stroke-width="2"/>
+          <rect x="13.5" y="0" width="13" height="8" rx="2" fill="#d9b34a"/>
+          <rect x="5" y="76" width="30" height="38" rx="3" fill="#f3ead7" opacity=".92"/>
+          <path d="M9 62v74" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="controls"><button class="big" id="spinBtn">หมุนขวด</button></div>
+</section>
+
+<!-- ===== CARDS ===== -->
+<section class="view" id="v-cards" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เปิดไพ่ตัวซวย</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="cInfo"></div>
+  <div class="stage"><div class="cgrid" id="cGrid"></div></div>
+  <div class="controls"><button class="ghost" id="cReset">สับไพ่ใหม่</button></div>
+</section>
+
+<!-- ===== BALLOON ===== -->
+<section class="view" id="v-balloon" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ลูกโป่งสูบลม</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="lInfo"></div>
+  <div class="stage">
+    <div class="bal-area">
+      <div class="bwrap" id="bwrap"><div class="balloon" id="balloon"></div><i class="burst"></i></div>
+      <i class="string"></i>
+    </div>
+  </div>
+  <div class="controls">
+    <button class="big" id="pump">สูบลม</button>
+    <button class="ghost" id="pass">ส่งต่อ →</button>
+  </div>
+</section>
+
+<!-- ===== STOP 10 ===== -->
+<section class="view" id="v-stop10" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>หยุดที่ 10 วิ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="sInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="clock" id="sClock">0.00</div>
+    <div class="sk-sub" id="sSub"></div>
+    <ol class="board" id="sBoard"></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="sBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== REACTION ===== -->
+<section class="view" id="v-react" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ไวกว่าแสง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="rInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <button class="rpad" id="rPad"><b id="rBig"></b><small id="rSmall"></small></button>
+    <ol class="board" id="rBoard"></ol>
+  </div></div>
+  <div class="controls"><button class="ghost" id="rReset">เริ่มรอบใหม่</button></div>
+</section>
+
+<!-- ===== SIMON ===== -->
+<section class="view" id="v-simon" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จำลำดับสี</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="siInfo"></div>
+  <div class="stage"><div class="simon locked" id="simon">
+    <button class="spad" style="--pc:#3bd17a" aria-label="เขียว"></button>
+    <button class="spad" style="--pc:#ff4d4d" aria-label="แดง"></button>
+    <button class="spad" style="--pc:#ffd04d" aria-label="เหลือง"></button>
+    <button class="spad" style="--pc:#3db2ff" aria-label="ฟ้า"></button>
+    <div class="shub" id="siHub">3</div>
+  </div></div>
+  <div class="controls"><button class="big" id="siBtn">พร้อม ดูลำดับ</button></div>
+</section>
+
+<!-- ===== AIM ===== -->
+<section class="view" id="v-aim" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เล็งเป้า</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="aInfo"></div>
+  <div class="stage" id="aStage"><div class="aim">
+    <div class="lvl" id="aLvl"></div>
+    <div class="track" id="track"><div class="zone" id="zone"></div><div class="cursor" id="cursor"></div></div>
+    <div class="sk-sub" id="aMsg"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="aBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== MATH ===== -->
+<section class="view" id="v-math" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เลขเร็ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="maInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="mq" id="mQ">?</div>
+    <div class="tbar"><i id="mBar"></i></div>
+    <div class="sk-sub" id="maSub"></div>
+    <div class="mchoices" id="mCh"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="maBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== STROOP ===== -->
+<section class="view" id="v-stroop" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>สีหลอกตา</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="stInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="rulechip" id="stRule"></div>
+    <div class="stroop-word" id="stWord">?</div>
+    <div class="tbar"><i id="stBar"></i></div>
+    <div class="pips" id="stPips"></div>
+    <div class="cbtns" id="stBtns"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="stBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== ODD SHADE ===== -->
+<section class="view" id="v-odd" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>หาสีที่ต่าง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="odInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="tbar"><i id="odBar"></i></div>
+    <div class="ogrid idle" id="odGrid"></div>
+    <div class="pips" id="odPips"></div>
+  </div></div>
+  <div class="controls"><button class="big" id="odBtn">พร้อม</button></div>
+</section>
+
+<!-- ===== SCHULTE ===== -->
+<section class="view" id="v-schulte" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เรียงเลข 1–16</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="scInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="clock sm" id="scClock">0.00</div>
+    <div class="sgrid" id="scGrid" hidden></div>
+    <div class="sk-sub" id="scSub"></div>
+    <ol class="board" id="scBoard"></ol>
+  </div></div>
+  <div class="controls"><button class="big" id="scBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== MIMON BOX ===== -->
+<section class="view" id="v-mbox" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>กล่องมิมอน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="mbInfo"></div>
+  <div class="stage"><div class="mbox" id="mbBox">
+    <svg class="mimon pop" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimonWow"/></svg>
+    <div class="lid"></div>
+    <div class="mbody" id="mbHoles"></div>
+  </div></div>
+  <div class="controls"><button class="ghost" onclick="G.mbox.init()">เริ่มรอบใหม่</button></div>
+</section>
+
+<!-- ===== NUMBER BOMB ===== -->
+<section class="view" id="v-numbomb" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เลขบอมบ์</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="nbInfo"></div>
+  <div class="stage"><div class="sk-col nb" id="nbWrap">
+    <div class="nbrange"><span id="nbLo">1</span><i class="nbtrack"><b id="nbFill"></b></i><span id="nbHi">100</span></div>
+    <div class="nbshow empty" id="nbShow">?</div>
+    <div class="sk-sub" id="nbSub"></div>
+    <div class="keypad" id="nbPad"></div>
+  </div></div>
+</section>
+
+<!-- ===== HI-LO ===== -->
+<section class="view" id="v-hilo" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ไพ่สูงต่ำ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="hlInfo"></div>
+  <div class="stage"><div class="sk-col">
+    <div class="hl">
+      <div class="hlcard"><div class="hlstatic" id="hlCur"></div></div>
+      <div class="hlcard" id="hlNext"><div class="in"><div class="face cback">?</div><div class="face front" id="hlNextF"></div></div></div>
+    </div>
+    <div class="sk-sub" id="hlSub"></div>
+    <small class="hlnote">A ต่ำสุด · K สูงสุด · ออกเท่ากันถือว่ารอด</small>
+  </div></div>
+  <div class="controls"><button class="big" id="hlLo">▼ ต่ำกว่า</button><button class="big" id="hlHi">▲ สูงกว่า</button></div>
+</section>
+
+<!-- ===== WAVE ===== -->
+<section class="view" id="v-wave" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>คลื่นยึดพื้นที่</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="wvInfo"></div>
+  <div class="stage" id="wvStage"><canvas id="wvCanvas"></canvas><div class="wvmid" id="wvMid"></div><div class="wvseats" id="wvSeats"></div></div>
+  <div class="controls"><button class="big" id="wvBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== STACK ===== -->
+<section class="view" id="v-stack" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ตึกสูง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="skInfo"></div>
+  <div class="stage" id="skStage"><canvas id="skCanvas"></canvas><div class="skhud" id="skHud"></div></div>
+  <div class="controls"><button class="big" id="skBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== MIMON COLOURS ===== -->
+<section class="view" id="v-mcolor" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>มิมอนเปลี่ยนสี</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="mcInfo"></div>
+  <div class="stage"><div class="mcarea" id="mcArea">
+    <div class="mcmid" id="mcMid"><svg class="mcring" viewBox="0 0 100 100" aria-hidden="true"><circle id="mcRing" cx="50" cy="50" r="46"/></svg><svg class="mimon" id="mcMimon" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></div>
+    <div class="mchint" id="mcHint"></div>
+  </div></div>
+  <div class="controls"><button class="ghost" id="mcClear" hidden>ล้างจุด</button><button class="big" id="mcBtn">เริ่ม</button></div>
+</section>
+
+<!-- ===== SUSHI ===== -->
+<section class="view" id="v-sushi" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ซูชิวาซาบิ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
+  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="info" id="suInfo"></div>
+  <div class="stage"><div class="geta" id="suBoard"></div></div>
+  <div class="controls"><button class="ghost" id="suReset">จัดจานใหม่</button></div>
+</section>
+
+<!-- ===== RESULT ===== -->
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mWord">
+  <div class="sheet">
+    <svg class="mimon rmimon" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimonWow"/></svg>
+    <h2 id="mWord"></h2>
+    <p id="mWho"></p>
+    <div class="owner" id="owner" hidden><small>นิ้วนี้เป็นของใคร?</small><div class="ochips" id="oChips"></div></div>
+    <div class="target" id="target"><small id="tLabel">คนรับกรรม</small><div class="rule" id="tRule"></div><svg class="rsushi" id="tSushi" hidden viewBox="0 0 60 44" aria-hidden="true"><rect x="8" y="22" width="44" height="17" rx="8.5" fill="#fbf8f0"/><rect x="8" y="31" width="44" height="8" rx="4" fill="#e6dcc8"/><path d="M4 22Q6 9 22 8L44 7Q57 8 56 20Q55 26 48 26L12 27Q4 27 4 22Z" fill="#ff8a5c"/><path d="M16 9Q12 17 14 26M27 8Q23 17 25 26M38 8Q34 17 36 26M48 9Q45 17 47 25" stroke="#ffd9c4" stroke-width="2.2" fill="none" stroke-linecap="round"/><path class="w1" d="M22 9c0-4 4-6 8-6s7 2 7 5-3 5-7.5 5S22 12 22 9z" fill="#7ccc3c"/><path class="w2" d="M37 11c0-3 3-5 6-5s5 2 5 4-2 4-5.5 4S37 13 37 11z" fill="#7ccc3c"/></svg><div class="bigname" id="tBig">?</div></div>
+    <div class="mbtns" id="mBtns">
+      <button class="big" id="mAgain">เล่นอีกรอบ</button>
+      <button class="ghost" id="mMenu">เลือกเกมอื่น</button>
+    </div>
+  </div>
+</div>
+<div id="flash"></div>
+
+<!-- ===== PLAYERS ===== -->
+<div class="modal" id="pModal" hidden role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <div class="sheet psheet">
+    <div class="shead"><h3 id="pTitle">ผู้เล่น <span id="pN"></span></h3><button class="hbtn" id="pClose" aria-label="ปิด">✕</button></div>
+    <form class="addname" id="pForm" style="padding-bottom:0"><input id="pNew" maxlength="20" autocomplete="off" enterkeyhint="send" placeholder="ชื่อผู้เล่นใหม่" aria-label="ชื่อผู้เล่นใหม่"><button type="submit" id="pAddBtn">เพิ่ม</button></form>
+    <small>ลาก ≡ เพื่อย้ายที่นั่ง · เรียงตามเข็มนาฬิกา · เพิ่มหรือลบคนกลางเกมจะเริ่มรอบใหม่</small>
+    <div class="plist" id="pList"></div>
+    <h4>ผังที่นั่ง</h4>
+    <small style="color:var(--muted);font-size:13px;margin-top:-8px">ลากคนไปวางทับอีกคนเพื่อสลับที่ หรือแตะทีละคน</small>
+    <div class="seatmap" id="pSeats"></div>
+    <button class="big" id="pDone">เสร็จ</button>
+  </div>
+</div>
+
+<!-- ===== SETTINGS ===== -->
+<div class="modal" id="sModal" hidden role="dialog" aria-modal="true" aria-labelledby="sTitle">
+  <div class="sheet ssheet">
+    <div class="shead"><h3 id="sTitle">ตั้งค่า</h3><button class="hbtn" id="sClose" aria-label="ปิด">✕</button></div>
+    <div class="sgroup">
+      <div class="trow"><div><strong>สุ่มตอนจบเกม</strong><small>จบเกมแล้วสุ่มต่อตามโหมดด้านล่าง ถ้าปิดจะประกาศแค่คนที่แพ้</small></div><label class="switch"><input type="checkbox" id="sPunish" aria-label="สุ่มตอนจบเกม"><span></span></label></div>
+    </div>
+    <div class="sgroup">
+      <h4>โหมดการโดน</h4>
+      <div class="seg" id="sMode">
+        <button data-m="people"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg><span>สุ่มคนรับกรรม</span><small>ตัวเอง ซ้าย ขวา ทุกคน</small></button>
+        <button data-m="sushi"><svg viewBox="0 0 60 44" aria-hidden="true"><rect x="8" y="22" width="44" height="17" rx="8.5" fill="#fbf8f0"/><rect x="8" y="31" width="44" height="8" rx="4" fill="#e6dcc8"/><path d="M4 22Q6 9 22 8L44 7Q57 8 56 20Q55 26 48 26L12 27Q4 27 4 22Z" fill="#ff8a5c"/><path d="M16 9Q12 17 14 26M27 8Q23 17 25 26M38 8Q34 17 36 26M48 9Q45 17 47 25" stroke="#ffd9c4" stroke-width="2.2" fill="none" stroke-linecap="round"/><path class="w1" d="M22 9c0-4 4-6 8-6s7 2 7 5-3 5-7.5 5S22 12 22 9z" fill="#7ccc3c"/></svg><span>ซูชิวาซาบิ</span><small>วาซาบิ ธรรมดา เพื่อนกินแทน</small></button>
+      </div>
+    </div>
+    <div class="sgroup" id="sgRates">
+      <h4 id="sRatesT">อัตราการโดน</h4>
+      <small>ยิ่งตัวเลขมากยิ่งออกบ่อย ตั้งเป็น 0 เพื่อปิดตัวเลือกนั้น · % คิดจากผู้เล่น <span id="sRN"></span> คนตอนนี้</small>
+      <div id="sRates"></div>
+    </div>
+    <div class="sgroup">
+      <div class="trow"><div><strong>โหมดแฟน</strong><small>จับคู่แฟนในหน้าผู้เล่น แล้วจะมีตัวเลือก "แฟนโดนแทน" และ "โดนคู่กับแฟน" · ปิดไว้ถ้าเล่นกับคนที่ไม่สนิท</small></div><label class="switch"><input type="checkbox" id="sCouple" aria-label="โหมดแฟน"><span></span></label></div>
+      <button class="ghost" id="sPair">จับคู่แฟนในหน้าผู้เล่น</button>
+    </div>
+    <div class="sgroup" id="sgDice">
+      <h4>ลูกเต๋า (จระเข้งับนิ้ว)</h4>
+      <small>ยิ่งตัวเลขมาก หน้านั้นยิ่งออกบ่อย</small>
+      <div class="presets" id="sPresets"></div>
+      <div id="sDice"></div>
+    </div>
+    <div class="sgroup"><button class="ghost" id="sReset">คืนค่าเริ่มต้นของการตั้งค่า</button><p class="ver" id="verSet"></p></div>
+    <button class="big" id="sDone">เสร็จ</button>
+  </div>
+</div>
+
+<!-- ===== HELP ===== -->
+<div class="modal" id="hModal" hidden role="dialog" aria-modal="true" aria-labelledby="hTitle">
+  <div class="sheet hsheet">
+    <div class="shead"><h3 id="hTitle"></h3><button class="hbtn" id="hClose" aria-label="ปิด">✕</button></div>
+    <ol id="hSteps"></ol>
+    <div class="tip" id="hTip"></div>
+    <button class="big" id="hDone">เข้าใจแล้ว</button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const rnd=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rnd(a.length)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const MAXP=12;
+
+/* ---------- settings ---------- */
+// ตัวเลือก "คนรับกรรม" และน้ำหนักเริ่มต้น (0–10)
+const POPTS=[
+  {k:'self',label:'ตัวเอง',w:4},
+  {k:'left',label:'คนทางซ้าย',w:3},
+  {k:'right',label:'คนทางขวา',w:3},
+  {k:'opp',label:'คนตรงข้าม',w:2,note:'เล่น 4 คนขึ้นไป'},
+  {k:'both',label:'ซ้ายและขวา',w:2,note:'เล่น 3 คนขึ้นไป'},
+  {k:'others',label:'ทุกคนยกเว้นตัวเอง',w:1},
+  {k:'all',label:'ทุกคน',w:1},
+  {k:'pick',label:'คนแพ้เลือกเอง 1 คน',w:2},
+  {k:'partner',label:'แฟนโดนแทน',w:3,couple:true},
+  {k:'withp',label:'โดนคู่กับแฟน',w:2,couple:true}];
+const DICE_PRESETS=[{n:'1–3 ออกบ่อย',w:[25,25,25,9,8,8]},{n:'เท่ากันหมด',w:[10,10,10,10,10,10]},{n:'ออกน้อยๆ',w:[40,30,15,8,4,3]},{n:'ออกเยอะๆ',w:[3,4,8,15,30,40]}];
+// โหมดซูชิวาซาบิ: ผลลัพธ์ตอนจบและน้ำหนักเริ่มต้น (0–10)
+const SOPTS=[{k:'wasabi',label:'กินซูชิใส่วาซาบิ',w:5},{k:'plain',label:'กินซูชิธรรมดา',w:3,note:'รอดตัว'},{k:'side',label:'เพื่อนข้างๆ กินวาซาบิแทน',w:3,note:'สุ่มซ้ายหรือขวา'},{k:'double',label:'วาซาบิ 2 คำ',w:1}];
+function defaults(){return{punish:true,pmode:'people',couple:false,pw:Object.fromEntries(POPTS.map(o=>[o.k,o.w])),sw:Object.fromEntries(SOPTS.map(o=>[o.k,o.w])),dice:DICE_PRESETS[0].w.slice()}}
+let cfg=defaults(),roster=[{id:uid(),n:''},{id:uid(),n:''}],partner={};
+try{const s=JSON.parse(localStorage.getItem('hakhondon')||'{}');
+  if(Array.isArray(s.roster)&&s.roster.length>=2)roster=s.roster.slice(0,MAXP).map(r=>({id:String(r&&r.id||uid()),n:String(r&&r.n||'').slice(0,20)}));
+  else if(Array.isArray(s.names)&&s.names.length>=2)roster=s.names.slice(0,MAXP).map(v=>({id:uid(),n:String(v||'').slice(0,20)}));
+  if(s.partner&&typeof s.partner==='object')partner=s.partner;
+  const c=s.cfg;
+  if(c){if(typeof c.punish==='boolean')cfg.punish=c.punish;if(typeof c.couple==='boolean')cfg.couple=c.couple;
+    if(c.pw)POPTS.forEach(o=>{const v=+c.pw[o.k];if(v>=0&&v<=10)cfg.pw[o.k]=Math.round(v)});
+    if(c.pmode==='people'||c.pmode==='sushi')cfg.pmode=c.pmode;
+    if(c.sw)SOPTS.forEach(o=>{const v=+c.sw[o.k];if(v>=0&&v<=10)cfg.sw[o.k]=Math.round(v)});
+    if(Array.isArray(c.dice)&&c.dice.length===6&&c.dice.every(v=>v>=0&&v<=50)&&c.dice.some(v=>v>0))cfg.dice=c.dice.map(v=>Math.round(+v))}
+  else if(s.punish===false)cfg.punish=false;
+}catch(e){}
+let players=roster.length;
+function cleanPartners(map,list){const ids=new Set(list.map(r=>r.id));for(const k of Object.keys(map)){const v=map[k];if(!ids.has(k)||!ids.has(v)||map[v]!==k)delete map[k]}}
+cleanPartners(partner,roster);
+function save(){try{localStorage.setItem('hakhondon',JSON.stringify({roster,partner,cfg}))}catch(e){}}
+const name=i=>((roster[i]&&roster[i].n)||'').trim()||'ผู้เล่น '+(i+1);
+const nameH=i=>esc(name(i));
+function partnerIdx(i){if(!cfg.couple||!roster[i])return -1;const p=partner[roster[i].id];return p?roster.findIndex(r=>r.id===p):-1}
+
+/* ---------- sound / haptics ---------- */
+let ac;
+function actx(){if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac}
+function tone(f,d,type='square',v=.08,slide){try{const a=actx(),t=a.currentTime,o=a.createOscillator(),g=a.createGain();
+  o.type=type;o.frequency.setValueAtTime(f,t);if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+d);
+  g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.02)}catch(e){}}
+function noise(d=.6,v=.4,lp=1200){try{const a=actx(),len=Math.floor(a.sampleRate*d),b=a.createBuffer(1,len,a.sampleRate),ch=b.getChannelData(0);
+  for(let i=0;i<len;i++)ch[i]=(Math.random()*2-1)*Math.pow(1-i/len,2);
+  const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='lowpass';f.frequency.value=lp;g.gain.value=v;
+  s.connect(f).connect(g).connect(a.destination);s.start()}catch(e){}}
+function buzz(p){try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}}
+function flash(color='#fff'){const f=$('flash');f.style.background=color;f.animate([{opacity:.85},{opacity:0}],{duration:500,easing:'ease-out'})}
+
+/* ---------- result sheet + "who takes it" roulette ---------- */
+let rToken=0,againFn=null;
+// ที่นั่งเรียงตามเข็มนาฬิกา (มองจากด้านบน) คนที่นั่งหันเข้ากลางวง: ซ้ายมือ = คนถัดไปตามเข็ม, ขวามือ = คนก่อนหน้า
+const leftOf=i=>(i+1)%players, rightOf=i=>(i-1+players)%players, oppOf=i=>(i+Math.floor(players/2))%players;
+function optApplies(k,L){
+  if(k==='opp')return players>=4;
+  if(k==='both')return players>=3;
+  if(k==='partner'||k==='withp')return cfg.couple&&(L==null||partnerIdx(L)>=0);
+  return true;
+}
+function relOptions(L){
+  const all=[...Array(players).keys()],P=partnerIdx(L),o=[];
+  const add=(k,ids)=>{const w=cfg.pw[k]||0;if(w>0&&optApplies(k,L))o.push({k,ids,w})};
+  add('self',[L]);add('left',[leftOf(L)]);add('right',[rightOf(L)]);add('opp',[oppOf(L)]);
+  add('both',[leftOf(L),rightOf(L)]);add('others',all.filter(i=>i!==L));add('all',all);add('pick',[L]);
+  if(P>=0){add('partner',[P]);add('withp',[L,P])}
+  if(!o.length)o.push({k:'self',ids:[L],w:1});
+  return o;
+}
+function sushiOptions(L){const o=[],w=k=>cfg.sw[k]||0;
+  if(w('wasabi'))o.push({k:'wasabi',ids:[L],w:w('wasabi')});
+  if(w('plain'))o.push({k:'plain',ids:[L],w:w('plain')});
+  if(w('side')){if(players<=2)o.push({k:'sideL',ids:[leftOf(L)],w:w('side')});else o.push({k:'sideL',ids:[leftOf(L)],w:w('side')/2},{k:'sideR',ids:[rightOf(L)],w:w('side')/2})}
+  if(w('double'))o.push({k:'double',ids:[L],w:w('double')});
+  if(!o.length)o.push({k:'wasabi',ids:[L],w:1});
+  return o}
+function weightedPick(o){const sm=o.reduce((a,b)=>a+b.w,0);let r=Math.random()*sm;for(const x of o){r-=x.w;if(r<0)return x}return o[o.length-1]}
+function describe(o,L){
+  if(o.k==='wasabi')return{rule:'กินซูชิใส่วาซาบิ 1 คำ',big:name(L),sushi:'wasabi'};
+  if(o.k==='plain')return{rule:'กินซูชิธรรมดา รอดตัว!',big:name(L),sushi:'plain'};
+  if(o.k==='double')return{rule:'กินซูชิใส่วาซาบิ 2 คำ',big:name(L),sushi:'double'};
+  if(o.k==='sideL'||o.k==='sideR')return{rule:`เพื่อน${players<=2?'ข้างๆ':o.k==='sideL'?'ทางซ้าย':'ทางขวา'}ของ ${name(L)} กินวาซาบิแทน`,big:name(o.ids[0]),sushi:'wasabi'};
+  if(o.k==='all')return{rule:'ทุกคน รวมตัวเองด้วย',big:'ทุกคน!'};
+  if(o.k==='others')return{rule:'ทุกคน ยกเว้น '+name(L),big:o.ids.length<=3?o.ids.map(name).join(' + '):'ทุกคนที่เหลือ'};
+  if(o.k==='pick')return{rule:'ให้คนนี้ชี้เลือกเอง 1 คน',big:name(L)};
+  if(o.k==='self')return{rule:'โดนเองเต็มๆ',big:name(L)};
+  if(o.k==='partner')return{rule:'แฟนของ '+name(L)+' โดนแทน',big:name(o.ids[0])};
+  if(o.k==='withp')return{rule:name(L)+' โดนคู่กับแฟน',big:o.ids.map(name).join(' + ')};
+  const lab={left:'คนทางซ้าย',right:'คนทางขวา',opp:'คนตรงข้าม',both:'คนซ้ายและขวา'}[o.k];
+  return{rule:lab+'ของ '+name(L),big:o.ids.map(name).join(' + ')};
+}
+function setBig(d){$('tRule').textContent=d.rule||'';const su=$('tSushi');su.toggleAttribute('hidden',!d.sushi);if(d.sushi)su.dataset.k=d.sushi;const b=$('tBig'),len=[...d.big].length;b.textContent=d.big;
+  b.classList.toggle('mid',len>7&&len<=14);b.classList.toggle('many',len>14)}
+function finishResult(){const box=$('target');box.classList.remove('done');void box.offsetWidth;box.classList.add('done');
+  tone(660,.12,'triangle',.08);setTimeout(()=>tone(990,.25,'triangle',.08),120);buzz([30,30,60]);flash('#ff5cb4');
+  $('mBtns').hidden=false;$('mAgain').focus()}
+function showResult({word,who,loser,again}){
+  closeSheets();
+  $('mWord').textContent=word;$('mWho').textContent=who;againFn=again;
+  const tok=++rToken;$('target').classList.remove('done');$('target').hidden=true;$('owner').hidden=true;$('mBtns').hidden=true;
+  $('modal').hidden=false;
+  if(loser==null){ // ไม่รู้ว่าใคร (เช่น เกมนิ้ว) ให้เลือกเจ้าของก่อน
+    $('owner').hidden=false;
+    $('oChips').innerHTML=roster.map((_,i)=>`<button class="ochip" data-i="${i}">${nameH(i)}</button>`).join('')+'<button class="ochip skip" data-i="-1">ไม่ระบุ</button>';
+    $('oChips').querySelectorAll('.ochip').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$('owner').hidden=true;
+      if(i>=0){$('mWho').textContent=who+' คือ '+name(i);reveal(i,tok)}else reveal(null,tok,who)});
+  } else reveal(loser,tok);
+}
+function reveal(L,tok,fallback){
+  $('target').hidden=false;
+  if(L==null){$('tLabel').textContent='คนที่โดน';setBig({big:fallback.replace('เจ้าของ','')});finishResult();return}
+  if(!cfg.punish){$('tLabel').textContent='คนที่โดน';setBig({big:name(L)});finishResult();return}
+  const sushi=cfg.pmode==='sushi';$('tLabel').textContent=sushi?'คนที่ต้องกิน':'คนรับกรรม';
+  const opts=sushi?sushiOptions(L):relOptions(L),win=weightedPick(opts);
+  if(opts.length===1){setBig(describe(win,L));finishResult();return}
+  let i=rnd(opts.length),delay=60,steps=0;const n=16+rnd(5);
+  (function tick(){
+    if(tok!==rToken)return;
+    if(++steps>=n){setBig(describe(win,L));finishResult();return}
+    i=(i+1)%opts.length;setBig(describe(opts[i],L));tone(700,.03,'triangle',.04);
+    delay*=1.12;setTimeout(tick,delay);
+  })();
+}
+function hideResult(){$('modal').hidden=true;rToken++}
+$('mAgain').onclick=()=>{hideResult();againFn&&againFn()};
+$('mMenu').onclick=()=>{hideResult();location.hash='menu'};
+function syncPunish(){const lbl=cfg.pmode==='sushi'?'สุ่มซูชิวาซาบิตอนจบ':'สุ่มคนรับกรรมตอนจบ';
+  document.querySelectorAll('.ptog').forEach(b=>{b.setAttribute('aria-checked',cfg.punish?'true':'false');const t=b.querySelector('span:not(.sw)');if(t)t.textContent=lbl});$('sPunish').checked=cfg.punish}
+function setPunish(v){cfg.punish=!!v;save();syncPunish();if(!$('sModal').hidden)renderS()}
+document.querySelectorAll('.ptog').forEach(b=>b.onclick=()=>{setPunish(!cfg.punish);tone(cfg.punish?760:420,.06,'triangle',.05);buzz(8)});
+
+/* ---------- seat map: tap two seats or drag one onto another to swap ---------- */
+function seatMap(el,getArr,setArr,getPair){
+  let sel=-1,flashIdx=[],drag=null;
+  const nm=(arr,i)=>((arr[i]&&arr[i].n)||'').trim()||'ผู้เล่น '+(i+1);
+  const pos=(i,n)=>{const a=i*2*Math.PI/n;return[50+41*Math.sin(a),50-41*Math.cos(a)]};
+  function draw(){
+    const arr=getArr(),n=arr.length;if(sel>=n)sel=-1;
+    const L=sel>=0?(sel+1)%n:-1,R=sel>=0?(sel-1+n)%n:-1,O=sel>=0&&n>=4?(sel+Math.floor(n/2))%n:-1;
+    let lines='';const paired=new Set();
+    if(getPair){arr.forEach((_,i)=>{const j=getPair(arr,i);if(j>=0){paired.add(i);if(i<j){const[a,b]=pos(i,n),[c,d]=pos(j,n);lines+=`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}"/>`}}})}
+    el.innerHTML=(lines?`<svg class="plines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${lines}</svg>`:'')+
+      `<div class="smid">${sel>=0?`<b>${sel+1}</b>${esc(nm(arr,sel))}<br>แตะคนอื่นเพื่อสลับ`:'<b>↻</b>เรียงตามเข็มนาฬิกา<br>ซ้ายมือ = คนถัดไป'}</div>`+
+      arr.map((_,i)=>{const[x,y]=pos(i,n),t=[];
+        if(sel>=0&&i!==sel){if(i===L)t.push('ซ้าย');if(i===R)t.push('ขวา');if(i===O)t.push('ตรงข้าม')}
+        return `<button class="sbtn${i===sel?' sel':''}${t.length?' rel':''}${paired.has(i)?' paired':''}${flashIdx.includes(i)?' swapped':''}" style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%" data-i="${i}" aria-label="ที่นั่ง ${i+1} ${esc(nm(arr,i))}">${t.length?`<em>${t.join('/')}</em>`:''}<i>${i+1}</i><span>${esc(nm(arr,i))}</span></button>`}).join('');
+    flashIdx=[];
+    el.querySelectorAll('.sbtn').forEach(b=>{b.onpointerdown=e=>down(e,b);b.onclick=e=>{if(e.detail===0)tap(+b.dataset.i)}});
+  }
+  function down(e,b){if(e.button>0)return;e.preventDefault();
+    drag={i:+b.dataset.i,b,x0:e.clientX,y0:e.clientY,moved:false,r:el.getBoundingClientRect(),tgt:-1};
+    try{b.setPointerCapture(e.pointerId)}catch(_){}
+    b.onpointermove=move;b.onpointerup=up;b.onpointercancel=cancel}
+  function move(e){if(!drag)return;const dx=e.clientX-drag.x0,dy=e.clientY-drag.y0;
+    if(!drag.moved){if(dx*dx+dy*dy<81)return;drag.moved=true;drag.b.classList.add('drag');drag.b.classList.remove('sel')}
+    const x=(e.clientX-drag.r.left)/drag.r.width*100,y=(e.clientY-drag.r.top)/drag.r.height*100;
+    drag.b.style.left=x+'%';drag.b.style.top=y+'%';
+    let best=-1,bd=1e9;
+    el.querySelectorAll('.sbtn').forEach(o=>{const j=+o.dataset.i;if(j===drag.i)return;const d=(parseFloat(o.style.left)-x)**2+(parseFloat(o.style.top)-y)**2;if(d<bd){bd=d;best=j}});
+    const t=bd<15*15?best:-1;
+    if(t!==drag.tgt){el.querySelectorAll('.sbtn.target').forEach(o=>o.classList.remove('target'));if(t>=0){el.querySelector(`.sbtn[data-i="${t}"]`).classList.add('target');tone(520,.03,'triangle',.04)}drag.tgt=t}
+  }
+  function up(){if(!drag)return;const d=drag;drag=null;if(!d.moved){tap(d.i);return}if(d.tgt>=0)swap(d.i,d.tgt);else{sel=-1;draw()}}
+  function cancel(){if(drag){drag=null;draw()}}
+  function tap(i){if(sel<0){sel=i;tone(600,.05,'triangle',.05);draw();return}if(i===sel){sel=-1;draw();return}swap(sel,i)}
+  function swap(a,b){const arr=getArr().slice();[arr[a],arr[b]]=[arr[b],arr[a]];flashIdx=[a,b];sel=-1;tone(500,.08,'triangle',.06,900);buzz(15);setArr(arr)}
+  return {draw,reset(){sel=-1;drag=null}};
+}
+
+
+const G={};
+
+/* ---------- 1. Croc ---------- */
+G.croc=(()=>{
+  const TEETH=[[18.7,17.1,'u'],[39,15.7,'u'],[60.8,15.7,'u'],[81.2,17.1,'u'],
+  [11,25.5,'u'],[11.7,35,'u'],[13.1,45.2,'u'],[88.2,25.5,'u'],[88.2,35,'u'],[86.7,45.2,'u'],
+  [13.6,60.7,'l'],[12.1,70.7,'l'],[11.5,80.5,'l'],[86.3,60.7,'l'],[87.8,70.7,'l'],[88.5,80.5,'l'],
+  [19.5,88.3,'l'],[39,90.2,'l'],[60.8,90.2,'l'],[80.6,88.3,'l']];
+  const FACES={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+  const mouth=$('mouth'),center=$('center');
+  let turn=0,st='roll',left=0,face=1,bad=-1,pressed=new Set(),els=[],iv=null,to=[];
+  TEETH.forEach(([x,y,k],i)=>{const b=document.createElement('button');b.className='tooth '+k;b.style.left=x+'%';b.style.top=y+'%';
+    b.setAttribute('aria-label','ฟันซี่ที่ '+(i+1));b.onclick=()=>press(i);(k==='u'?$('upper'):$('lower')).appendChild(b);els.push(b)});
+  function drawOdds(){const w=cfg.dice,sm=w.reduce((a,b)=>a+b,0)||1;$('odds').innerHTML=w.map((v,i)=>`<span><i style="height:${Math.max(2,Math.round(v/sm*48))}px"></i>${i+1}</span>`).join('')}
+  drawOdds();
+  function weighted(){const w=cfg.dice,sm=w.reduce((a,b)=>a+b,0);if(!sm)return 1+rnd(6);let r=Math.random()*sm;for(let i=0;i<6;i++){r-=w[i];if(r<0)return i+1}return 6}
+  function dieHTML(n,cls){return `<button class="die ${n===1?'one':''} ${cls}" id="die" ${st!=='roll'?'disabled':''} aria-label="ทอยลูกเต๋า">`+
+    Array.from({length:9},(_,i)=>`<span class="pip ${FACES[n].includes(i)?'on':''}"></span>`).join('')+`</button>`}
+  function render(msg){
+    mouth.classList.toggle('locked',st!=='press');mouth.classList.toggle('ready',st==='press');
+    let s=st==='roll'?(msg||'แตะลูกเต๋าเพื่อทอย'):st==='rolling'?'กำลังทอย…':`<span class="big-n">${left}</span>ซี่ที่ต้องกด`;
+    center.innerHTML=`<div class="turn">ตาของ<b>${nameH(turn)}</b></div>${dieHTML(face,st==='roll'?'attn':'')}<div class="status">${s}</div>`;
+    if(st==='roll')$('die').onclick=roll;
+  }
+  function roll(){
+    if(st!=='roll')return;st='rolling';render();
+    const d=$('die');d.classList.add('rolling');let t=0;
+    iv=setInterval(()=>{face=1+rnd(6);d.className='die rolling'+(face===1?' one':'');
+      d.querySelectorAll('.pip').forEach((p,i)=>p.classList.toggle('on',FACES[face].includes(i)));tone(500+Math.random()*400,.04,'triangle',.05);
+      if(++t>=9){clearInterval(iv);face=weighted();left=Math.min(face,TEETH.length-pressed.size);st='press';tone(880,.15,'triangle',.08);render()}},75);
+  }
+  function press(i){
+    if(st!=='press'){if(st==='roll'){const s=center.querySelector('.status');if(s)s.innerHTML='<span class="warn">ทอยลูกเต๋าก่อนนะ</span>'}return}
+    if(i===bad)return bite(i);
+    pressed.add(i);els[i].classList.add('pressed');left--;tone(320,.06,'square',.05);buzz(10);
+    if(left<=0){turn=(turn+1)%players;st='roll';render(`รอดแล้ว! ส่งต่อให้ ${nameH(turn)}`)}else render();
+  }
+  function bite(i){
+    st='biting';els[i].classList.add('bitten');mouth.classList.remove('ready');mouth.classList.add('bite');
+    tone(180,.35,'sawtooth',.18,40);buzz([60,40,120]);
+    to.push(setTimeout(()=>mouth.classList.add('shake'),120));
+    to.push(setTimeout(()=>{mouth.classList.remove('shake');st='lost';
+      showResult({word:'งับ!',who:name(turn)+' โดนจระเข้งับ',loser:turn,again:()=>start((turn+1)%players)})},700));
+  }
+  function start(s){stop();pressed.clear();bad=rnd(TEETH.length);turn=s%players;face=1;st='roll';
+    mouth.classList.remove('bite','shake');els.forEach(t=>t.classList.remove('pressed','bitten'));render()}
+  function stop(){clearInterval(iv);to.forEach(clearTimeout);to=[]}
+  $('crocReset').onclick=()=>start(0);
+  return {init:()=>start(0),stop,drawOdds,refresh:()=>{if(st==='roll'||st==='press')render()}};
+})();
+
+/* ---------- 2. Bomb ---------- */
+G.bomb=(()=>{
+  const CATS=['ผลไม้','สัตว์','จังหวัดในไทย','อาหารไทย','ยี่ห้อรถ','ประเทศ','อาชีพ','ขนม','ยี่ห้อมือถือ','กีฬา','เครื่องดื่ม','ของในห้องน้ำ','สิ่งที่เป็นสีแดง','ของในครัว','ผัก','ตัวการ์ตูน','ชื่อเพลงไทย','ร้านสะดวกซื้อมีขาย','ยี่ห้อเสื้อผ้า','สถานที่เที่ยวในไทย','คำที่ขึ้นต้นด้วย ก','คำที่ลงท้ายด้วย ง','สิ่งที่บินได้','ของที่พกไปทะเล','วิชาเรียน','อวัยวะในร่างกาย','เครื่องดนตรี','สีต่างๆ'];
+  const bomb=$('bomb'),main=$('bMain');
+  let st='idle',holder=0,t0=0,fuse=0,tt=null,raf=0,flip=false,cat='';
+  function newCat(){let c;do{c=pick(CATS)}while(c===cat);cat=c;$('bPrompt').innerHTML=`พูดชื่อ<b>${cat}</b>1 อย่าง ห้ามซ้ำ แล้วกดส่งต่อ`}
+  function paint(){$('bHolder').textContent=name(holder);main.textContent=st==='idle'?'จุดชนวน':'ส่งต่อ →';main.disabled=st==='boom';
+    $('bCat').disabled=st!=='idle';bomb.classList.toggle('lit',st==='run')}
+  function tick(){
+    if(st!=='run')return;const e=performance.now()-t0;if(e>=fuse)return boom();
+    flip=!flip;tone(flip?1250:950,.035,'square',.045);
+    bomb.classList.remove('tk');void bomb.offsetWidth;bomb.classList.add('tk');
+    tt=setTimeout(tick,Math.max(110,620-e/1000*20));
+  }
+  function loop(){if(st!=='run')return;const e=performance.now()-t0;bomb.style.setProperty('--k',Math.min(1,e/35000).toFixed(3));raf=requestAnimationFrame(loop)}
+  main.onclick=()=>{
+    if(st==='idle'){st='run';t0=performance.now();fuse=(12+Math.random()*28)*1000;tick();loop();paint();tone(300,.3,'sawtooth',.06,900)}
+    else if(st==='run'){holder=(holder+1)%players;paint();tone(520,.05,'triangle',.06);buzz(15);
+      $('bHolder').animate([{transform:'scale(1.35)',color:'#ffd04d'},{transform:'none'}],{duration:350})}
+  };
+  $('bCat').onclick=newCat;
+  function boom(){
+    st='boom';clearTimeout(tt);cancelAnimationFrame(raf);bomb.classList.remove('lit','tk');bomb.classList.add('boom');paint();
+    noise(1.3,.8,900);tone(90,.7,'sawtooth',.22,30);buzz([250,80,300]);flash('#ffe8b0');
+    tt=setTimeout(()=>showResult({word:'ตูม!',who:name(holder)+' ถือระเบิดอยู่',loser:holder,again:()=>init((holder+1)%players)}),900);
+  }
+  function init(s=0){stop();st='idle';holder=s%players;bomb.classList.remove('boom','lit','tk');bomb.style.setProperty('--k',0);newCat();paint()}
+  function stop(){clearTimeout(tt);cancelAnimationFrame(raf);if(st==='run')st='idle'}
+  return {init:()=>init(0),stop,refresh:paint};
+})();
+
+/* ---------- 3. Finger chooser ---------- */
+G.finger=(()=>{
+  const COLORS=[['แดง','#ff4d4d'],['ฟ้า','#3db2ff'],['เขียว','#3fd17a'],['เหลือง','#ffd04d'],['ม่วง','#a37bff'],['ชมพู','#ff6fb5'],['ส้ม','#ff8a3d'],['ขาว','#f4f4f4'],['เขียวมิ้นต์','#2fd6c9'],['น้ำตาล','#c08a5a']];
+  const area=$('touch'),hint=$('fHint'),cnt=$('fCount');
+  let f=new Map(),phase='wait',timer=null,civ=null,to=[],mouseN=0;
+  function freeColor(){const used=[...f.values()].map(v=>v.c[1]);return COLORS.find(c=>!used.includes(c[1]))||pick(COLORS)}
+  function pos(e){const r=area.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]}
+  function add(id,x,y){const c=freeColor(),el=document.createElement('div');el.className='dot';el.style.setProperty('--dc',c[1]);
+    el.style.left=x+'px';el.style.top=y+'px';area.appendChild(el);f.set(id,{el,c});tone(400+f.size*80,.08,'triangle',.06);buzz(8);changed()}
+  function remove(id){const v=f.get(id);if(!v)return;v.el.remove();f.delete(id);changed()}
+  function changed(){
+    if(phase==='done')return;
+    clearTimeout(timer);clearInterval(civ);area.classList.remove('counting');hint.hidden=f.size>0;cnt.textContent='';
+    if(f.size>=2){void area.offsetWidth;area.classList.add('counting');phase='counting';let n=3;cnt.textContent='ค้างไว้… '+n;
+      civ=setInterval(()=>{n--;if(n>0){cnt.textContent='ค้างไว้… '+n;tone(600,.05,'triangle',.05)}},1000);
+      timer=setTimeout(choose,3000)}
+    else{phase='wait';if(f.size===1)cnt.textContent='รออีกอย่างน้อย 1 นิ้ว'}
+  }
+  function choose(){
+    clearInterval(civ);phase='done';area.classList.remove('counting');cnt.textContent='กำลังสุ่ม…';
+    const list=[...f.values()],win=rnd(list.length);let i=rnd(list.length),steps=0,d=70;const n=list.length*3+win+rnd(3);
+    (function step(){
+      list.forEach(v=>v.el.classList.remove('hl'));
+      if(steps>=n){const w=list[win];list.forEach(v=>v.el.classList.add(v===w?'win':'out'));cnt.textContent='';
+        area.style.background=`radial-gradient(circle at 50% 50%,${w.c[1]}55,#0e1611 70%)`;
+        tone(220,.4,'sawtooth',.14,60);noise(.4,.4,1500);buzz([80,40,160]);
+        to.push(setTimeout(()=>showResult({word:'โดน!',who:`เจ้าของนิ้วสี${w.c[0]}`,again:init}),1100));return}
+      i=(i+1)%list.length;list[i].el.classList.add('hl');tone(820,.04,'triangle',.05);steps++;
+      if(steps>n-6)d*=1.25;to.push(setTimeout(step,d));
+    })();
+  }
+  area.addEventListener('pointerdown',e=>{
+    if(phase==='done')return;e.preventDefault();const [x,y]=pos(e);
+    if(e.pointerType==='mouse'){
+      for(const [id,v] of f){if(String(id).startsWith('m')){const dx=parseFloat(v.el.style.left)-x,dy=parseFloat(v.el.style.top)-y;if(dx*dx+dy*dy<48*48){remove(id);return}}}
+      add('m'+(++mouseN),x,y);return}
+    add(e.pointerId,x,y);
+  });
+  area.addEventListener('pointermove',e=>{const v=f.get(e.pointerId);if(!v||phase==='done')return;const [x,y]=pos(e);v.el.style.left=x+'px';v.el.style.top=y+'px'});
+  const up=e=>{if(e.pointerType==='mouse')return;if(phase==='done'){return}remove(e.pointerId)};
+  area.addEventListener('pointerup',up);area.addEventListener('pointercancel',up);
+  area.addEventListener('contextmenu',e=>e.preventDefault());
+  function init(){stop();f.forEach(v=>v.el.remove());f.clear();phase='wait';hint.hidden=false;cnt.textContent='';area.style.background='';area.classList.remove('counting')}
+  function stop(){clearTimeout(timer);clearInterval(civ);to.forEach(clearTimeout);to=[]}
+  return {init,stop};
+})();
+
+/* ---------- 4. Spin the bottle ---------- */
+G.bottle=(()=>{
+  const table=$('table'),bottle=$('bottle'),btn=$('spinBtn');
+  let rot=0,spinning=false,to=[];
+  function angles(){return Array.from({length:players},(_,i)=>i*360/players)}
+  function layout(){table.querySelectorAll('.seat').forEach(s=>s.remove());
+    angles().forEach((a,i)=>{const s=document.createElement('div'),r=a*Math.PI/180;s.className='seat';s.textContent=i+1;const l=document.createElement('span');l.textContent=name(i);s.appendChild(l);
+      s.style.left=(50+41*Math.sin(r))+'%';s.style.top=(50-41*Math.cos(r))+'%';table.appendChild(s)})}
+  function spin(){
+    if(spinning)return;spinning=true;btn.disabled=true;table.querySelectorAll('.seat').forEach(s=>s.classList.remove('hit'));
+    rot+=360*(4+rnd(3))+Math.random()*360;const D=4600;
+    bottle.style.transition=`transform ${D}ms cubic-bezier(.15,.62,.1,1)`;bottle.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
+    let d=45,t=0;(function tk(){if(!spinning)return;t+=d;if(t>D-200)return;tone(900,.025,'square',.04);d*=1.085;to.push(setTimeout(tk,d))})();
+    to.push(setTimeout(done,D+80));
+  }
+  function done(){
+    const a=((rot%360)+360)%360;let best=0,bd=999;
+    angles().forEach((s,i)=>{const dd=Math.abs(((a-s+540)%360)-180);if(dd<bd){bd=dd;best=i}});
+    table.querySelectorAll('.seat')[best].classList.add('hit');tone(523,.12,'triangle',.09);to.push(setTimeout(()=>tone(784,.25,'triangle',.09),130));buzz([40,30,80]);
+    to.push(setTimeout(()=>showResult({word:'ชี้แล้ว!',who:'ขวดชี้ไปที่ '+name(best),loser:best,again:()=>{spinning=false;btn.disabled=false;table.querySelectorAll('.seat').forEach(s=>s.classList.remove('hit'))}}),1000));
+  }
+  btn.onclick=spin;bottle.onclick=spin;
+  function stop(){to.forEach(clearTimeout);to=[];spinning=false}
+  return {init:()=>{stop();btn.disabled=false;layout()},stop,refresh:()=>{if(!spinning)layout()}};
+})();
+
+/* ---------- 5. Card flip ---------- */
+G.cards=(()=>{
+  const grid=$('cGrid'),info=$('cInfo');
+  const SKULL='<svg viewBox="0 0 40 40"><path d="M20 4C11 4 5 10 5 18c0 5 3 9 6 10v5c0 2 1 3 3 3h12c2 0 3-1 3-3v-5c3-1 6-5 6-10C35 10 29 4 20 4z" fill="#fff"/><circle cx="14" cy="18" r="4.5" fill="#b21d1d"/><circle cx="26" cy="18" r="4.5" fill="#b21d1d"/><path d="M18 26l2-4 2 4z" fill="#b21d1d"/></svg>';
+  let deck=[],turn=0,dir=1,need=1,nextNeed=1,busy=false,to=[];
+  function front(t){
+    if(t==='skull')return `<div class="face front skull">${SKULL}<span>ตัวซวย!</span></div>`;
+    if(t==='x2')return `<div class="face front x2"><span class="g">×2</span><small>คนต่อไปเปิด 2 ใบ</small></div>`;
+    if(t==='rev')return `<div class="face front rev"><span class="g">⇄</span><small>กลับทิศ</small></div>`;
+    return `<div class="face front"><span class="g">✓</span><small>รอด</small></div>`;
+  }
+  function build(){
+    const n=players<=4?12:16;deck=Array(n).fill('safe');
+    const slots=[...Array(n).keys()].sort(()=>Math.random()-.5);
+    deck[slots[0]]='skull';deck[slots[1]]='x2';if(players>2)deck[slots[2]]='rev';
+    grid.style.setProperty('--rows',n/4);
+    grid.innerHTML=deck.map((t,i)=>`<button class="pcard" data-i="${i}" aria-label="ไพ่ใบที่ ${i+1}"><div class="in"><div class="face cback">?</div>${front(t)}</div></button>`).join('');
+    grid.querySelectorAll('.pcard').forEach(c=>c.onclick=()=>flipCard(+c.dataset.i,c));
+  }
+  function paint(msg){info.innerHTML=(msg?msg+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เปิดอีก <b>${need}</b> ใบ`+(players>2?` · วน${dir===1?'ตามเข็ม':'ทวนเข็ม'}`:'')}
+  function flipCard(i,c){
+    if(busy||c.classList.contains('open'))return;busy=true;c.classList.add('sus');
+    for(let k=0;k<6;k++)to.push(setTimeout(()=>tone(300+k*60,.05,'triangle',.05),k*110));
+    to.push(setTimeout(()=>{c.classList.remove('sus');c.classList.add('open');reveal(deck[i])},760));
+  }
+  function reveal(t){
+    if(t==='skull'){tone(160,.5,'sawtooth',.18,50);noise(.5,.5,1200);buzz([100,50,200]);flash('#ff5a4e');
+      to.push(setTimeout(()=>showResult({word:'ซวยแล้ว!',who:name(turn)+' เปิดเจอไพ่ตัวซวย',loser:turn,again:()=>init((turn+dir+players)%players)}),900));return}
+    let msg='';
+    if(t==='x2'){nextNeed=2;msg='<b style="color:#ffd04d">×2!</b>';tone(700,.1,'square',.07);setTimeout(()=>tone(900,.15,'square',.07),100)}
+    else if(t==='rev'){dir*=-1;msg='<b style="color:#3fc6c0">กลับทิศ!</b>';tone(600,.2,'triangle',.08,300)}
+    else tone(880,.12,'triangle',.07);
+    need--;
+    if(need<=0){turn=(turn+dir+players)%players;need=nextNeed;nextNeed=1;msg=(msg?msg+' ':'')+'รอด! ส่งต่อ'}
+    busy=false;paint(msg);
+  }
+  function init(s=0){stop();turn=s%players;dir=1;need=1;nextNeed=1;busy=false;build();paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  $('cReset').onclick=()=>init(0);
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 6. Balloon ---------- */
+G.balloon=(()=>{
+  const b=$('balloon'),wrap=$('bwrap'),pumpBtn=$('pump'),passBtn=$('pass'),info=$('lInfo');
+  const MAXREF=28;let pumps=0,limit=0,turn=0,mine=0,st='play',to=[];
+  function size(){const p=Math.min(1,pumps/MAXREF);b.style.setProperty('--s',(.3+.7*p).toFixed(3));wrap.style.setProperty('--w',(p*p).toFixed(3))}
+  function paint(msg){info.innerHTML=(msg?msg+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · สูบได้อีก <b>${3-mine}</b> ครั้ง`;
+    pumpBtn.textContent=`สูบลม (${mine}/3)`;pumpBtn.disabled=st!=='play'||mine>=3;passBtn.disabled=st!=='play'||mine<1}
+  pumpBtn.onclick=()=>{
+    if(st!=='play'||mine>=3)return;pumps++;mine++;
+    noise(.22,.3,500+pumps*30);tone(180+pumps*14,.22,'sine',.05,320+pumps*18);buzz(12);
+    if(pumps>=limit)return pop();size();paint();
+  };
+  passBtn.onclick=()=>{if(st!=='play'||mine<1)return;turn=(turn+1)%players;mine=0;tone(520,.06,'triangle',.06);paint('ส่งต่อแล้ว')};
+  function pop(){st='pop';b.classList.add('pop');wrap.classList.add('popped');noise(.5,.9,4000);tone(120,.3,'square',.15,40);buzz([120,40,200]);flash('#ffd0ca');paint();
+    to.push(setTimeout(()=>showResult({word:'โป๊ะ!',who:name(turn)+' ทำลูกโป่งแตก',loser:turn,again:()=>init((turn+1)%players)}),800))}
+  function init(s=0){stop();pumps=0;mine=0;st='play';turn=s%players;limit=4+rnd(MAXREF-4);b.classList.remove('pop');wrap.classList.remove('popped');size();paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+})();
+
+/* ---------- 7. Stop at 10 s ---------- */
+G.stop10=(()=>{
+  const clock=$('sClock'),sub=$('sSub'),btn=$('sBtn'),board=$('sBoard'),info=$('sInfo');
+  const TARGET=10,HIDE=3;
+  let idx=0,st='ready',t0=0,raf=0,res=[],to=null,worstI=-1;
+  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
+    if(st==='ready'){clock.textContent='0.00';clock.className='clock';sub.textContent=`กดเริ่ม แล้วหยุดให้ตรง ${TARGET}.00 วินาที · ตัวเลขหายหลัง ${HIDE} วิ`;btn.textContent='เริ่ม'}}
+  function drawBoard(){const s=res.slice().sort((a,b)=>Math.abs(a.d)-Math.abs(b.d));
+    board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${r.v.toFixed(2)}</span><span class="d">${r.d>=0?'+':''}${r.d.toFixed(2)}</span></li>`).join('')}
+  function loop(){if(st!=='run')return;const e=(performance.now()-t0)/1000;
+    if(e<HIDE)clock.textContent=e.toFixed(2);else if(!clock.classList.contains('hid')){clock.textContent='?.??';clock.classList.add('hid');tone(300,.08,'triangle',.05)}
+    raf=requestAnimationFrame(loop)}
+  btn.onclick=()=>{
+    if(st==='ready'){st='run';t0=performance.now();btn.textContent='หยุด!';sub.textContent='นับในใจ…';tone(660,.08,'triangle',.06);loop()}
+    else if(st==='run'){const v=(performance.now()-t0)/1000,d=v-TARGET,ad=Math.abs(d);st='shown';cancelAnimationFrame(raf);res.push({i:idx,v,d});
+      clock.textContent=v.toFixed(2);clock.className='clock '+(ad<=.3?'good':ad>1?'bad':'');
+      sub.textContent=ad<.005?'เป๊ะ!':`${d>0?'เกิน':'ขาด'}ไป ${ad.toFixed(2)} วินาที`;
+      tone(ad<=.3?880:440,.15,'triangle',.08);buzz(20);drawBoard();
+      btn.textContent=idx<players-1?`ส่งต่อให้ ${name(idx+1)} →`:'ดูผล'}
+    else if(st==='shown'){if(idx<players-1){idx++;st='ready';paint()}else finish()}
+  };
+  function finish(){st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(Math.abs(r.d)>Math.abs(w.d))w=r});worstI=w.i;drawBoard();
+    to=setTimeout(()=>showResult({word:'ห่างสุด!',who:`${name(w.i)} ${w.d>0?'เกิน':'ขาด'}ไป ${Math.abs(w.d).toFixed(2)} วิ`,loser:w.i,again:init}),700)}
+  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';btn.disabled=false;paint()}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to)}
+  return {init,stop,refresh:()=>{paint();drawBoard()}};
+})();
+
+/* ---------- 8. Reaction ---------- */
+G.react=(()=>{
+  const pad=$('rPad'),big=$('rBig'),small=$('rSmall'),board=$('rBoard'),info=$('rInfo');
+  const TRIES=2,FOUL=1000;
+  let idx=0,st='ready',tries=[],t0=0,tt=null,res=[],worstI=-1;
+  function set(cls,b,s){pad.className='rpad '+cls;big.textContent=b;small.textContent=s||''}
+  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
+    if(st==='ready')set('','แตะเพื่อเริ่ม',`รอจอเป็นสีเขียวแล้วแตะให้ไวที่สุด · เล่น ${TRIES} ครั้ง เอาค่าเฉลี่ย`)}
+  function arm(){st='wait';set('wait','รอสีเขียว…','แตะก่อนเวลา = ฟาวล์');
+    tt=setTimeout(()=>{st='go';t0=performance.now();set('go','แตะ!');tone(990,.08,'square',.06)},1500+Math.random()*3200)}
+  function drawBoard(){const s=res.slice().sort((a,b)=>a.v-b.v);
+    board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${Math.round(r.v)} ms</span><span class="d">${r.t.map(x=>x>=FOUL?'ฟาวล์':Math.round(x)).join(' / ')}</span></li>`).join('')}
+  pad.addEventListener('pointerdown',e=>{e.preventDefault();actx();
+    if(st==='ready'){tries=[];arm()}
+    else if(st==='wait'){clearTimeout(tt);tries.push(FOUL);buzz(80);tone(150,.25,'sawtooth',.1);after('foul','ฟาวล์!','แตะก่อนขึ้นสีเขียว นับเป็น 1000 ms')}
+    else if(st==='go'){const rt=performance.now()-t0;tries.push(rt);tone(660,.08,'triangle',.06);after('',Math.round(rt)+' ms','')}
+    else if(st==='res')arm();
+    else if(st==='next'){idx++;st='ready';paint()}
+  });
+  function after(cls,b,s){
+    if(tries.length<TRIES){st='res';set(cls,b,(s?s+' · ':'')+'แตะเพื่อลองครั้งที่ 2');return}
+    const v=tries.reduce((a,c)=>a+c,0)/tries.length;res.push({i:idx,v,t:tries.slice()});drawBoard();
+    if(idx<players-1){st='lock';set(cls,b,(s?s+' · ':'')+`เฉลี่ย ${Math.round(v)} ms · ส่งมือถือให้ ${name(idx+1)} แล้วแตะ`);tt=setTimeout(()=>{st='next'},500)}
+    else{st='done';set(cls,b,`เฉลี่ย ${Math.round(v)} ms`);finish()}
+  }
+  function finish(){let w=res[0];res.forEach(r=>{if(r.v>w.v)w=r});worstI=w.i;drawBoard();
+    tt=setTimeout(()=>showResult({word:'ช้าสุด!',who:`${name(w.i)} เฉลี่ย ${Math.round(w.v)} ms`,loser:w.i,again:init}),900)}
+  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';paint()}
+  function stop(){clearTimeout(tt)}
+  $('rReset').onclick=init;
+  return {init,stop,refresh:()=>{paint();drawBoard()}};
+})();
+
+/* ---------- 9. Simon ---------- */
+G.simon=(()=>{
+  const wrap=$('simon'),pads=[...wrap.querySelectorAll('.spad')],hub=$('siHub'),info=$('siInfo'),btn=$('siBtn');
+  const FREQ=[329.6,261.6,392,523.3];
+  let seq=[],turn=0,pos=0,st='ready',to=[];
+  function light(k,d){pads[k].classList.add('on');tone(FREQ[k],d/1000,'triangle',.12);to.push(setTimeout(()=>pads[k].classList.remove('on'),d))}
+  function paint(msg){info.innerHTML=(msg?msg+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · จำ <b>${seq.length}</b> ขั้น`;
+    hub.textContent=st==='input'?`${pos}/${seq.length}`:seq.length;wrap.classList.toggle('locked',st!=='input');
+    btn.disabled=st!=='ready';btn.textContent=st==='ready'?'พร้อม ดูลำดับ':st==='show'?'ดูให้ดี…':st==='input'?'กดตามลำดับ':'จบ'}
+  btn.onclick=()=>{if(st!=='ready')return;st='show';paint();play()};
+  function play(){const on=Math.max(260,560-seq.length*18),gap=Math.max(90,170-seq.length*5);let t=450;
+    seq.forEach(k=>{to.push(setTimeout(()=>light(k,on),t));t+=on+gap});
+    to.push(setTimeout(()=>{st='input';pos=0;paint()},t))}
+  pads.forEach((p,k)=>p.addEventListener('pointerdown',e=>{e.preventDefault();if(st!=='input')return;light(k,220);
+    if(k!==seq[pos]){st='over';buzz([100,50,150]);tone(110,.5,'sawtooth',.15);const want=seq[pos];paint();
+      to.push(setTimeout(()=>light(want,700),400));
+      to.push(setTimeout(()=>showResult({word:'จำผิด!',who:`${name(turn)} พลาดขั้นที่ ${pos+1} จาก ${seq.length}`,loser:turn,again:()=>init((turn+1)%players)}),1500));return}
+    pos++;hub.textContent=`${pos}/${seq.length}`;
+    if(pos>=seq.length){const prev=turn;st='ready';seq.push(rnd(4));turn=(turn+1)%players;
+      to.push(setTimeout(()=>tone(784,.12,'triangle',.08),200));paint(`<b style="color:#7ee081">${nameH(prev)} ผ่าน!</b>`)}
+  }));
+  function init(s=0){stop();seq=[rnd(4),rnd(4),rnd(4)];turn=s%players;pos=0;st='ready';pads.forEach(p=>p.classList.remove('on'));paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 10. Aim ---------- */
+G.aim=(()=>{
+  const track=$('track'),zone=$('zone'),cur=$('cursor'),btn=$('aBtn'),info=$('aInfo'),lvl=$('aLvl'),msg=$('aMsg');
+  let level=1,turn=0,st='ready',raf=0,t0=0,ph=0,zx=0,zw=0,spd=0,to=null;
+  function setup(){zw=Math.max(5,24-(level-1)*2);spd=.5+(level-1)*.09;zx=4+Math.random()*(92-zw);
+    zone.style.left=zx+'%';zone.style.width=zw+'%';track.classList.remove('hit','miss')}
+  function paint(m){info.innerHTML=`ตาของ <b>${nameH(turn)}</b>`;lvl.innerHTML=`ระดับ ${level}<small>ช่องกว้าง ${Math.round(zw)}% · ความเร็ว ×${(spd/.5).toFixed(1)}</small>`;
+    if(m!=null)msg.innerHTML=m;btn.textContent=st==='move'?'หยุด!':'เริ่ม';btn.disabled=st==='pause'||st==='over'}
+  function pos(){const e=(performance.now()-t0)/1000*spd+ph,f=e%2;return(f<1?f:2-f)*100}
+  function loop(){if(st!=='move')return;cur.style.left=pos()+'%';raf=requestAnimationFrame(loop)}
+  function go(){if(st==='ready'){st='move';t0=performance.now();ph=Math.random()*2;paint('แตะปุ่มหรือแตะจอตรงไหนก็ได้เพื่อหยุด');tone(500,.06,'triangle',.05);loop()}else if(st==='move')hit()}
+  function hit(){cancelAnimationFrame(raf);const p=pos();cur.style.left=p+'%';
+    if(p>=zx&&p<=zx+zw){const prev=turn;st='pause';track.classList.add('hit');tone(880,.12,'triangle',.08);buzz(15);turn=(turn+1)%players;level++;
+      paint(`<b style="color:#7ee081">${nameH(prev)} เข้าเป้า!</b>`);
+      to=setTimeout(()=>{st='ready';setup();paint(`เข้าเป้าแล้ว ตาต่อไปยากขึ้น`)},800)}
+    else{st='over';track.classList.add('miss');const dist=p<zx?zx-p:p-(zx+zw);tone(140,.4,'sawtooth',.14);buzz([80,40,120]);
+      paint(`<b style="color:var(--danger)">พลาด!</b> ห่างจากช่องไป ${dist.toFixed(1)}%`);
+      to=setTimeout(()=>showResult({word:'พลาดเป้า!',who:`${name(turn)} พลาดที่ระดับ ${level}`,loser:turn,again:()=>init((turn+1)%players)}),1000)}
+  }
+  btn.onclick=go;
+  $('aStage').addEventListener('pointerdown',e=>{if(st==='move'){e.preventDefault();hit()}});
+  function init(s=0){stop();level=1;turn=s%players;st='ready';setup();cur.style.left='0%';paint('กดเริ่ม แล้วหยุดเส้นให้อยู่ในช่องสีเขียว')}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to)}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 11. Quick math ---------- */
+G.math=(()=>{
+  const q=$('mQ'),bar=$('mBar'),ch=$('mCh'),info=$('maInfo'),btn=$('maBtn'),sub=$('maSub');
+  let level=1,turn=0,st='ready',cur=null,t0=0,raf=0,to=null;
+  const lim=()=>Math.max(3,8-(level-1)*.45);
+  const r=(x,y)=>x+rnd(y-x+1);
+  function gen(L){let a,b,c,text,ans;
+    if(L<=4){const hi=L<=2;a=hi?r(2,20):r(12,99);b=hi?r(2,20):r(11,89);
+      if(Math.random()<.5){text=`${a} + ${b}`;ans=a+b}else{if(b>a)[a,b]=[b,a];text=`${a} − ${b}`;ans=a-b}}
+    else if(L<=6){a=r(3,12);b=r(3,12);text=`${a} × ${b}`;ans=a*b}
+    else if(L<=8){a=r(3,12);b=r(3,12);c=r(2,30);if(Math.random()<.5){text=`${a} × ${b} + ${c}`;ans=a*b+c}else{text=`${a} × ${b} − ${c}`;ans=a*b-c}}
+    else{a=r(12,49);b=r(3,9);text=`${a} × ${b}`;ans=a*b}
+    const set=new Set([ans]),spread=Math.max(3,Math.round(Math.abs(ans)*.12));
+    while(set.size<4){let d=r(1,spread)*(Math.random()<.5?-1:1);if(L>=5&&Math.random()<.35)d=Math.random()<.5?-10:10;const v=ans+d;if(v>=0)set.add(v)}
+    return{text,ans,choices:[...set].sort(()=>Math.random()-.5)}}
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · ข้อที่ <b>${level}</b>`}
+  function ready(m){st='ready';q.textContent='?';sub.textContent=`มีเวลา ${lim().toFixed(1)} วินาที · ส่งมือถือแล้วกดพร้อม`;ch.innerHTML='';bar.style.transform='scaleX(1)';btn.disabled=false;btn.textContent='พร้อม';paint(m)}
+  btn.onclick=()=>{if(st==='ready')ask()};
+  function ask(){st='q';btn.disabled=true;btn.textContent='เลือกคำตอบ';cur=gen(level);q.textContent=cur.text+' = ?';sub.textContent='';
+    ch.innerHTML=cur.choices.map(v=>`<button data-v="${v}">${v}</button>`).join('');
+    ch.querySelectorAll('button').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();answer(+b.dataset.v,b)}));
+    tone(600,.06,'triangle',.05);t0=performance.now();loop()}
+  function loop(){if(st!=='q')return;const e=(performance.now()-t0)/1000,L=lim();bar.style.transform=`scaleX(${Math.max(0,1-e/L)})`;
+    if(e>=L)return fail(null);raf=requestAnimationFrame(loop)}
+  function answer(v,b){if(st!=='q')return;cancelAnimationFrame(raf);
+    if(v===cur.ans){b.classList.add('right');tone(880,.1,'triangle',.08);buzz(12);const prev=turn;turn=(turn+1)%players;level++;st='pause';
+      q.textContent=`${cur.text} = ${cur.ans}`;to=setTimeout(()=>ready(`<b style="color:#7ee081">${nameH(prev)} ถูก!</b>`),700)}
+    else{b.classList.add('wrong');fail(v)}}
+  function fail(v){st='over';cancelAnimationFrame(raf);ch.querySelectorAll('button').forEach(x=>{if(+x.dataset.v===cur.ans)x.classList.add('right')});
+    q.textContent=`${cur.text} = ${cur.ans}`;tone(140,.4,'sawtooth',.14);buzz([80,40,120]);
+    to=setTimeout(()=>showResult({word:v==null?'หมดเวลา!':'ผิด!',who:`${name(turn)} ${v==null?'ตอบไม่ทัน':'ตอบ '+v} (${cur.text} = ${cur.ans})`,loser:turn,again:()=>init((turn+1)%players)}),1200)}
+  function init(s=0){stop();level=1;turn=s%players;ready()}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to);st='ready'}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 12. Stroop ---------- */
+G.stroop=(()=>{
+  const C=[['แดง','#ff4d4d'],['เขียว','#3fd17a'],['ฟ้า','#3db2ff'],['เหลือง','#ffd04d']];
+  const PER=5;
+  const word=$('stWord'),rule=$('stRule'),bar=$('stBar'),pips=$('stPips'),btns=$('stBtns'),info=$('stInfo'),btn=$('stBtn');
+  let level=1,turn=0,st='ready',k=0,cur=null,t0=0,raf=0,to=null;
+  const lim=()=>Math.max(1.3,3.2-(level-1)*.22);
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · ระดับ <b>${level}</b>`;
+    pips.innerHTML=Array.from({length:PER},(_,i)=>`<i class="${i<k?'ok':''}"></i>`).join('')}
+  function ready(m){st='ready';k=0;word.textContent='?';word.style.color='';bar.style.transform='scaleX(1)';btns.innerHTML='';
+    rule.innerHTML=level>=3?'ดูป้ายทุกข้อ ตอบตาม <b>สี</b> หรือ <b>คำ</b>':'ตอบตาม <b>สีของตัวอักษร</b>';
+    btn.disabled=false;btn.textContent='พร้อม';paint(m)}
+  function next(){const wi=rnd(4);let ci;do{ci=rnd(4)}while(ci===wi);
+    const byWord=level>=3&&Math.random()<Math.min(.5,.2+level*.05);
+    cur={ci,ans:byWord?wi:ci};st='q';
+    rule.innerHTML=byWord?'ตอบตาม <b style="color:#ff9a5c">คำที่เขียน</b>':'ตอบตาม <b>สีของตัวอักษร</b>';
+    word.textContent=C[wi][0];word.style.color=C[ci][1];
+    const order=level>=2?[0,1,2,3].sort(()=>Math.random()-.5):[0,1,2,3];
+    btns.innerHTML=order.map(i=>`<button data-i="${i}">${C[i][0]}</button>`).join('');
+    btns.querySelectorAll('button').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();answer(+b.dataset.i,b)}));
+    t0=performance.now();loop()}
+  function loop(){if(st!=='q')return;const e=(performance.now()-t0)/1000,L=lim();bar.style.transform=`scaleX(${Math.max(0,1-e/L)})`;
+    if(e>=L)return fail(null);raf=requestAnimationFrame(loop)}
+  btn.onclick=()=>{if(st!=='ready')return;btn.disabled=true;btn.textContent='ตอบให้ทัน';tone(600,.06,'triangle',.05);next()};
+  function answer(v,b){if(st!=='q')return;cancelAnimationFrame(raf);
+    if(v!==cur.ans){b.classList.add('wrong');return fail(v)}
+    b.classList.add('right');k++;tone(700+k*60,.07,'triangle',.07);paint();
+    if(k>=PER){const prev=turn;st='pause';turn=(turn+1)%players;level++;buzz(15);
+      to=setTimeout(()=>ready(`<b style="color:#7ee081">${nameH(prev)} ผ่าน!</b>`),700)}
+    else{st='gap';to=setTimeout(next,160)}}
+  function fail(v){st='over';cancelAnimationFrame(raf);
+    btns.querySelectorAll('button').forEach(x=>{if(+x.dataset.i===cur.ans)x.classList.add('right')});
+    tone(140,.4,'sawtooth',.14);buzz([80,40,120]);
+    to=setTimeout(()=>showResult({word:v==null?'ช้าไป!':'โดนหลอก!',who:`${name(turn)} ${v==null?'ตอบไม่ทัน':'ตอบ'+C[v][0]} · ที่ถูกคือ ${C[cur.ans][0]}`,loser:turn,again:()=>init((turn+1)%players)}),1100)}
+  function init(s=0){stop();level=1;turn=s%players;ready()}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to);st='ready'}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 13. Odd shade ---------- */
+G.odd=(()=>{
+  const PER=3;
+  const grid=$('odGrid'),bar=$('odBar'),pips=$('odPips'),info=$('odInfo'),btn=$('odBtn');
+  let level=1,turn=0,st='ready',k=0,ans=-1,t0=0,raf=0,to=null;
+  const size=()=>Math.min(7,3+Math.floor((level-1)/2));
+  const delta=()=>Math.max(3.5,20-(level-1)*2.2);
+  const lim=()=>Math.max(2.5,6-(level-1)*.35);
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · ระดับ <b>${level}</b> · ${size()}×${size()}`;
+    pips.innerHTML=Array.from({length:PER},(_,i)=>`<i class="${i<k?'ok':''}"></i>`).join('')}
+  function idle(){const n=size();grid.className='ogrid idle';grid.style.gridTemplateColumns=`repeat(${n},minmax(0,1fr))`;
+    grid.innerHTML=Array.from({length:n*n},()=>'<button disabled tabindex="-1"></button>').join('')}
+  function ready(m){st='ready';k=0;bar.style.transform='scaleX(1)';idle();btn.disabled=false;btn.textContent='พร้อม';paint(m)}
+  function board(){const n=size(),h=rnd(360),sat=55+rnd(25),l=42+rnd(14),d=delta()*(Math.random()<.5?1:-1);ans=rnd(n*n);st='q';
+    grid.className='ogrid';grid.style.gridTemplateColumns=`repeat(${n},minmax(0,1fr))`;
+    grid.innerHTML=Array.from({length:n*n},(_,i)=>`<button data-i="${i}" style="background:hsl(${h},${sat}%,${i===ans?l+d:l}%)" aria-label="ช่อง ${i+1}"></button>`).join('');
+    grid.querySelectorAll('button').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();choose(+b.dataset.i,b)}));
+    t0=performance.now();loop()}
+  function loop(){if(st!=='q')return;const e=(performance.now()-t0)/1000,L=lim();bar.style.transform=`scaleX(${Math.max(0,1-e/L)})`;
+    if(e>=L)return fail(true);raf=requestAnimationFrame(loop)}
+  btn.onclick=()=>{if(st!=='ready')return;btn.disabled=true;btn.textContent='หาให้เจอ';tone(600,.06,'triangle',.05);board()};
+  function choose(i,b){if(st!=='q')return;
+    if(i!==ans)return fail(false,b);
+    cancelAnimationFrame(raf);b.classList.add('hit');k++;tone(700+k*80,.08,'triangle',.07);paint();
+    if(k>=PER){const prev=turn;st='pause';turn=(turn+1)%players;level++;buzz(15);
+      to=setTimeout(()=>ready(`<b style="color:#7ee081">${nameH(prev)} ผ่าน!</b>`),700)}
+    else{st='gap';to=setTimeout(board,220)}}
+  function fail(timeout,b){st='over';cancelAnimationFrame(raf);const c=grid.querySelector(`[data-i="${ans}"]`);if(c)c.classList.add('hit');
+    if(b)b.style.opacity='.35';tone(140,.4,'sawtooth',.14);buzz([80,40,120]);
+    to=setTimeout(()=>showResult({word:timeout?'หมดเวลา!':'ตาลาย!',who:`${name(turn)} ${timeout?'หาไม่ทัน':'แตะผิดช่อง'} ที่ระดับ ${level}`,loser:turn,again:()=>init((turn+1)%players)}),1200)}
+  function init(s=0){stop();level=1;turn=s%players;ready()}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to);st='ready'}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 14. Schulte 1–16 ---------- */
+G.schulte=(()=>{
+  const N=16,PEN=1;
+  const grid=$('scGrid'),clock=$('scClock'),sub=$('scSub'),board=$('scBoard'),info=$('scInfo'),btn=$('scBtn');
+  let idx=0,st='ready',want=1,pen=0,t0=0,raf=0,res=[],worstI=-1,to=null;
+  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
+    if(st==='ready'){clock.textContent='0.00';clock.className='clock sm';grid.hidden=true;board.hidden=false;sub.textContent=`แตะเลข 1 ถึง ${N} ตามลำดับ · แตะผิดบวก ${PEN} วินาที`;btn.disabled=false;btn.textContent='เริ่ม'}}
+  function drawBoard(){const s=res.slice().sort((a,b)=>a.t-b.t);
+    board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${r.t.toFixed(2)} วิ</span><span class="d">${r.p?'ผิด '+r.p:'ไม่ผิด'}</span></li>`).join('')}
+  function loop(){if(st!=='run')return;clock.textContent=((performance.now()-t0)/1000+pen).toFixed(2);raf=requestAnimationFrame(loop)}
+  btn.onclick=()=>{
+    if(st==='ready'){st='run';want=1;pen=0;board.hidden=true;grid.hidden=false;sub.textContent='ถัดไป: 1';
+      const nums=[...Array(N)].map((_,i)=>i+1).sort(()=>Math.random()-.5);
+      grid.innerHTML=nums.map(v=>`<button data-v="${v}">${v}</button>`).join('');
+      grid.querySelectorAll('button').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();hit(+b.dataset.v,b)}));
+      btn.disabled=true;btn.textContent='แตะ 1 → 16';tone(660,.08,'triangle',.06);t0=performance.now();loop()}
+    else if(st==='shown'){if(idx<players-1){idx++;st='ready';paint()}else finish()}
+  };
+  function hit(v,b){if(st!=='run')return;
+    if(v===want){b.classList.add('done');tone(400+v*30,.05,'triangle',.06);want++;sub.textContent=want<=N?'ถัดไป: '+want:'';
+      if(want>N)done()}
+    else{pen+=PEN;b.classList.add('err');setTimeout(()=>b.classList.remove('err'),250);tone(150,.12,'sawtooth',.08);buzz(40);
+      clock.animate([{color:'#ff5a4e'},{color:'inherit'}],{duration:400})}}
+  function done(){cancelAnimationFrame(raf);const t=(performance.now()-t0)/1000+pen;st='shown';res.push({i:idx,t,p:pen/PEN});
+    clock.textContent=t.toFixed(2);sub.textContent=pen?`รวมโดนบวก ${pen} วินาที`:'ไม่ผิดเลย';grid.hidden=true;board.hidden=false;drawBoard();
+    tone(880,.15,'triangle',.08);buzz(20);btn.disabled=false;btn.textContent=idx<players-1?`ส่งต่อให้ ${name(idx+1)} →`:'ดูผล'}
+  function finish(){st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(r.t>w.t)w=r});worstI=w.i;drawBoard();
+    to=setTimeout(()=>showResult({word:'ช้าสุด!',who:`${name(w.i)} ใช้เวลา ${w.t.toFixed(2)} วิ`,loser:w.i,again:init}),700)}
+  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';paint()}
+  function stop(){cancelAnimationFrame(raf);clearTimeout(to)}
+  return {init,stop,refresh:()=>{paint();drawBoard()}};
+})();
+
+/* ---------- Mimon greeting on home ---------- */
+(()=>{const LINES=['วันนี้ใครโดน?','เลือกเกมเลย ห้ามหนีนะ','มิมอนพร้อมเชียร์แล้ว!','แพ้แล้วห้ามงอแงน้า','จิ้มมิมอนอีกทีสิ','ใครจะโดนคนแรก?'];
+  const b=$('mimonHi'),say=$('mimonSay');let k=0;
+  b.onclick=()=>{let n;do{n=rnd(LINES.length)}while(n===k);k=n;say.textContent=LINES[k];
+    b.classList.remove('jump');void b.offsetWidth;b.classList.add('jump');tone(520,.12,'sine',.1,900);setTimeout(()=>tone(900,.1,'sine',.08,1300),90);buzz(15)};
+})();
+
+/* ---------- 15. Mimon box (luck) ---------- */
+G.mbox=(()=>{
+  const N=16,box=$('mbBox'),holes=$('mbHoles'),info=$('mbInfo');
+  let turn=0,st='play',bad=-1,used=0,to=[];
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${N-used} ช่อง`;box.style.setProperty('--sh',(used/N).toFixed(2))}
+  function build(){holes.innerHTML=Array.from({length:N},(_,i)=>`<button class="hole" data-i="${i}" aria-label="ช่องที่ ${i+1}"></button>`).join('');
+    holes.querySelectorAll('.hole').forEach(b=>b.addEventListener('click',()=>stick(+b.dataset.i,b)))}
+  function stick(i,b){
+    if(st!=='play'||b.classList.contains('in'))return;
+    b.classList.add('in');b.style.setProperty('--pc',`hsl(${(turn*67+320)%360} 85% 66%)`);used++;
+    if(i===bad){st='pop';box.classList.add('open');paint();tone(180,.5,'sine',.16,900);noise(.3,.4,3000);buzz([60,40,160]);flash('#ff9ad5');
+      to.push(setTimeout(()=>showResult({word:'มิมอนเด้ง!',who:name(turn)+' ทำมิมอนเด้งออกมา',loser:turn,again:()=>init((turn+1)%players)}),1300));return}
+    tone(300+used*25,.07,'triangle',.07);buzz(10);
+    box.classList.remove('jolt');void box.offsetWidth;box.classList.add('jolt');
+    const prev=turn;turn=(turn+1)%players;paint(`${nameH(prev)} รอด`)}
+  function init(s=0){stop();turn=s%players;st='play';used=0;bad=rnd(N);box.classList.remove('open','jolt');build();paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+})();
+
+/* ---------- 16. Number bomb (luck) ---------- */
+G.numbomb=(()=>{
+  const MAX=100,wrap=$('nbWrap'),show=$('nbShow'),sub=$('nbSub'),info=$('nbInfo'),pad=$('nbPad'),fill=$('nbFill'),loEl=$('nbLo'),hiEl=$('nbHi');
+  let lo=1,hi=MAX,bomb=0,turn=0,entry='',st='play',to=[];
+  pad.innerHTML=['1','2','3','4','5','6','7','8','9','del','0','ok'].map(k=>`<button data-k="${k}" class="${k==='ok'?'ok':k==='del'?'del':''}" aria-label="${k==='del'?'ลบ':k==='ok'?'ทาย':k}">${k==='del'?'⌫':k==='ok'?'ทาย':k}</button>`).join('');
+  pad.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>press(b.dataset.k)));
+  function paint(m){
+    info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b>`;
+    loEl.textContent=lo;hiEl.textContent=hi;
+    fill.style.left=((lo-1)/MAX*100)+'%';fill.style.width=((hi-lo+1)/MAX*100)+'%';
+    wrap.style.setProperty('--heat',(1-(hi-lo)/(MAX-1)).toFixed(3));
+    show.textContent=entry||'?';show.classList.toggle('empty',!entry);
+  }
+  function press(k){if(st!=='play')return;
+    if(k==='ok')return guess();
+    if(k==='del')entry=entry.slice(0,-1);else if(entry.length<3)entry=(entry+k).replace(/^0+/,'');
+    tone(480+(+k||0)*30,.03,'triangle',.04);paint()}
+  function guess(){
+    const g=+entry;
+    if(!entry||g<lo||g>hi){sub.textContent=`ต้องเป็นเลข ${lo} ถึง ${hi}`;show.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:250});tone(160,.12,'sawtooth',.07);return}
+    entry='';
+    if(g===bomb){st='boom';paint();show.textContent=g;wrap.classList.add('boom');sub.textContent='บอมบ์!';noise(1,.8,900);tone(90,.6,'sawtooth',.2,30);buzz([200,60,260]);flash('#ff6b6b');
+      to.push(setTimeout(()=>showResult({word:'บอมบ์!',who:`${name(turn)} ทายโดนเลขบอมบ์ ${bomb}`,loser:turn,again:()=>init((turn+1)%players)}),1100));return}
+    if(g<bomb)lo=g+1;else hi=g-1;
+    const prev=turn;turn=(turn+1)%players;tone(700,.08,'triangle',.07);buzz(12);
+    paint(`${nameH(prev)} ทาย ${g} รอด`);
+    sub.textContent=lo===hi?`เหลือเลขเดียว ${name(turn)} ต้องทาย ${lo}`:`ทายเลขระหว่าง ${lo} ถึง ${hi}`;
+  }
+  document.addEventListener('keydown',e=>{if(current!=='numbomb'||!$('modal').hidden||!$('pModal').hidden||!$('hModal').hidden)return;
+    if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('del');else if(e.key==='Enter'){e.preventDefault();press('ok')}});
+  function init(s=0){stop();lo=1;hi=MAX;bomb=1+rnd(MAX);entry='';turn=s%players;st='play';wrap.classList.remove('boom');paint();sub.textContent=`ทายเลขระหว่าง 1 ถึง ${MAX}`}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 17. Hi-Lo (luck) ---------- */
+G.hilo=(()=>{
+  const SU=[['♠',0],['♥',1],['♦',1],['♣',0]],RK=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+  const cur=$('hlCur'),nx=$('hlNext'),nxf=$('hlNextF'),info=$('hlInfo'),bLo=$('hlLo'),bHi=$('hlHi'),sub=$('hlSub');
+  let deck=[],c=null,n=null,turn=0,streak=0,st='play',to=[];
+  function shuffle(){deck=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)deck.push({r,s});for(let i=deck.length-1;i>0;i--){const j=rnd(i+1);[deck[i],deck[j]]=[deck[j],deck[i]]}}
+  function draw(){if(!deck.length)shuffle();return deck.pop()}
+  function face(cd){const red=SU[cd.s][1],rk=RK[cd.r-1],su=SU[cd.s][0];return `<div class="hlface${red?' red':''}"><span class="tl">${rk}<br>${su}</span><b>${rk}</b><i>${su}</i><span class="br">${rk}<br>${su}</span></div>`}
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b>`+(streak?` · รอดติดกัน ${streak}`:'');bLo.disabled=bHi.disabled=st!=='play'}
+  function guess(up){if(st!=='play')return;st='flip';paint();n=draw();nxf.innerHTML=face(n);nx.classList.add('open');tone(500,.06,'triangle',.05);
+    to.push(setTimeout(()=>{const same=n.r===c.r,ok=same||(up?n.r>c.r:n.r<c.r);
+      if(ok){streak++;const prev=turn;turn=(turn+1)%players;tone(same?660:880,.12,'triangle',.08);buzz(12);sub.textContent=same?'เท่ากัน รอด!':'ถูก!';
+        to.push(setTimeout(()=>{c=n;cur.innerHTML=face(c);nx.classList.remove('open');st='play';sub.textContent='ใบต่อไปสูงหรือต่ำกว่า?';paint(`${nameH(prev)} รอด`)},850))}
+      else{st='over';tone(140,.4,'sawtooth',.14);buzz([80,40,120]);sub.textContent='ผิด!';
+        to.push(setTimeout(()=>showResult({word:'เดาผิด!',who:`${name(turn)} เดา${up?'สูงกว่า':'ต่ำกว่า'} แต่ออก ${RK[n.r-1]}`,loser:turn,again:()=>init((turn+1)%players)}),900))}
+    },620))}
+  bLo.onclick=()=>guess(false);bHi.onclick=()=>guess(true);
+  function init(s=0){stop();shuffle();c=draw();cur.innerHTML=face(c);nx.classList.remove('open');turn=s%players;streak=0;st='play';sub.textContent='ใบต่อไปสูงหรือต่ำกว่า?';paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,refresh:()=>paint()};
+})();
+
+/* ---------- 18. Wave territory (skill, everyone at once) ---------- */
+G.wave=(()=>{
+  const DUR=10,COLS=['#ff4d8d','#3db2ff','#3fd17a','#ffd04d','#a37bff','#ff8a3d','#2fd6c9','#f4f4f4','#ff9ad5','#c08a5a','#7bdcff','#d4ff5c'];
+  const stage=$('wvStage'),cv=$('wvCanvas'),ctx=cv.getContext('2d'),seatsEl=$('wvSeats'),mid=$('wvMid'),btn=$('wvBtn'),info=$('wvInfo');
+  const off=document.createElement('canvas'),octx=off.getContext('2d');
+  let st='ready',seeds=[],r=[],taps=[],area=[],W=0,H=0,gw=0,gh=0,img=null,rgb=[],t0=0,raf=0,to=[],iv=null,rip=[],step=0,els=[];
+  const hex=h=>[1,3,5].map(k=>parseInt(h.slice(k,k+2),16));
+  function layout(){
+    const b=stage.getBoundingClientRect();W=b.width;H=b.height;if(!W||!H)return;
+    const dpr=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+    gw=64;gh=Math.max(24,Math.round(gw*H/W));off.width=gw;off.height=gh;img=octx.createImageData(gw,gh);
+    const n=players,size=n<=4?88:n<=8?72:60,rx=Math.max(10,W/2-size/2-4),ry=Math.max(10,H/2-size/2-4);
+    seeds=Array.from({length:n},(_,i)=>{const a=i*2*Math.PI/n;return{x:W/2+rx*Math.sin(a),y:H/2-ry*Math.cos(a)}});
+    step=Math.hypot(W,H)*0.011;rgb=COLS.map(hex);
+    seatsEl.innerHTML=seeds.map((s,i)=>`<button class="wseat" data-i="${i}" style="left:${s.x.toFixed(1)}px;top:${s.y.toFixed(1)}px;width:${size}px;height:${size}px;--wc:${COLS[i%COLS.length]}" aria-label="ปุ่มของ ${nameH(i)}"><b>${taps[i]||0}</b><span>${nameH(i)}</span></button>`).join('');
+    els=[...seatsEl.querySelectorAll('.wseat')];
+    els.forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();tap(+b.dataset.i,b)}));
+  }
+  function tap(i,b){if(st!=='run')return;taps[i]++;r[i]+=step;rip.push({i,t:performance.now()});
+    b.firstElementChild.textContent=taps[i];b.classList.remove('hit');void b.offsetWidth;b.classList.add('hit');
+    if(taps[i]%3===0)tone(300+i*60,.03,'triangle',.03)}
+  function compute(){
+    area=Array(seeds.length).fill(0);const d=img.data,sx=W/gw,sy=H/gh;
+    for(let y=0;y<gh;y++)for(let x=0;x<gw;x++){
+      const px=(x+.5)*sx,py=(y+.5)*sy;let best=-1,bs=0;
+      for(let i=0;i<seeds.length;i++){const sc=r[i]-Math.hypot(px-seeds[i].x,py-seeds[i].y);if(sc>bs){bs=sc;best=i}}
+      const o=(y*gw+x)*4;
+      if(best>=0){const c=rgb[best%rgb.length];d[o]=c[0];d[o+1]=c[1];d[o+2]=c[2];d[o+3]=150;area[best]++}else d[o+3]=0;
+    }
+    octx.putImageData(img,0,0);
+  }
+  function render(){
+    if(!W||!img)return;compute();ctx.clearRect(0,0,W,H);ctx.imageSmoothingEnabled=true;ctx.drawImage(off,0,0,W,H);
+    const now=performance.now();rip=rip.filter(p=>now-p.t<500);
+    for(const p of rip){const k=(now-p.t)/500,s=seeds[p.i];if(!s)continue;ctx.beginPath();ctx.arc(s.x,s.y,Math.max(1,r[p.i]*k),0,Math.PI*2);ctx.strokeStyle=COLS[p.i%COLS.length];ctx.globalAlpha=1-k;ctx.lineWidth=3;ctx.stroke();ctx.globalAlpha=1}
+  }
+  function loop(){if(st!=='run'&&st!=='count')return;render();
+    if(st==='run'){const left=DUR-(performance.now()-t0)/1000;mid.innerHTML=`<b>${Math.max(0,left).toFixed(1)}</b>`;if(left<=0)return end()}
+    raf=requestAnimationFrame(loop)}
+  btn.onclick=()=>{if(st!=='ready')return;st='count';btn.disabled=true;btn.textContent='รัวปุ่มของตัวเอง!';let n=3;
+    mid.innerHTML=`<b class="cd">${n}</b>`;tone(600,.1,'triangle',.07);loop();
+    iv=setInterval(()=>{n--;if(n>0){mid.innerHTML=`<b class="cd">${n}</b>`;tone(600,.1,'triangle',.07)}else{clearInterval(iv);st='run';t0=performance.now();tone(1000,.2,'square',.07);buzz(30)}},800)};
+  function end(){st='done';cancelAnimationFrame(raf);rip=[];render();
+    const tot=gw*gh,pct=area.map(a=>a/tot*100);
+    els.forEach((b,i)=>{b.firstElementChild.textContent=Math.round(pct[i])+'%'});
+    const min=Math.min(...pct),L=pick(pct.map((v,i)=>v===min?i:-1).filter(i=>i>=0)),max=Math.max(...pct),top=pct.indexOf(max);
+    els[L].classList.add('lose');mid.innerHTML=`<small>พื้นที่มากสุด</small><b>${nameH(top)}</b>`;btn.textContent='หมดเวลา';
+    tone(220,.4,'sawtooth',.12,60);buzz([80,40,120]);
+    to.push(setTimeout(()=>showResult({word:'พื้นที่น้อยสุด!',who:`${name(L)} ได้พื้นที่ ${pct[L].toFixed(1)}%`,loser:L,again:init}),1500))}
+  function init(){stop();st='ready';taps=Array(players).fill(0);r=Array(players).fill(0);rip=[];btn.disabled=false;btn.textContent='เริ่ม';
+    info.innerHTML=`ทุกคนเล่นพร้อมกัน · <b>${DUR} วินาที</b>`;layout();r=r.map(()=>step*2.5);render();
+    mid.innerHTML='<small>วางมือถือกลางวง</small><b>รัวปุ่มสีตัวเอง</b>'}
+  function stop(){cancelAnimationFrame(raf);clearInterval(iv);to.forEach(clearTimeout);to=[]}
+  return {init,stop,resize:()=>{if(st==='ready'){layout();r=r.map(()=>step*2.5);render()}},refresh:()=>{if(st==='ready'){layout();render()}}};
+})();
+
+/* ---------- 19. Stack tower (skill) ---------- */
+G.stack=(()=>{
+  const stage=$('skStage'),cv=$('skCanvas'),ctx=cv.getContext('2d'),btn=$('skBtn'),info=$('skInfo'),hud=$('skHud');
+  let W=0,H=0,bh=24,blocks=[],cur=null,cam=0,camT=0,turn=0,st='ready',raf=0,last=0,fall=[],to=[],flashT=0;
+  function layout(){const b=stage.getBoundingClientRect();W=b.width;H=b.height;if(!W)return;const dpr=Math.min(2,window.devicePixelRatio||1);
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);bh=Math.max(18,Math.min(32,H/15))}
+  const yOf=i=>H-(i+1)*bh-8+cam, hue=i=>(320-i*13+720)%360;
+  function rr(x,y,w,h,c){ctx.fillStyle=c;const r=Math.max(0,Math.min(5,h/3,w/2));ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,.22)';ctx.fillRect(x+2,y+2,Math.max(0,w-4),Math.max(1,h*.22))}
+  function draw(){ctx.clearRect(0,0,W,H);
+    blocks.forEach((b,i)=>{const y=yOf(i);if(y>H+bh||y<-bh)return;rr(b.x,y,b.w,bh-2,`hsl(${hue(i)} 80% 62%)`)});
+    if(cur)rr(cur.x,yOf(blocks.length),cur.w,bh-2,`hsl(${hue(blocks.length)} 88% 67%)`);
+    fall.forEach(f=>{ctx.save();ctx.globalAlpha=Math.max(0,1-f.t/1.2);rr(f.x,f.y,f.w,bh-2,`hsl(${f.h} 70% 55%)`);ctx.restore()});
+    if(flashT>0&&blocks.length>1){const i=blocks.length-1,b=blocks[i];ctx.strokeStyle=`rgba(255,255,255,${flashT})`;ctx.lineWidth=3;ctx.strokeRect(b.x-3,yOf(i)-3,b.w+6,bh+4)}
+  }
+  function spawn(){const lvl=blocks.length,top=blocks[lvl-1],fromL=lvl%2===1;
+    cur={w:top.w,x:fromL?-top.w*0.3:W-top.w*0.7,dir:fromL?1:-1,v:W*Math.min(1.3,0.38+lvl*0.04)};st='move';paint();
+    hud.innerHTML=`<b>${lvl-1}</b><small>ตาของ ${nameH(turn)} · แตะจอเพื่อวาง</small>`}
+  function loop(t){const dt=Math.min(.04,(t-last)/1000||0);last=t;
+    if(st==='move'&&cur){cur.x+=cur.dir*cur.v*dt;const minX=-cur.w*0.3,maxX=W-cur.w*0.7;if(cur.x>maxX){cur.x=maxX;cur.dir=-1}if(cur.x<minX){cur.x=minX;cur.dir=1}}
+    cam+=(camT-cam)*Math.min(1,dt*6);
+    fall.forEach(f=>{f.vy+=1800*dt;f.y+=f.vy*dt;f.t+=dt});fall=fall.filter(f=>f.y<H+60&&f.t<1.5);
+    if(flashT>0)flashT=Math.max(0,flashT-dt*2.5);
+    draw();raf=requestAnimationFrame(loop)}
+  function drop(){if(st!=='move'||!cur)return;
+    const i=blocks.length,top=blocks[i-1],L=Math.max(cur.x,top.x),R=Math.min(cur.x+cur.w,top.x+top.w),ov=R-L,y=yOf(i);
+    if(ov<=0){fall.push({x:cur.x,w:cur.w,y,vy:0,t:0,h:hue(i)});cur=null;return over(i)}
+    const tol=Math.max(3,W*0.012);let nb;
+    if(Math.abs(cur.x-top.x)<=tol){nb={x:top.x,w:top.w};flashT=1;tone(880+Math.min(i,20)*20,.12,'triangle',.09);buzz(20)}
+    else{nb={x:L,w:ov};fall.push({x:cur.x<top.x?cur.x:R,w:cur.w-ov,y,vy:0,t:0,h:hue(i)});tone(420+Math.min(i,20)*15,.08,'square',.06);buzz(10)}
+    blocks.push(nb);cur=null;camT=Math.max(0,(blocks.length+2)*bh-H*0.6);
+    const prev=turn,perfect=flashT===1;turn=(turn+1)%players;st='pause';paint(`${nameH(prev)} ${perfect?'วางเป๊ะ!':'วางได้'}`);
+    hud.innerHTML=`<b>${blocks.length-1}</b><small>ต่อไป: ${nameH(turn)}</small>`;
+    to.push(setTimeout(spawn,700))}
+  function over(i){st='over';tone(140,.5,'sawtooth',.14,50);buzz([80,40,160]);paint();hud.innerHTML=`<b>${i-1}</b><small>ตึกพัง!</small>`;
+    to.push(setTimeout(()=>showResult({word:'ตึกพัง!',who:`${name(turn)} วางพลาดที่ชั้น ${i}`,loser:turn,again:()=>init((turn+1)%players)}),1100))}
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · สูง <b>${Math.max(0,blocks.length-1)}</b> ชั้น`;
+    btn.textContent=st==='ready'?'เริ่ม':'วาง!';btn.disabled=!(st==='ready'||st==='move')}
+  btn.onclick=()=>{if(st==='ready'){actx();spawn()}else drop()};
+  stage.addEventListener('pointerdown',e=>{if(st==='move'){e.preventDefault();drop()}else if(st==='ready'){e.preventDefault();spawn()}});
+  function init(s=0){stop();layout();turn=s%players;blocks=[{x:W*0.2,w:W*0.6}];cur=null;fall=[];cam=camT=0;flashT=0;st='ready';
+    hud.innerHTML='<b>0</b><small>ผลัดกันวางคนละชั้น</small>';paint();last=performance.now();raf=requestAnimationFrame(loop)}
+  function stop(){cancelAnimationFrame(raf);to.forEach(clearTimeout);to=[]}
+  return {init:()=>init(0),stop,resize:()=>{if(st==='ready'){layout();blocks=[{x:W*0.2,w:W*0.6}]}},refresh:()=>paint()};
+})();
+
+/* ---------- 20. Mimon colours (skill, everyone at once) ---------- */
+G.mcolor=(()=>{
+  const COL=[['แดง','#ff4d4d'],['ฟ้า','#3db2ff'],['เขียว','#3fd17a'],['เหลือง','#ffd04d'],['ม่วง','#a37bff'],['ส้ม','#ff8a3d'],['ขาว','#f4f4f4'],['มิ้นต์','#2fd6c9'],['ชมพู','#ff6fb5'],['น้ำตาล','#c08a5a']];
+  const area=$('mcArea'),midEl=$('mcMid'),mim=$('mcMimon'),face=mim.querySelector('use'),ring=$('mcRing'),hint=$('mcHint'),btn=$('mcBtn'),clr=$('mcClear'),info=$('mcInfo');
+  const RL=2*Math.PI*46;ring.style.strokeDasharray=RL.toFixed(1);
+  let pads=[],st='setup',round=0,lim=1.6,target=null,t0=0,raf=0,to=[],cyc=null,cdIv=null;
+  const setHint=t=>{hint.innerHTML=t};
+  function paint(){info.innerHTML=st==='setup'?`วางแล้ว <b>${pads.length}</b> สี · ต้องมีอย่างน้อย 2`:`รอบที่ <b>${round+1}</b> · เวลากด <b>${lim.toFixed(2)}</b> วิ`;
+    btn.disabled=!(st==='setup'&&pads.length>=2);clr.hidden=st!=='setup'||!pads.length;btn.textContent=st==='setup'?'เริ่ม':'ดูมิมอนดีๆ'}
+  function setFace(w){face.setAttribute('href',w?'#mimonWow':'#mimon')}
+  function addPad(x,y){const used=pads.map(p=>p.c),c=COL.findIndex((_,i)=>!used.includes(i));if(c<0)return;
+    const el=document.createElement('button');el.className='mpad';el.style.left=x+'px';el.style.top=y+'px';el.style.setProperty('--pc',COL[c][1]);
+    el.innerHTML=`<span>${COL[c][0]}</span>`;el.setAttribute('aria-label','ปุ่มสี'+COL[c][0]);
+    area.appendChild(el);const p={c,x,y,el};pads.push(p);el.addEventListener('pointerdown',e=>{e.preventDefault();e.stopPropagation();padTap(p)});
+    tone(400+pads.length*70,.08,'triangle',.06);buzz(8);paint()}
+  area.addEventListener('pointerdown',e=>{if(st!=='setup'||e.target.closest('.mpad'))return;e.preventDefault();
+    const r=area.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,mr=midEl.offsetWidth/2+40;
+    if(Math.hypot(x-r.width/2,y-r.height/2)<mr){setHint('วางห่างจากมิมอนอีกนิด');return}
+    if(pads.some(p=>Math.hypot(p.x-x,p.y-y)<84)){setHint('ใกล้จุดอื่นเกินไป');return}
+    if(pads.length>=COL.length){setHint('ครบ 10 สีแล้ว');return}
+    addPad(Math.min(Math.max(x,46),r.width-46),Math.min(Math.max(y,46),r.height-46));setHint('แตะจุดของตัวเองซ้ำเพื่อลบ · ครบแล้วกดเริ่ม')});
+  function padTap(p){
+    if(st==='setup'){p.el.remove();pads=pads.filter(q=>q!==p);tone(300,.06,'triangle',.05);paint();return}
+    if(st==='spin'||st==='fake')return lose(p,'early');
+    if(st==='go')return p===target?win(p):lose(p,'wrong');
+  }
+  function cycle(){let last=-1;clearInterval(cyc);cyc=setInterval(()=>{let k;do{k=rnd(pads.length)}while(pads.length>1&&k===last);last=k;mim.style.color=COL[pads[k].c][1];tone(500+rnd(300),.025,'triangle',.03)},120)}
+  function spin(){st='spin';target=null;ring.style.opacity=0;setFace(false);mim.classList.remove('land');mim.classList.add('spin');setHint('รอให้มิมอนหยุด…');paint();cycle();
+    const dur=1200+Math.random()*2000,fake=round>=2&&Math.random()<.4;
+    if(fake)to.push(setTimeout(()=>{if(st!=='spin')return;st='fake';clearInterval(cyc);mim.classList.remove('spin');
+      to.push(setTimeout(()=>{if(st!=='fake')return;st='spin';mim.classList.add('spin');cycle()},450))},dur*0.45));
+    to.push(setTimeout(land,dur+(fake?450:0)))}
+  function land(){if(st!=='spin')return;clearInterval(cyc);target=pick(pads);const col=COL[target.c][1];mim.style.color=col;
+    mim.classList.remove('spin');void mim.getBoundingClientRect();mim.classList.add('land');
+    ring.style.stroke=col;ring.style.strokeDashoffset=0;ring.style.opacity=1;st='go';t0=performance.now();tone(1046,.15,'square',.08);buzz(25);
+    setHint(`สี<b style="color:${col}">${COL[target.c][0]}</b> กดเลย!`);loop()}
+  function loop(){if(st!=='go')return;const e=(performance.now()-t0)/1000;ring.style.strokeDashoffset=(RL*Math.min(1,e/lim)).toFixed(1);
+    if(e>=lim)return lose(target,'slow');raf=requestAnimationFrame(loop)}
+  function win(p){st='pause';cancelAnimationFrame(raf);ring.style.opacity=0;p.el.classList.add('good');setTimeout(()=>p.el.classList.remove('good'),380);
+    round++;lim=Math.max(.55,lim*.9);tone(784,.1,'triangle',.08);to.push(setTimeout(()=>tone(1175,.15,'triangle',.08),90));setHint('ทัน!');paint();to.push(setTimeout(spin,750))}
+  function lose(p,why){st='over';cancelAnimationFrame(raf);clearInterval(cyc);mim.classList.remove('spin','land');setFace(true);ring.style.opacity=0;
+    p.el.classList.add('bad');tone(150,.45,'sawtooth',.14,50);buzz([80,40,160]);
+    const word={early:'ใจร้อน!',wrong:'กดผิดสี!',slow:'ช้าไป!'}[why];
+    setHint({early:'กดตอนมิมอนยังไม่หยุด',wrong:`มิมอนเป็นสี${target?COL[target.c][0]:''} ไม่ใช่สี${COL[p.c][0]}`,slow:'กดไม่ทัน'}[why]);
+    to.push(setTimeout(()=>showResult({word,who:`เจ้าของสี${COL[p.c][0]}`,loser:null,again:restart}),1000))}
+  btn.onclick=()=>{if(st!=='setup'||pads.length<2)return;actx();st='count';paint();let n=3;setHint(`<b class="mccd">${n}</b>`);tone(600,.1,'triangle',.07);
+    cdIv=setInterval(()=>{n--;if(n>0){setHint(`<b class="mccd">${n}</b>`);tone(600,.1,'triangle',.07)}else{clearInterval(cdIv);spin()}},700)};
+  clr.onclick=()=>{pads.forEach(p=>p.el.remove());pads=[];paint();setHint('ทุกคนแตะจอคนละจุดเพื่อรับสีของตัวเอง')};
+  function reset(){stop();st='setup';round=0;lim=1.6;target=null;ring.style.opacity=0;mim.classList.remove('spin','land');mim.style.color='';setFace(false);
+    pads.forEach(p=>p.el.classList.remove('bad','good'));paint()}
+  function restart(){reset();setHint('สีเดิมพร้อมแล้ว กดเริ่มได้เลย · แตะจุดเพื่อลบ')}
+  function init(){reset();pads.forEach(p=>p.el.remove());pads=[];paint();setHint('ทุกคนแตะจอคนละจุดเพื่อรับสีของตัวเอง')}
+  function stop(){cancelAnimationFrame(raf);clearInterval(cyc);clearInterval(cdIv);to.forEach(clearTimeout);to=[]}
+  return {init,stop};
+})();
+
+/* ---------- 21. Sushi wasabi (luck) ---------- */
+G.sushi=(()=>{
+  const board=$('suBoard'),info=$('suInfo');
+  const RICE='<rect x="8" y="22" width="44" height="17" rx="8.5" fill="#fbf8f0"/><rect x="8" y="31" width="44" height="8" rx="4" fill="#e6dcc8"/><g fill="#fff"><ellipse cx="17" cy="33" rx="2" ry="1.2"/><ellipse cx="29" cy="35" rx="2" ry="1.2"/><ellipse cx="41" cy="33" rx="2" ry="1.2"/></g>';
+  const SLAB='M4 22Q6 9 22 8L44 7Q57 8 56 20Q55 26 48 26L12 27Q4 27 4 22Z';
+  const T=[
+    RICE+`<path d="${SLAB}" fill="#ff8a5c"/><path d="M16 9Q12 17 14 26M27 8Q23 17 25 26M38 8Q34 17 36 26M48 9Q45 17 47 25" stroke="#ffd9c4" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+    RICE+`<path d="${SLAB}" fill="#d8344a"/><path d="M12 13Q30 9 47 11" stroke="#ff8a98" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7"/>`,
+    RICE+`<rect x="5" y="9" width="50" height="16" rx="4" fill="#ffd34d"/><rect x="5" y="9" width="50" height="5" rx="2.5" fill="#ffe58f"/><rect x="25" y="7" width="10" height="33" rx="2" fill="#1f2a24"/>`,
+    RICE+`<path d="M53 15L60 8L59 21Z" fill="#e8553a"/><path d="${SLAB}" fill="#ff9a70"/><path d="M14 9Q11 17 13 26M24 8Q21 17 23 26M34 8Q31 17 33 26M44 8Q41 17 43 26" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".85"/>`,
+    `<circle cx="30" cy="24" r="17" fill="#1f2a24"/><circle cx="30" cy="24" r="13.5" fill="#fbf8f0"/><circle cx="30" cy="24" r="6" fill="#ff8a5c"/><circle cx="27" cy="22" r="2" fill="#4caf50"/>`,
+    `<circle cx="30" cy="24" r="17" fill="#1f2a24"/><circle cx="30" cy="24" r="13.5" fill="#fbf8f0"/><circle cx="30" cy="24" r="6" fill="#5cbf4a"/><circle cx="30" cy="24" r="2.6" fill="#d6f78a"/>`];
+  const svg=k=>`<svg viewBox="0 0 60 44" aria-hidden="true">${T[k]}</svg>`;
+  let turn=0,st='play',bad=-1,left=0,N=12,to=[];
+  function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${left} ชิ้น`}
+  function build(){N=players>6?16:12;const cols=N===16?4:3;board.style.setProperty('--cols',cols);board.style.setProperty('--rows',N/cols);
+    board.innerHTML=Array.from({length:N},(_,i)=>`<button class="sushi" data-i="${i}" aria-label="ซูชิชิ้นที่ ${i+1}">${svg(rnd(T.length))}<i class="wasabi"></i></button>`).join('');
+    board.querySelectorAll('.sushi').forEach(b=>b.addEventListener('click',()=>eat(+b.dataset.i,b)))}
+  function eat(i,b){if(st!=='play'||b.classList.contains('eat'))return;
+    if(i===bad){st='hot';b.classList.add('hot');board.classList.add('hotboard');flash('#8be04e');noise(.8,.5,2600);tone(300,.8,'sawtooth',.12,1500);buzz([100,50,100,50,220]);paint();
+      to.push(setTimeout(()=>showResult({word:'วาซาบิ!',who:`${name(turn)} กินโดนชิ้นวาซาบิ`,loser:turn,again:()=>init((turn+1)%players)}),1400));return}
+    b.classList.add('eat');left--;tone(520,.06,'triangle',.07);setTimeout(()=>tone(390,.08,'triangle',.07),110);buzz(12);
+    const prev=turn;turn=(turn+1)%players;paint(`${nameH(prev)} อร่อย รอด`)}
+  function init(s=0){stop();turn=s%players;st='play';build();left=N;bad=rnd(N);board.classList.remove('hotboard');paint()}
+  function stop(){to.forEach(clearTimeout);to=[]}
+  $('suReset').onclick=()=>init(0);
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+})();
+
+/* ---------- how to play ---------- */
+const HELP={
+  croc:{t:'จระเข้งับนิ้ว',s:['แตะลูกเต๋าเพื่อทอย ได้แต้มเท่าไหร่ต้องกดฟันเท่านั้นซี่','ฟันมีซี่เดียวที่งับ สุ่มใหม่ทุกรอบ','กดรอดครบแล้ว ตาจะส่งต่อให้คนถัดไป','ใครกดโดนซี่ที่งับ แพ้'],tip:'กราฟด้านล่างคือโอกาสออกของแต่ละหน้า ปรับได้ที่ปุ่มตั้งค่าในหน้าหลัก'},
+  bomb:{t:'ระเบิดเวลา',s:['กดจุดชนวน เครื่องจะบอกหมวดคำ','คนที่ถือมือถือพูดคำในหมวด 1 คำ ห้ามซ้ำ','กดส่งต่อแล้วยื่นมือถือให้คนถัดไป','ระเบิดตูมตอนอยู่ในมือใคร คนนั้นแพ้'],tip:'ระเบิดตูมในเวลาสุ่ม 12–40 วินาที เสียงติ๊กถี่ขึ้นแต่ไม่ได้บอกเวลาจริง'},
+  finger:{t:'นิ้วใครโดน',s:['ทุกคนวางนิ้วบนจอพร้อมกันแล้วค้างไว้','ครบ 2 นิ้วขึ้นไป รอ 3 วินาที','เครื่องวนไฮไลต์แล้วหยุดที่นิ้วเดียว','แตะชื่อเจ้าของนิ้ว แล้วเกมจะสุ่มคนรับกรรมต่อ'],tip:'ยกนิ้วออกกลางทาง การนับจะเริ่มใหม่'},
+  bottle:{t:'ขวดหมุน',s:['นั่งตามเลขที่นั่งรอบวง','แตะขวดหรือกดหมุนขวด','ปากขวดชี้ใคร คนนั้นโดน'],tip:'จัดที่นั่งได้ที่ปุ่มผู้เล่นมุมขวาบน'},
+  cards:{t:'เปิดไพ่ตัวซวย',s:['ผลัดกันเปิดไพ่คนละใบ','ไพ่ ×2 ทำให้คนถัดไปต้องเปิด 2 ใบ','ไพ่ ⇄ กลับทิศการเล่น','ใครเปิดเจอไพ่ตัวซวย แพ้'],tip:''},
+  balloon:{t:'ลูกโป่งสูบลม',s:['แต่ละตาต้องสูบอย่างน้อย 1 ครั้ง ไม่เกิน 3 ครั้ง','สูบเสร็จกดส่งต่อ','ลูกโป่งแตกตอนใครสูบ คนนั้นแพ้'],tip:'จุดแตกสุ่มใหม่ทุกรอบ ขนาดลูกโป่งไม่ได้บอกว่าใกล้แตก'},
+  stop10:{t:'หยุดที่ 10 วิ',s:['ทุกคนเล่นคนละตา','กดเริ่มแล้วนับในใจ ตัวเลขหายหลัง 3 วินาที','กดหยุดให้ใกล้ 10.00 ที่สุด','ครบทุกคนแล้ว ใครห่างจาก 10.00 มากที่สุด แพ้'],tip:''},
+  react:{t:'ไวกว่าแสง',s:['ทุกคนเล่นคนละตา คนละ 2 ครั้ง','แตะเพื่อเริ่ม จอจะเป็นสีแดง','พอจอเป็นสีเขียว แตะให้ไวที่สุด','ใครเฉลี่ยช้าที่สุด แพ้'],tip:'แตะตอนจอยังแดง = ฟาวล์ นับเป็น 1000 ms'},
+  simon:{t:'จำลำดับสี',s:['กดพร้อม แล้วดูไฟกะพริบตามลำดับ','กดสีตามลำดับให้ครบ','ผ่านแล้วลำดับยาวขึ้น 1 ขั้น ส่งให้คนถัดไป','ใครกดผิด แพ้'],tip:''},
+  aim:{t:'เล็งเป้า',s:['กดเริ่ม เส้นสีขาวจะวิ่งไปมา','แตะปุ่มหรือแตะจอเพื่อหยุดให้อยู่ในช่องเขียว','เข้าเป้าแล้วส่งต่อ ช่องจะแคบลงและวิ่งเร็วขึ้น','ใครพลาด แพ้'],tip:''},
+  math:{t:'เลขเร็ว',s:['ส่งมือถือแล้วกดพร้อม','เลือกคำตอบให้ทันก่อนแถบเวลาหมด','ตอบถูกส่งต่อ ข้อต่อไปยากขึ้นและเวลาน้อยลง','ใครตอบผิดหรือไม่ทัน แพ้'],tip:''},
+  stroop:{t:'สีหลอกตา',s:['ดูป้ายด้านบนว่าให้ตอบตาม "สีของตัวอักษร" หรือ "คำที่เขียน"','ตอบให้ถูก 5 ข้อติดกัน ข้อละไม่กี่วินาที','ผ่านแล้วส่งต่อ ข้อต่อไปเร็วขึ้น ปุ่มสลับที่ และเริ่มสลับกติกา','ใครตอบผิดหรือไม่ทัน แพ้'],tip:'ระดับ 1–2 ตอบตามสีของตัวอักษรเสมอ'},
+  odd:{t:'หาสีที่ต่าง',s:['ส่งมือถือแล้วกดพร้อม','แตะช่องที่สีต่างจากช่องอื่น','ต้องผ่าน 3 กระดานติดกันถึงจะส่งต่อได้','ใครแตะผิดหรือหมดเวลา แพ้'],tip:'ยิ่งระดับสูง กระดานยิ่งใหญ่ สีใกล้กันขึ้น และเวลาน้อยลง'},
+  schulte:{t:'เรียงเลข 1–16',s:['ทุกคนเล่นคนละตา','กดเริ่มแล้วแตะเลข 1 ถึง 16 ตามลำดับให้เร็วที่สุด','แตะผิดบวกเวลา 1 วินาที','ใครใช้เวลานานที่สุด แพ้'],tip:''}
+};
+Object.assign(HELP,{
+  mbox:{t:'กล่องมิมอน',s:['ผลัดกันแตะช่องเพื่อเสียบไม้คนละ 1 อัน','มีช่องเดียวที่ทำให้มิมอนเด้งออกมา สุ่มใหม่ทุกรอบ','ใครทำมิมอนเด้ง แพ้'],tip:'ยิ่งเสียบเยอะ กล่องยิ่งสั่นแรง แต่ไม่ได้บอกว่าใกล้เด้ง'},
+  numbomb:{t:'เลขบอมบ์',s:['เครื่องซ่อนเลขบอมบ์ไว้ 1 ตัว ระหว่าง 1 ถึง 100','ผลัดกันทายเลขที่อยู่ในช่วง','ทายไม่โดน ช่วงจะแคบลงแล้วส่งต่อ','ใครทายโดนเลขบอมบ์ แพ้'],tip:'ถ้าเหลือเลขเดียว คนต่อไปต้องทายเลขนั้น'},
+  hilo:{t:'ไพ่สูงต่ำ',s:['ดูไพ่ที่เปิดอยู่ แล้วเดาว่าใบต่อไปสูงกว่าหรือต่ำกว่า','เดาถูกส่งต่อให้คนถัดไป','ออกเลขเท่ากันถือว่ารอด','ใครเดาผิด แพ้'],tip:'A ต่ำสุด K สูงสุด'},
+  wave:{t:'คลื่นยึดพื้นที่',s:['วางมือถือกลางวง ทุกคนเล่นพร้อมกัน','แต่ละคนรัวปุ่มสีของตัวเองที่อยู่ใกล้ตัว','ทุกครั้งที่กด คลื่นวงกลมจะขยายกินพื้นที่','ครบ 10 วินาที ใครมีพื้นที่น้อยสุด แพ้'],tip:'ปุ่มเรียงตามผังที่นั่ง คนที่ 1 อยู่ด้านบน วนตามเข็มนาฬิกา'},
+  stack:{t:'ตึกสูง',s:['บล็อกจะเลื่อนไปมา แตะจอเพื่อวางลงบนตึก','ส่วนที่ยื่นเกินจะถูกตัดทิ้ง ตึกจะแคบลง','วางตรงเป๊ะ ขนาดจะไม่ลด','ผลัดกันวางคนละชั้น ใครวางพลาดตึก แพ้'],tip:'ยิ่งสูง บล็อกยิ่งเลื่อนเร็ว'},
+  mcolor:{t:'มิมอนเปลี่ยนสี',s:['ทุกคนแตะจอคนละจุด จะได้ปุ่มสีของตัวเอง','กดเริ่ม มิมอนจะหมุนเปลี่ยนสีอยู่กลางจอ','มิมอนหยุดเป็นสีของใคร คนนั้นรีบกดปุ่มตัวเอง','กดตอนมิมอนยังหมุน หรือกดผิดสี โดน · กดช้า โดน'],tip:'ยิ่งเล่นนาน เวลาให้กดยิ่งน้อย และตั้งแต่รอบ 3 มิมอนจะแกล้งหยุดหลอก ของจริงต้องมีวงเวลาขึ้นรอบตัว'}
+});
+HELP.sushi={t:'ซูชิวาซาบิ',s:['ผลัดกันแตะกินซูชิคนละ 1 ชิ้น','มีชิ้นเดียวที่แอบใส่วาซาบิไว้ สุ่มใหม่ทุกรอบ','ใครกินโดนชิ้นวาซาบิ แพ้'],tip:'ถ้ามีซูชิจริงอยู่บนโต๊ะ ให้คนรับกรรมกินซูชิป้ายวาซาบิเยอะๆ 1 คำ'};
+function openHelp(id){const h=HELP[id];if(!h)return;closeSheets();
+  $('hTitle').textContent='วิธีเล่น: '+h.t;$('hSteps').innerHTML=h.s.map(x=>`<li>${esc(x)}</li>`).join('');$('hTip').textContent=h.tip||'';
+  $('hModal').hidden=false;$('hDone').focus()}
+$('hDone').onclick=$('hClose').onclick=()=>{$('hModal').hidden=true};
+
+/* ---------- menu + routing ---------- */
+const VIEWS=['menu','croc','bomb','finger','bottle','cards','balloon','stop10','react','simon','aim','math','stroop','odd','schulte','mbox','numbomb','hilo','wave','stack','mcolor','sushi'];
+let current=null;
+const PEOPLE_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg>';
+function route(){
+  const h=location.hash.slice(1),id=VIEWS.includes(h)?h:'menu';
+  if(current&&G[current])G[current].stop();
+  hideResult();closeSheets();
+  document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id);
+  updatePlayersUI();
+  current=id;if(G[id])G[id].init();
+}
+function closeSheets(){if(!$('pModal').hidden)closePlayers();$('sModal').hidden=true;$('hModal').hidden=true}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{actx();location.hash=b.dataset.go});
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>{location.hash='menu'});
+document.querySelectorAll('.helpbtn').forEach(b=>b.onclick=()=>openHelp(current));
+document.querySelectorAll('button.pchip').forEach(c=>c.onclick=()=>openPlayers());
+$('openPlayers').onclick=()=>openPlayers();
+$('openSettings').onclick=()=>openSettings();
+['pModal','sModal','hModal'].forEach(id=>$(id).addEventListener('click',e=>{if(e.target.id===id){id==='pModal'?closePlayers():$(id).hidden=true}}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheets()});
+window.addEventListener('resize',()=>{const g=G[current];if(g&&g.resize)g.resize()});
+
+/* ---------- players sheet ---------- */
+let draft=[],dpart={};
+const dname=i=>((draft[i]&&draft[i].n)||'').trim()||'ผู้เล่น '+(i+1);
+const dPair=(arr,i)=>{if(!cfg.couple||!arr[i])return -1;const p=dpart[arr[i].id];return p?arr.findIndex(r=>r.id===p):-1};
+const pSeat=seatMap($('pSeats'),()=>draft,a=>{draft=a;renderP()},dPair);
+const GRIP='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+function openPlayers(focusIdx){$('sModal').hidden=true;$('hModal').hidden=true;
+  draft=roster.map(r=>({id:r.id,n:r.n}));dpart={...partner};pSeat.reset();renderP(focusIdx);$('pModal').hidden=false}
+function setPair(a,b){const unp=x=>{const o=dpart[x];if(o)delete dpart[o];delete dpart[x]};unp(a);if(b){unp(b);dpart[a]=b;dpart[b]=a}}
+function renderP(focusIdx){
+  cleanPartners(dpart,draft);
+  $('pN').textContent=`(${draft.length} คน)`;
+  const list=$('pList');
+  list.innerHTML=draft.map((r,i)=>{
+    const sel=cfg.couple?`<div class="pp"><span>แฟน</span><select data-i="${i}" aria-label="แฟนของ ${esc(dname(i))}"><option value="">ไม่มีในวง</option>${draft.map((o,j)=>j===i?'':`<option value="${o.id}"${dpart[r.id]===o.id?' selected':''}>${esc(dname(j))}</option>`).join('')}</select></div>`:'';
+    return `<div class="prow" data-id="${r.id}"><span class="drag" aria-label="ลากเพื่อย้ายที่นั่ง">${GRIP}</span><i>${i+1}</i><input id="pin${i}" maxlength="20" autocomplete="off" value="${esc(r.n)}" placeholder="ผู้เล่น ${i+1}" aria-label="ชื่อผู้เล่นคนที่ ${i+1}"><button class="pdel" data-i="${i}" aria-label="ลบผู้เล่นคนที่ ${i+1}"${draft.length<=2?' disabled':''}>×</button>${sel}</div>`}).join('');
+  list.querySelectorAll('input').forEach((inp,i)=>{inp.oninput=()=>{draft[i].n=inp.value;pSeat.draw()};
+    inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const n=$('pin'+(i+1));n?n.focus():inp.blur()}}});
+  list.querySelectorAll('select').forEach(sl=>sl.onchange=()=>{setPair(draft[+sl.dataset.i].id,sl.value);renderP();tone(760,.08,'triangle',.06)});
+  list.querySelectorAll('.pdel').forEach(b=>b.onclick=()=>{if(draft.length<=2)return;const i=+b.dataset.i;setPair(draft[i].id,'');draft.splice(i,1);renderP()});
+  list.querySelectorAll('.drag').forEach(h=>h.addEventListener('pointerdown',e=>startDrag(e,h)));
+  pSeat.draw();
+  const full=draft.length>=MAXP&&draft.every(r=>r.n.trim());$('pAddBtn').disabled=full;$('pNew').disabled=full;$('pNew').placeholder=full?`ครบ ${MAXP} คนแล้ว`:'ชื่อผู้เล่นใหม่';
+  if(focusIdx!=null){const el=$('pin'+focusIdx);if(el){el.focus();el.scrollIntoView({block:'nearest'})}}
+}
+function startDrag(e,h){
+  if(e.button>0)return;e.preventDefault();
+  const list=$('pList'),row=h.closest('.prow'),sheet=$('pModal').querySelector('.sheet');
+  const grab=e.clientY-row.getBoundingClientRect().top;let lastY=e.clientY,timer=null;
+  row.classList.add('dragging');try{h.setPointerCapture(e.pointerId)}catch(_){}
+  function place(y){
+    const sibs=[...list.children].filter(x=>x!==row);let before=null;
+    for(const sb of sibs){const b=sb.getBoundingClientRect();if(y<b.top+b.height/2){before=sb;break}}
+    if(row.nextElementSibling!==before)list.insertBefore(row,before);
+    row.style.transform='none';const top=row.getBoundingClientRect().top;row.style.transform=`translateY(${y-grab-top}px)`;
+  }
+  function edge(){const r=sheet.getBoundingClientRect();let d=0;if(lastY<r.top+60)d=-10;else if(lastY>r.bottom-110)d=10;if(d){sheet.scrollTop+=d;place(lastY)}}
+  const mv=ev=>{lastY=ev.clientY;place(lastY)};
+  timer=setInterval(edge,30);
+  const end=()=>{clearInterval(timer);h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',end);h.removeEventListener('pointercancel',end);
+    row.classList.remove('dragging');row.style.transform='';
+    const order=[...list.children].map(x=>x.dataset.id),changed=order.join()!==draft.map(r=>r.id).join();
+    draft=order.map(id=>draft.find(r=>r.id===id));renderP();if(changed){tone(500,.06,'triangle',.05,800);buzz(10)}};
+  h.addEventListener('pointermove',mv);h.addEventListener('pointerup',end);h.addEventListener('pointercancel',end);
+}
+$('pForm').onsubmit=e=>{e.preventDefault();const inp=$('pNew'),n=inp.value.trim().slice(0,20);if(!n){inp.focus();return}
+  const empty=draft.findIndex(r=>!r.n.trim());
+  if(empty>=0)draft[empty].n=n;else if(draft.length<MAXP)draft.push({id:uid(),n});else return;
+  inp.value='';renderP();inp.focus();tone(660,.06,'triangle',.05);const l=$('pList');l.lastElementChild&&l.lastElementChild.scrollIntoView({block:'nearest'})};
+function closePlayers(){
+  if($('pModal').hidden)return;
+  const oldIds=roster.map(r=>r.id).join(),oldNames=roster.map(r=>r.n).join('\n'),countChanged=draft.length!==roster.length;
+  roster=draft.map(r=>({id:r.id,n:r.n.trim().slice(0,20)}));partner=dpart;cleanPartners(partner,roster);players=roster.length;save();
+  $('pModal').hidden=true;updatePlayersUI();
+  const changed=roster.map(r=>r.id).join()!==oldIds||roster.map(r=>r.n).join('\n')!==oldNames;
+  if(current&&G[current]){if(countChanged){hideResult();G[current].stop();G[current].init()}else if(changed&&G[current].refresh)G[current].refresh()}
+}
+$('pDone').onclick=$('pClose').onclick=closePlayers;
+function updatePlayersUI(){
+  $('pbN').textContent=players+' คน';
+  $('pbL').textContent=roster.map((_,i)=>name(i)).join(' · ');
+  document.querySelectorAll('button.pchip').forEach(c=>c.innerHTML=PEOPLE_SVG+players);
+}
+
+/* ---------- settings sheet ---------- */
+function openSettings(section){$('pModal').hidden||closePlayers();$('hModal').hidden=true;renderS();$('sModal').hidden=false;
+  const sh=$('sModal').querySelector('.sheet');sh.scrollTop=0;
+  if(section){const el=$(section==='dice'?'sgDice':'sgRates');if(el)requestAnimationFrame(()=>el.scrollIntoView({block:'start'}))}}
+const sum=a=>a.reduce((x,y)=>x+y,0);
+function renderS(){
+  $('sPunish').checked=cfg.punish;$('sCouple').checked=cfg.couple;$('sPair').hidden=!cfg.couple;
+  $('sgRates').classList.toggle('dim',!cfg.punish);$('sRN').textContent=players;
+  const sushi=cfg.pmode==='sushi',WT=sushi?cfg.sw:cfg.pw,okf=o=>sushi||optApplies(o.k,null);
+  document.querySelectorAll('#sMode button').forEach(b=>b.classList.toggle('on',b.dataset.m===cfg.pmode));
+  $('sRatesT').textContent=sushi?'อัตราซูชิวาซาบิ':'อัตราการโดน';
+  const shown=sushi?SOPTS:POPTS.filter(o=>!o.couple||cfg.couple);
+  const tot=shown.filter(okf).reduce((a,o)=>a+WT[o.k],0)||1;
+  $('sRates').innerHTML=shown.map(o=>{const ok=okf(o),v=WT[o.k],p=ok?Math.round(v/tot*100):0;
+    const note=o.note||(o.couple?'เฉพาะคนที่มีแฟนในวง':'');
+    return `<div class="wrow${ok?'':' off'}"><span class="wl">${o.label}${note?`<small>${note}</small>`:''}</span><button data-k="${o.k}" data-d="-1" aria-label="ลด ${o.label}">−</button><output>${v}</output><button data-k="${o.k}" data-d="1" aria-label="เพิ่ม ${o.label}">+</button><span class="pct">${ok?p+'%':'—'}</span><span class="bar"><i style="width:${p}%"></i></span></div>`}).join('');
+  $('sRates').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.k;WT[k]=Math.max(0,Math.min(10,WT[k]+ +b.dataset.d));save();renderS();tone(560,.03,'triangle',.04)});
+  const ds=sum(cfg.dice)||1;
+  $('sPresets').innerHTML=DICE_PRESETS.map((p,i)=>`<button data-p="${i}" class="${p.w.join()===cfg.dice.join()?'on':''}">${p.n}</button>`).join('');
+  $('sPresets').querySelectorAll('button').forEach(b=>b.onclick=()=>{cfg.dice=DICE_PRESETS[+b.dataset.p].w.slice();save();renderS();G.croc.drawOdds();tone(660,.05,'triangle',.05)});
+  $('sDice').innerHTML=cfg.dice.map((v,i)=>{const p=Math.round(v/ds*100);
+    return `<div class="wrow"><span class="wl">หน้า ${i+1}</span><button data-f="${i}" data-d="-1" aria-label="ลดโอกาสหน้า ${i+1}">−</button><output>${v}</output><button data-f="${i}" data-d="1" aria-label="เพิ่มโอกาสหน้า ${i+1}">+</button><span class="pct">${p}%</span><span class="bar"><i style="width:${p}%"></i></span></div>`}).join('');
+  $('sDice').querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.f,d=+b.dataset.d,v=cfg.dice[i];
+    const step=d>0?(v<10?1:5):(v<=10?1:5),nv=Math.max(0,Math.min(50,v+d*step));
+    if(nv===0&&sum(cfg.dice)-v===0)return;cfg.dice[i]=nv;save();renderS();G.croc.drawOdds();tone(560,.03,'triangle',.04)});
+}
+$('sPunish').onchange=e=>setPunish(e.target.checked);
+document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
+const APP_VERSION='1.13';
+$('verLine').textContent=`หาคนโดน เวอร์ชัน ${APP_VERSION} · ${document.querySelectorAll('.tile').length} เกม`;
+$('verSet').textContent=`เวอร์ชัน ${APP_VERSION}`;
+$('sCouple').onchange=e=>{cfg.couple=e.target.checked;save();renderS()};
+$('sPair').onclick=()=>{$('sModal').hidden=true;openPlayers()};
+$('sDone').onclick=$('sClose').onclick=()=>{$('sModal').hidden=true};
+let resetArm=null;
+$('sReset').onclick=()=>{const b=$('sReset');
+  if(!resetArm){b.textContent='แตะอีกครั้งเพื่อยืนยัน';b.style.color='var(--danger)';resetArm=setTimeout(()=>{resetArm=null;b.textContent='คืนค่าเริ่มต้นของการตั้งค่า';b.style.color=''},3000);return}
+  clearTimeout(resetArm);resetArm=null;cfg=defaults();save();renderS();syncPunish();G.croc.drawOdds();b.textContent='คืนค่าแล้ว';b.style.color='';
+  setTimeout(()=>{b.textContent='คืนค่าเริ่มต้นของการตั้งค่า'},1500)};
+
+(()=>{const d=document,el=d.documentElement,b=$('fsBtn');
+  const can=(d.fullscreenEnabled||d.webkitFullscreenEnabled)&&(el.requestFullscreen||el.webkitRequestFullscreen);
+  if(!can)return;b.hidden=false;
+  b.onclick=async()=>{try{if(d.fullscreenElement||d.webkitFullscreenElement){await (d.exitFullscreen||d.webkitExitFullscreen).call(d)}else{await (el.requestFullscreen||el.webkitRequestFullscreen).call(el)}}catch(e){b.hidden=true}};
+})();
+syncPunish();
+updatePlayersUI();
+window.addEventListener('hashchange',route);
+route();
+
+</script>
+
+</body>
+</html>
