@@ -29,7 +29,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%}
-body{margin:0;background:radial-gradient(90vmax 60vmax at 0% -10%,rgba(150,60,255,.28),transparent 60%),radial-gradient(80vmax 55vmax at 110% 0%,rgba(255,60,160,.22),transparent 55%),radial-gradient(90vmax 60vmax at 50% 120%,rgba(110,40,220,.25),transparent 60%),var(--bg);color:var(--ink);font-family:var(--font);
+body{margin:0;background:radial-gradient(90vmax 60vmax at 0% -10%,rgba(150,60,255,.28),transparent 60%),radial-gradient(80vmax 55vmax at 110% 0%,rgba(255,60,160,.22),transparent 55%),radial-gradient(70vmax 45vmax at 50% 62%,rgba(120,50,230,.16),transparent 70%),var(--bg);color:var(--ink);font-family:var(--font);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0;
   overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer;padding:0}
@@ -663,11 +663,29 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 @keyframes gfade{from{opacity:.2;transform:translateX(var(--gdx,0))}}
 .gfoot{display:flex;align-items:center;justify-content:center;position:relative;min-height:26px}
 .dots{display:flex;gap:2px}
-.dot{width:24px;height:26px;display:grid;place-items:center}
-.dot::before{content:"";width:8px;height:8px;border-radius:99px;background:var(--line);transition:width .2s,background .2s}
-.dot.on::before{width:22px;background:var(--grad)}
+.pdot{width:24px;height:26px;display:grid;place-items:center}
+.pdot::before{content:"";width:8px;height:8px;border-radius:99px;background:var(--line);transition:width .2s,background .2s}
+.pdot.on::before{width:22px;background:var(--grad)}
 .gfoot .ver{position:absolute;right:0;top:50%;transform:translateY(-50%);margin:0;font-size:11px;opacity:.6}
 @media (max-height:700px){.hello .mbtn{width:64px;height:64px}.bubble>span{font-size:15px}.menu-wrap{gap:8px;padding-block:8px 6px}.pchip2{margin-top:5px}}
+
+/* ---------- Home v2: compact bubble, centred grid, mode dots ---------- */
+.hello .mbtn{width:70px;height:70px}
+.bubble{padding:8px 10px 8px 12px;gap:0;border-radius:16px}
+.bline{display:flex;align-items:baseline;gap:8px;min-width:0}
+.bline b{flex:none}
+.bline span{min-width:0;font-size:16px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pchip2{margin-top:6px;min-height:40px;padding:4px 4px 4px 10px;border-radius:12px}
+.pchip2 .pe{padding:6px 10px}
+.menu-wrap{gap:12px}
+.menu-wrap>.gwrap{--gap:min(10px,2.2cqh)}
+.ggrid{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:var(--gap) 10px;grid-template:none}
+.ggrid .tile{flex:none;width:calc((100% - 20px) / 3);height:calc((100cqh - 3 * var(--gap)) / 4)}
+.gfoot{flex-direction:column;gap:2px;min-height:0}
+.dots{gap:0;align-items:center}
+.pdot.gapL{margin-left:10px}
+.gfoot .ver{position:static;transform:none;font-size:11px;opacity:.55}
+@media (max-height:700px){.hello .mbtn{width:56px;height:56px}.bline span{font-size:15px}}
 @media (max-width:360px){.tiles{grid-auto-columns:calc((100% - 10px) / 2.3)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
@@ -722,7 +740,7 @@ body{padding-top:env(safe-area-inset-top,0px)}
       <button class="hbtn coopbtn" id="coopBtn" hidden aria-label="ห้องออนไลน์"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="9" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="12.5" y="6" width="9" height="15" rx="2" fill="currentColor" opacity=".55"/><path d="M5.5 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><i id="coopBadge">1</i></button>
       <button class="hbtn" id="openSettings" aria-label="ตั้งค่า"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M19.4 13.4l1.7 1.3-2 3.5-2-.8c-.5.4-1.1.8-1.8 1l-.3 2.1h-4l-.3-2.1c-.7-.2-1.3-.6-1.8-1l-2 .8-2-3.5 1.7-1.3a7.6 7.6 0 0 1 0-2.8L2.9 9.3l2-3.5 2 .8c.5-.4 1.1-.8 1.8-1L9 3.5h4l.3 2.1c.7.2 1.3.6 1.8 1l2-.8 2 3.5-1.7 1.3a7.6 7.6 0 0 1 0 2.8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button>
     </div>
-    <div class="hello"><button class="mbtn" id="mimonHi" aria-label="มิมอน มาสคอตของแอป"><svg class="mimon " viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></button><div class="bubble"><b>mimon</b><span id="mimonSay">วันนี้ใครโดน?</span>
+    <div class="hello"><button class="mbtn" id="mimonHi" aria-label="มิมอน มาสคอตของแอป"><svg class="mimon " viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></button><div class="bubble"><div class="bline"><b>mimon</b><span id="mimonSay">วันนี้ใครโดน?</span></div>
       <button class="pchip2" id="openPlayers" aria-label="จัดการผู้เล่น"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg><span class="pn" id="pbN"></span><span class="pl" id="pbL"></span><span class="pe">แก้ไข</span></button></div></div>
     <div class="modes" role="tablist" aria-label="ประเภทเกม">
       <button role="tab" data-mode="luck">ลุ้นดวง<small></small></button><button role="tab" data-mode="skill">ใช้ฝีมือ<small></small></button><button role="tab" data-mode="hard">ยากขึ้น<small></small></button>
@@ -2280,27 +2298,33 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.18';
+const APP_VERSION='1.19';
 /* home: 3 modes, 12 games per page, dots + swipe between pages */
 const PER_PAGE=12;
 let gMode=(()=>{try{return localStorage.getItem('hk-mode')||'luck'}catch(e){return'luck'}})(),gPage=0,gSwiped=false;
 const tilesOf=m=>[...document.querySelectorAll(`.tile[data-mode="${m}"]`)];
+const MODE_KEYS=['luck','skill','hard'],MODE_NAME={luck:'ลุ้นดวง',skill:'ใช้ฝีมือ',hard:'ยากขึ้น'};
+// ทุกหน้าของทุกโหมดเรียงต่อกัน ปัดซ้ายขวาเพื่อไปหน้าถัดไปหรือโหมดถัดไป
+const pageSeq=()=>{const q=[];MODE_KEYS.forEach(m=>{const n=Math.max(1,Math.ceil(tilesOf(m).length/PER_PAGE));for(let k=0;k<n;k++)q.push([m,k])});return q};
 function renderGrid(dir){
   if(!tilesOf(gMode).length)gMode='luck';
   const all=tilesOf(gMode),pages=Math.max(1,Math.ceil(all.length/PER_PAGE));gPage=Math.max(0,Math.min(gPage,pages-1));
   const grid=$('ggrid'),pool=$('gpool');[...grid.children].forEach(t=>pool.appendChild(t));
   all.slice(gPage*PER_PAGE,(gPage+1)*PER_PAGE).forEach(t=>grid.appendChild(t));
-  grid.style.setProperty('--gdx',dir?(dir>0?'24px':'-24px'):'0');grid.classList.remove('fade');void grid.offsetWidth;if(dir!==undefined)grid.classList.add('fade');
-  $('gdots').innerHTML=Array.from({length:pages},(_,i)=>`<button class="dot${i===gPage?' on':''}" data-p="${i}" aria-label="หน้า ${i+1} จาก ${pages}"></button>`).join('');
-  $('gdots').querySelectorAll('.dot').forEach(d=>d.onclick=()=>{const p=+d.dataset.p;if(p!==gPage){const dd=p>gPage?1:-1;gPage=p;renderGrid(dd)}});
+  grid.style.setProperty('--gdx',dir?(dir>0?'28px':'-28px'):'0');grid.classList.remove('fade');void grid.offsetWidth;if(dir!==undefined)grid.classList.add('fade');
+  const q=pageSeq();
+  $('gdots').innerHTML=q.map(([m,k],n)=>`<button class="pdot${m===gMode&&k===gPage?' on':''}${n&&q[n-1][0]!==m?' gapL':''}" data-n="${n}" aria-label="${MODE_NAME[m]} หน้า ${k+1}"></button>`).join('');
+  $('gdots').querySelectorAll('.pdot').forEach(d=>d.onclick=()=>goPage(+d.dataset.n));
   document.querySelectorAll('.modes [data-mode]').forEach(b=>{const on=b.dataset.mode===gMode;b.classList.toggle('on',on);b.setAttribute('aria-selected',on);b.querySelector('small').textContent=tilesOf(b.dataset.mode).length});
 }
-document.querySelectorAll('.modes [data-mode]').forEach(b=>b.onclick=()=>{if(b.dataset.mode===gMode)return;gMode=b.dataset.mode;gPage=0;try{localStorage.setItem('hk-mode',gMode)}catch(e){}tone(620,.05,'triangle',.05);renderGrid(0)});
+function goPage(n,dir){const q=pageSeq(),cur=q.findIndex(([m,k])=>m===gMode&&k===gPage);n=(n+q.length)%q.length;if(n===cur)return;
+  const [m,k]=q[n];if(m!==gMode){gMode=m;try{localStorage.setItem('hk-mode',gMode)}catch(e){}}gPage=k;tone(620,.05,'triangle',.05);renderGrid(dir||(n>cur?1:-1))}
+document.querySelectorAll('.modes [data-mode]').forEach(b=>b.onclick=()=>{if(b.dataset.mode===gMode)return;goPage(pageSeq().findIndex(([m])=>m===b.dataset.mode))});
 (()=>{const g=$('gwrap');let x0=null,y0=0;
   g.addEventListener('pointerdown',e=>{x0=e.clientX;y0=e.clientY;gSwiped=false});
+  g.addEventListener('pointercancel',()=>{x0=null});
   g.addEventListener('pointerup',e=>{if(x0==null)return;const dx=e.clientX-x0,dy=e.clientY-y0;x0=null;
-    const pages=Math.ceil(tilesOf(gMode).length/PER_PAGE);
-    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3){gSwiped=true;const np=gPage+(dx<0?1:-1);if(pages>1&&np>=0&&np<pages){gPage=np;renderGrid(dx<0?1:-1)}}});
+    if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.2){gSwiped=true;const q=pageSeq(),cur=q.findIndex(([m,k])=>m===gMode&&k===gPage);goPage(cur+(dx<0?1:-1),dx<0?1:-1)}});
   g.addEventListener('click',e=>{if(gSwiped){e.stopPropagation();e.preventDefault();gSwiped=false}},true);
 })();
 renderGrid();
