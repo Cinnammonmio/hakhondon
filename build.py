@@ -20,7 +20,7 @@ HEAD = """<!doctype html>
 <meta name="theme-color" content="#13091f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="หาคนโดน">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -28,30 +28,15 @@ HEAD = """<!doctype html>
 <style>:root{color-scheme:dark;background:#13091f}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
 """
 
-# iPhone home-screen mode (iOS 26) with a translucent status bar reports a viewport
-# that is short by the status-bar height, which leaves an empty strip at the bottom.
-# iOS 26 also refuses to draw position:fixed content below that short viewport, so
-# the page uses normal flow instead: the script measures the missing height (iOS
-# home-screen mode only) and <html> grows by that much. Safe-area padding keeps
-# content clear of the notch and is kept tight above the home bar.
-STANDALONE = """<script>
-(function(){
-  function fix(){
-    var g=0;
-    if(window.navigator.standalone===true){
-      var land=window.matchMedia&&matchMedia('(orientation: landscape)').matches;
-      var full=land?Math.min(screen.width,screen.height):Math.max(screen.width,screen.height);
-      g=Math.round(full-window.innerHeight);if(g<0||g>120)g=0;
-    }
-    document.documentElement.style.setProperty('--vfix',g+'px');
-  }
-  fix();window.addEventListener('resize',fix);window.addEventListener('orientationchange',function(){setTimeout(fix,300)});window.addEventListener('pageshow',fix);
-})();
-</script>
-<style>
-html{height:calc(100% + var(--vfix,0px));overflow:hidden}
-body{position:relative;height:100%;overflow:hidden;padding-top:env(safe-area-inset-top,0px)}
-.menu-wrap{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px) / 2)}
+# iPhone home-screen mode on iOS 26 mis-sizes the page when the status bar is
+# "black-translucent": the viewport comes out short by the status-bar height and
+# nothing is drawn in the strip left at the bottom. An opaque status bar ("black",
+# set in HEAD) keeps the page and the screen the same size. Safe-area padding keeps
+# content clear of the home bar, kept tight so buttons sit just above it.
+STANDALONE = """<style>
+html,body{height:100%}
+body{padding-top:env(safe-area-inset-top,0px)}
+.menu-wrap{padding-bottom:calc(10px + env(safe-area-inset-bottom,0px) / 2)}
 .controls{padding-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
 .view>.stage:last-child{margin-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
 </style>
