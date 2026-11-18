@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="หาคนโดน: รวม 21 เกมวงเพื่อน ลุ้นว่าใครโดน มีมิมอนเป็นมาสคอต">
+<meta name="description" content="หาคนโดน: รวมเกมวงเพื่อน ลุ้นว่าใครโดน เล่นเครื่องเดียวหรือหลายเครื่องก็ได้">
 <meta name="theme-color" content="#13091f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -12,7 +12,7 @@
 <link rel="icon" type="image/svg+xml" href="logo.svg">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
-<style>:root{color-scheme:dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%;background:#13091f}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
+<style>:root{color-scheme:dark;background:#13091f}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
 <title>หาคนโดน</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@600;700&family=Mitr:wght@400;500;700&display=swap">
@@ -563,8 +563,72 @@ input{user-select:text;-webkit-user-select:text}
 .rsushi .w1,.rsushi .w2{display:none}
 .rsushi[data-k="wasabi"] .w1,.rsushi[data-k="double"] .w1,.rsushi[data-k="double"] .w2{display:inline}
 .ver{margin:6px 0 0;text-align:center;font-size:12px;color:var(--muted);opacity:.85;font-variant-numeric:tabular-nums}
+
+/* ---------- Co-op ---------- */
+.coopcard{display:flex;align-items:center;gap:10px;width:100%;min-height:62px;background:linear-gradient(90deg,rgba(46,230,197,.13),rgba(79,209,255,.07)),var(--panel);border:1px solid var(--line);border-radius:18px;padding:8px 10px 8px 14px;text-align:left;transition:transform .08s,border-color .2s}
+.coopcard:active{transform:scale(.98)}
+.coopcard .cic{width:28px;height:28px;flex:none;color:#2ee6c5}
+.coopcard .cic svg{width:100%;height:100%}
+.coopcard .ct{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.coopcard .ct b{font-weight:500;font-size:17px;color:#bff7ec}
+.coopcard .ct small{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.coopcard .pe{flex:none;font-size:15px;background:var(--panel2);border-radius:12px;padding:10px 14px}
+.coopcard.on{border-color:rgba(46,230,197,.6);box-shadow:0 0 18px rgba(46,230,197,.18)}
+.coopcard.on .ct b::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:#2ee6c5;margin-right:8px;vertical-align:middle;box-shadow:0 0 8px #2ee6c5}
+.gopts{flex-wrap:wrap;gap:8px}
+.netpill{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:99px;background:rgba(46,230,197,.12);border:1px solid rgba(46,230,197,.35);color:#bff7ec;font-size:15px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.netpill.mine{background:var(--grad);border-color:transparent;color:#fff;font-weight:500;animation:pillpulse .9s ease-in-out infinite alternate}
+.netpill.lost{background:rgba(255,90,78,.15);border-color:rgba(255,90,78,.5);color:#ffc2bd}
+@keyframes pillpulse{to{box-shadow:0 0 20px rgba(255,79,163,.65)}}
+.coop-guest .ptog,.coop-guest .resetbtn{display:none}
+.toast{position:fixed;left:50%;bottom:calc(100px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;width:max-content;max-width:calc(100% - 32px);background:#2b1749;border:1px solid var(--accent);color:var(--ink);padding:12px 18px;border-radius:16px;font-size:15px;line-height:1.4;box-shadow:0 10px 30px rgba(0,0,0,.5);text-align:center;pointer-events:none;overflow-wrap:anywhere}
+.toast.show{animation:toastin .28s cubic-bezier(.2,1.4,.4,1)}
+@keyframes toastin{from{transform:translateX(-50%) translateY(12px) scale(.95);opacity:0}}
+.sheet.rsheet{align-items:stretch;text-align:left;gap:12px}
+.rsheet h4{margin:4px 0 0;font-size:16px;font-weight:500}
+.rhelp{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.coop .rhelp{display:none}
+.mine{display:flex;flex-direction:column;gap:6px}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) 48px;gap:6px}
+.mrow input,.joinrow input,.sbcfg input{min-height:50px;width:100%;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink)}
+.mrow input:focus,.joinrow input:focus,.sbcfg input:focus{outline:2px solid var(--accent);border-color:transparent}
+.mrow button{height:50px;border-radius:12px;background:var(--panel2);font-size:20px;color:var(--muted)}
+.mrow button:disabled{opacity:.3}
+.rbig{width:100%;margin-top:4px}
+.ror{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px;margin:6px 0}
+.ror::before,.ror::after{content:"";flex:1;height:1px;background:var(--line)}
+.joinrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.joinrow input{text-transform:uppercase;letter-spacing:.35em;font-weight:700;text-align:center;font-size:24px;padding-left:.35em}
+.joinrow .ghost{min-width:110px;font-size:17px;font-weight:500}
+.rerr{margin:4px 0 0;color:#ff9a9a;font-size:14px;line-height:1.45;min-height:1.3em}
+.sbcfg{background:var(--panel2);border-radius:14px;padding:6px 12px;margin-top:4px}
+.sbcfg summary{cursor:pointer;font-size:14px;color:var(--muted);min-height:40px;display:flex;align-items:center}
+.sbcfg[open]{display:flex;flex-direction:column;gap:8px;padding-bottom:12px}
+.sbcfg small{color:var(--muted);font-size:12px;line-height:1.5}
+.rcode{display:flex;flex-direction:column;align-items:center;gap:8px;background:linear-gradient(160deg,rgba(46,230,197,.16),rgba(79,209,255,.07));border:1px solid rgba(46,230,197,.4);border-radius:18px;padding:14px}
+.rcode small{color:var(--muted);font-size:13px}
+.rcode b{font-size:46px;letter-spacing:.25em;padding-left:.25em;line-height:1;font-variant-numeric:tabular-nums}
+.rstat{margin:0;font-size:14px;color:var(--muted);text-align:center}
+.rdevs{display:flex;flex-direction:column;gap:6px}
+.rdev{display:flex;align-items:center;gap:8px;background:var(--panel2);border-radius:12px;padding:10px 12px;font-size:15px;min-width:0}
+.rdev .tag{flex:none;font-style:normal;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--line)}
+.rdev .tag.h{background:var(--grad)}
+.rdev span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rnote{color:var(--muted);font-size:13px;margin-top:-8px}
+.danger{color:#ff9a9a}
+.watch{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;max-width:340px}
+.watch .mimon{width:min(40cqmin,150px);height:auto;aspect-ratio:1;animation:mbob 2.6s ease-in-out infinite}
+.watch h2{margin:0;font-size:26px;font-weight:500}
+.watch p{margin:0;color:var(--muted);font-size:16px;line-height:1.55}
 @media (max-width:360px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<style>
+html{height:100%}
+body{position:fixed;inset:0;height:auto;padding-top:env(safe-area-inset-top,0px)}
+.menu-wrap{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+.controls{padding-bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 6px))}
+.view>.stage:last-child{margin-bottom:max(16px,env(safe-area-inset-bottom,0px))}
 </style>
 </head>
 <body>
@@ -611,6 +675,7 @@ input{user-select:text;-webkit-user-select:text}
     </div>
     <div class="hello"><button class="mbtn" id="mimonHi" aria-label="มิมอน มาสคอตของแอป"><svg class="mimon " viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></button><div class="bubble"><b>mimon</b><span id="mimonSay">วันนี้ใครโดน?</span></div></div>
     <button class="pbar" id="openPlayers" aria-label="จัดการผู้เล่น"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg><span class="pn" id="pbN"></span><span class="pl" id="pbL"></span><span class="pe">แก้ไข</span></button>
+    <button class="coopcard" id="coopCard"><span class="cic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="9" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="12.5" y="6" width="9" height="15" rx="2" fill="currentColor" opacity=".55"/><path d="M5.5 16h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span><span class="ct"><b id="coopT">เล่นหลายเครื่อง</b><small id="coopS">สร้างห้องหรือเข้าห้องเพื่อนผ่านเน็ต</small></span><span class="pe" id="coopE">เปิด</span></button>
     <h2 class="sec">ลุ้นดวง</h2>
     <div class="tiles">
       <button class="tile" data-go="croc" style="--c:#46a052"><span class="ic"><svg viewBox="0 0 48 48"><rect x="4" y="8" width="40" height="32" rx="10" fill="currentColor"/><rect x="9" y="14" width="30" height="20" rx="5" fill="#3a0909"/><path d="M12 14l3 6 3-6m3 0l3 6 3-6m3 0l3 6 3-6M12 34l3-6 3 6m3 0l3-6 3 6m3 0l3-6 3 6" fill="#fff"/></svg></span><span class="tn">จระเข้งับนิ้ว</span></button>
@@ -648,7 +713,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== CROC ===== -->
 <section class="view" id="v-croc" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จระเข้งับนิ้ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="stage">
     <main class="mouth locked" id="mouth" aria-label="ปากจระเข้">
       <div class="jaw lower" id="lower"><div class="shell"></div><div class="lip"></div><div class="cavity"></div></div>
@@ -658,14 +723,14 @@ input{user-select:text;-webkit-user-select:text}
   </div>
   <div class="controls" style="justify-content:space-between">
     <div class="odds" id="odds" role="img" aria-label="โอกาสออกของลูกเต๋าแต่ละหน้า"></div>
-    <button class="ghost" id="crocReset">เริ่มใหม่</button>
+    <button class="ghost resetbtn" id="crocReset">เริ่มใหม่</button>
   </div>
 </section>
 
 <!-- ===== BOMB ===== -->
 <section class="view" id="v-bomb" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ระเบิดเวลา</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="prompt" id="bPrompt"></div>
   <div class="holder">กำลังถือ: <b id="bHolder"></b></div>
   <div class="stage">
@@ -689,7 +754,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== FINGER ===== -->
 <section class="view" id="v-finger" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>นิ้วใครโดน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info">วางนิ้วค้างไว้ <b>ห้ามยก</b> จนกว่าจะเลือกเสร็จ</div>
   <div class="stage" style="margin-bottom:16px">
     <div class="touch" id="touch">
@@ -702,7 +767,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== BOTTLE ===== -->
 <section class="view" id="v-bottle" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ขวดหมุน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info">นั่งตามเลขรอบวง <b>เรียงตามเข็มนาฬิกา</b></div>
   <div class="stage">
     <div class="table" id="table">
@@ -722,16 +787,16 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== CARDS ===== -->
 <section class="view" id="v-cards" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เปิดไพ่ตัวซวย</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="cInfo"></div>
   <div class="stage"><div class="cgrid" id="cGrid"></div></div>
-  <div class="controls"><button class="ghost" id="cReset">สับไพ่ใหม่</button></div>
+  <div class="controls"><button class="ghost resetbtn" id="cReset">สับไพ่ใหม่</button></div>
 </section>
 
 <!-- ===== BALLOON ===== -->
 <section class="view" id="v-balloon" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ลูกโป่งสูบลม</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="lInfo"></div>
   <div class="stage">
     <div class="bal-area">
@@ -748,7 +813,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== STOP 10 ===== -->
 <section class="view" id="v-stop10" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>หยุดที่ 10 วิ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="sInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="clock" id="sClock">0.00</div>
@@ -761,19 +826,19 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== REACTION ===== -->
 <section class="view" id="v-react" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ไวกว่าแสง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="rInfo"></div>
   <div class="stage"><div class="sk-col">
     <button class="rpad" id="rPad"><b id="rBig"></b><small id="rSmall"></small></button>
     <ol class="board" id="rBoard"></ol>
   </div></div>
-  <div class="controls"><button class="ghost" id="rReset">เริ่มรอบใหม่</button></div>
+  <div class="controls"><button class="ghost resetbtn" id="rReset">เริ่มรอบใหม่</button></div>
 </section>
 
 <!-- ===== SIMON ===== -->
 <section class="view" id="v-simon" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>จำลำดับสี</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="siInfo"></div>
   <div class="stage"><div class="simon locked" id="simon">
     <button class="spad" style="--pc:#3bd17a" aria-label="เขียว"></button>
@@ -788,7 +853,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== AIM ===== -->
 <section class="view" id="v-aim" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เล็งเป้า</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="aInfo"></div>
   <div class="stage" id="aStage"><div class="aim">
     <div class="lvl" id="aLvl"></div>
@@ -801,7 +866,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== MATH ===== -->
 <section class="view" id="v-math" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เลขเร็ว</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="maInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="mq" id="mQ">?</div>
@@ -815,7 +880,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== STROOP ===== -->
 <section class="view" id="v-stroop" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>สีหลอกตา</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="stInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="rulechip" id="stRule"></div>
@@ -830,7 +895,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== ODD SHADE ===== -->
 <section class="view" id="v-odd" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>หาสีที่ต่าง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="odInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="tbar"><i id="odBar"></i></div>
@@ -843,7 +908,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== SCHULTE ===== -->
 <section class="view" id="v-schulte" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เรียงเลข 1–16</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="scInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="clock sm" id="scClock">0.00</div>
@@ -857,20 +922,20 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== MIMON BOX ===== -->
 <section class="view" id="v-mbox" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>กล่องมิมอน</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="mbInfo"></div>
   <div class="stage"><div class="mbox" id="mbBox">
     <svg class="mimon pop" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimonWow"/></svg>
     <div class="lid"></div>
     <div class="mbody" id="mbHoles"></div>
   </div></div>
-  <div class="controls"><button class="ghost" onclick="G.mbox.init()">เริ่มรอบใหม่</button></div>
+  <div class="controls"><button class="ghost resetbtn" onclick="doReset(()=>G.mbox.init())">เริ่มรอบใหม่</button></div>
 </section>
 
 <!-- ===== NUMBER BOMB ===== -->
 <section class="view" id="v-numbomb" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>เลขบอมบ์</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="nbInfo"></div>
   <div class="stage"><div class="sk-col nb" id="nbWrap">
     <div class="nbrange"><span id="nbLo">1</span><i class="nbtrack"><b id="nbFill"></b></i><span id="nbHi">100</span></div>
@@ -883,7 +948,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== HI-LO ===== -->
 <section class="view" id="v-hilo" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ไพ่สูงต่ำ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="hlInfo"></div>
   <div class="stage"><div class="sk-col">
     <div class="hl">
@@ -899,7 +964,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== WAVE ===== -->
 <section class="view" id="v-wave" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>คลื่นยึดพื้นที่</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="wvInfo"></div>
   <div class="stage" id="wvStage"><canvas id="wvCanvas"></canvas><div class="wvmid" id="wvMid"></div><div class="wvseats" id="wvSeats"></div></div>
   <div class="controls"><button class="big" id="wvBtn">เริ่ม</button></div>
@@ -908,7 +973,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== STACK ===== -->
 <section class="view" id="v-stack" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ตึกสูง</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="skInfo"></div>
   <div class="stage" id="skStage"><canvas id="skCanvas"></canvas><div class="skhud" id="skHud"></div></div>
   <div class="controls"><button class="big" id="skBtn">เริ่ม</button></div>
@@ -917,7 +982,7 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== MIMON COLOURS ===== -->
 <section class="view" id="v-mcolor" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>มิมอนเปลี่ยนสี</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="mcInfo"></div>
   <div class="stage"><div class="mcarea" id="mcArea">
     <div class="mcmid" id="mcMid"><svg class="mcring" viewBox="0 0 100 100" aria-hidden="true"><circle id="mcRing" cx="50" cy="50" r="46"/></svg><svg class="mimon" id="mcMimon" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg></div>
@@ -929,10 +994,21 @@ input{user-select:text;-webkit-user-select:text}
 <!-- ===== SUSHI ===== -->
 <section class="view" id="v-sushi" hidden>
   <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ซูชิวาซาบิ</h1><button class="hbtn helpbtn" aria-label="วิธีเล่น">?</button><button class="pchip" aria-label="จัดการผู้เล่น"></button></header>
-  <div class="gopts"><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
+  <div class="gopts"><span class="netpill" hidden></span><button class="ptog" role="switch" aria-checked="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h3.5c2 0 3.2.9 4.4 2.6l2.2 3.3c1.2 1.7 2.4 2.6 4.4 2.6H20M3 17h3.5c2 0 3.2-.9 4.4-2.6M14.9 9.6C16.1 7.9 17.3 7 19.3 7H20M17.5 4.5 20 7l-2.5 2.5M17.5 13 20 15.5 17.5 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>สุ่มคนรับกรรมตอนจบ</span><span class="sw"></span></button></div>
   <div class="info" id="suInfo"></div>
   <div class="stage"><div class="geta" id="suBoard"></div></div>
-  <div class="controls"><button class="ghost" id="suReset">จัดจานใหม่</button></div>
+  <div class="controls"><button class="ghost resetbtn" id="suReset">จัดจานใหม่</button></div>
+</section>
+
+<!-- ===== WATCH (co-op guest) ===== -->
+<section class="view" id="v-watch" hidden>
+  <header class="top"><button class="hbtn back" aria-label="กลับหน้าเกมทั้งหมด"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h1>ห้องออนไลน์</h1><button class="pchip" aria-label="ดูห้อง"></button></header>
+  <div class="gopts"><span class="netpill" hidden></span></div>
+  <div class="stage"><div class="watch">
+    <svg class="mimon" viewBox="0 0 120 120" aria-hidden="true"><use href="#mimon"/></svg>
+    <h2 id="wGame"></h2>
+    <p id="wMsg"></p>
+  </div></div>
 </section>
 
 <!-- ===== RESULT ===== -->
@@ -964,6 +1040,41 @@ input{user-select:text;-webkit-user-select:text}
     <button class="big" id="pDone">เสร็จ</button>
   </div>
 </div>
+
+<!-- ===== ROOM (co-op) ===== -->
+<div class="modal" id="rModal" hidden role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="sheet rsheet">
+    <div class="shead"><h3 id="rTitle">เล่นหลายเครื่อง</h3><button class="hbtn" id="rClose" aria-label="ปิด">✕</button></div>
+    <div id="rOnTop" hidden>
+      <div class="rcode"><small>รหัสห้อง</small><b id="rCodeBig"></b><button class="ghost" id="rCopy">ส่งลิงก์ชวนเพื่อน</button></div>
+      <p class="rstat" id="rStat"></p>
+      <div class="rdevs" id="rDevs"></div>
+    </div>
+    <p class="rhelp" id="rHelp">ทุกเครื่องเข้าห้องเดียวกันผ่านเน็ต เครื่องเดียวมีหลายคนเล่นได้ ตาของใคร คนนั้นกดที่เครื่องตัวเอง</p>
+    <h4>คนที่เล่นเครื่องนี้</h4>
+    <div class="mine" id="rMine"></div>
+    <form class="addname" id="rMineForm" style="padding-bottom:0"><input id="rMineNew" maxlength="20" autocomplete="off" enterkeyhint="send" placeholder="เพิ่มอีกคนที่ใช้เครื่องนี้" aria-label="เพิ่มชื่อคนที่ใช้เครื่องนี้"><button type="button" id="rMineAdd">เพิ่ม</button></form>
+    <div id="rOffAct">
+      <button class="big rbig" id="rCreate">สร้างห้องใหม่</button>
+      <div class="ror"><span>หรือเข้าห้องเพื่อน</span></div>
+      <div class="joinrow"><input id="rCode" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="รหัส" aria-label="รหัสห้อง 4 ตัว"><button class="ghost" id="rJoin">เข้าห้อง</button></div>
+      <p class="rerr" id="rErr" role="alert"></p>
+      <details class="sbcfg" id="rCfg"><summary>ตั้งค่า Supabase · <span id="rCfgNote"></span></summary>
+        <small>ใส่ Project URL และ anon public key จาก Supabase (Project Settings → API) ใช้แค่ Realtime ไม่ต้องสร้างตาราง ค่านี้เก็บไว้ในเครื่องนี้</small>
+        <input id="rUrl" autocomplete="off" spellcheck="false" placeholder="https://xxxx.supabase.co" aria-label="Supabase URL">
+        <input id="rKey" autocomplete="off" spellcheck="false" placeholder="anon public key" aria-label="Supabase anon key">
+        <button class="ghost" id="rSave">บันทึก</button>
+      </details>
+    </div>
+    <div id="rOnBot" hidden>
+      <h4>ผังที่นั่ง</h4>
+      <small class="rnote" id="rSeatNote"></small>
+      <div class="seatmap" id="rSeats"></div>
+      <button class="ghost danger" id="rLeave">ออกจากห้อง</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
 
 <!-- ===== SETTINGS ===== -->
 <div class="modal" id="sModal" hidden role="dialog" aria-modal="true" aria-labelledby="sTitle">
@@ -1013,6 +1124,10 @@ input{user-select:text;-webkit-user-select:text}
 const $=id=>document.getElementById(id);
 const rnd=n=>Math.floor(Math.random()*n);
 const pick=a=>a[rnd(a.length)];
+// gr = สุ่มของตัวเกม (โหมดออนไลน์ใช้ seed เดียวกันทุกเครื่อง) · rnd = สุ่มเพื่อความสวยงามเฉพาะเครื่อง
+let gr=Math.random;const grnd=n=>Math.floor(gr()*n);
+function setSeed(s){if(s==null){gr=Math.random;return}let a=s>>>0;gr=()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const NET={on:false,host:false,code:'',dev:'',localRoster:null};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uid=()=>Math.random().toString(36).slice(2,9);
 const MAXP=12;
@@ -1050,7 +1165,7 @@ try{const s=JSON.parse(localStorage.getItem('hakhondon')||'{}');
 let players=roster.length;
 function cleanPartners(map,list){const ids=new Set(list.map(r=>r.id));for(const k of Object.keys(map)){const v=map[k];if(!ids.has(k)||!ids.has(v)||map[v]!==k)delete map[k]}}
 cleanPartners(partner,roster);
-function save(){try{localStorage.setItem('hakhondon',JSON.stringify({roster,partner,cfg}))}catch(e){}}
+function save(){try{localStorage.setItem('hakhondon',JSON.stringify({roster:NET.on&&NET.localRoster?NET.localRoster:roster,partner,cfg}))}catch(e){}}
 const name=i=>((roster[i]&&roster[i].n)||'').trim()||'ผู้เล่น '+(i+1);
 const nameH=i=>esc(name(i));
 function partnerIdx(i){if(!cfg.couple||!roster[i])return -1;const p=partner[roster[i].id];return p?roster.findIndex(r=>r.id===p):-1}
@@ -1111,28 +1226,41 @@ function describe(o,L){
 }
 function setBig(d){$('tRule').textContent=d.rule||'';const su=$('tSushi');su.toggleAttribute('hidden',!d.sushi);if(d.sushi)su.dataset.k=d.sushi;const b=$('tBig'),len=[...d.big].length;b.textContent=d.big;
   b.classList.toggle('mid',len>7&&len<=14);b.classList.toggle('many',len>14)}
+let lastGame=null;
 function finishResult(){const box=$('target');box.classList.remove('done');void box.offsetWidth;box.classList.add('done');
   tone(660,.12,'triangle',.08);setTimeout(()=>tone(990,.25,'triangle',.08),120);buzz([30,30,60]);flash('#ff5cb4');
-  $('mBtns').hidden=false;$('mAgain').focus()}
+  const guest=NET.on&&!NET.host;$('mAgain').disabled=guest;$('mAgain').textContent=guest?'รอหัวห้องกดเล่นต่อ':'เล่นอีกรอบ';$('mMenu').textContent=guest?'ปิด':'เลือกเกมอื่น';
+  $('mBtns').hidden=false;if(!guest)$('mAgain').focus()}
+function openResult(word,who){closeSheets();$('mWord').textContent=word;$('mWho').textContent=who;
+  const tok=++rToken;$('target').classList.remove('done');$('target').hidden=true;$('owner').hidden=true;$('mBtns').hidden=true;$('modal').hidden=false;return tok}
 function showResult({word,who,loser,again}){
-  closeSheets();
-  $('mWord').textContent=word;$('mWho').textContent=who;againFn=again;
-  const tok=++rToken;$('target').classList.remove('done');$('target').hidden=true;$('owner').hidden=true;$('mBtns').hidden=true;
-  $('modal').hidden=false;
+  againFn=again;lastGame=current;
+  if(NET.on&&!NET.host){if(NET.resultGen!==NET.playGen)NET.pending={word,who,loser};return} // หัวห้องเป็นคนสุ่มผลแล้วส่งให้ทุกเครื่อง
+  const tok=openResult(word,who);
   if(loser==null){ // ไม่รู้ว่าใคร (เช่น เกมนิ้ว) ให้เลือกเจ้าของก่อน
     $('owner').hidden=false;
     $('oChips').innerHTML=roster.map((_,i)=>`<button class="ochip" data-i="${i}">${nameH(i)}</button>`).join('')+'<button class="ochip skip" data-i="-1">ไม่ระบุ</button>';
     $('oChips').querySelectorAll('.ochip').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;$('owner').hidden=true;
-      if(i>=0){$('mWho').textContent=who+' คือ '+name(i);reveal(i,tok)}else reveal(null,tok,who)});
-  } else reveal(loser,tok);
+      if(i>=0){$('mWho').textContent=who+' คือ '+name(i);decide(i,tok,null)}else decide(null,tok,who)});
+  } else decide(loser,tok,null);
 }
-function reveal(L,tok,fallback){
+// เลือกผล (เครื่องเดียว หรือหัวห้องในโหมดออนไลน์)
+function decide(L,tok,fallback){
+  let res;
+  if(L==null)res={L:null,big:String(fallback||'').replace('เจ้าของ','')};
+  else if(!cfg.punish)res={L,plain:true};
+  else{const sushi=cfg.pmode==='sushi',opts=sushi?sushiOptions(L):relOptions(L),w=weightedPick(opts);res={L,mode:sushi?'sushi':'people',win:{k:w.k,ids:w.ids}}}
+  if(NET.on){NET.pending=null;NET.send({t:'result',word:$('mWord').textContent,who:$('mWho').textContent,res});return}
+  display(res,tok);
+}
+function display(res,tok){
   $('target').hidden=false;
-  if(L==null){$('tLabel').textContent='คนที่โดน';setBig({big:fallback.replace('เจ้าของ','')});finishResult();return}
-  if(!cfg.punish){$('tLabel').textContent='คนที่โดน';setBig({big:name(L)});finishResult();return}
-  const sushi=cfg.pmode==='sushi';$('tLabel').textContent=sushi?'คนที่ต้องกิน':'คนรับกรรม';
-  const opts=sushi?sushiOptions(L):relOptions(L),win=weightedPick(opts);
-  if(opts.length===1){setBig(describe(win,L));finishResult();return}
+  if(res.L==null){$('tLabel').textContent='คนที่โดน';setBig({big:res.big||'?'});finishResult();return}
+  const L=res.L;
+  if(res.plain){$('tLabel').textContent='คนที่โดน';setBig({big:name(L)});finishResult();return}
+  const sushi=res.mode==='sushi';$('tLabel').textContent=sushi?'คนที่ต้องกิน':'คนรับกรรม';
+  const opts=sushi?sushiOptions(L):relOptions(L),win=res.win;
+  if(opts.length<=1){setBig(describe(win,L));finishResult();return}
   let i=rnd(opts.length),delay=60,steps=0;const n=16+rnd(5);
   (function tick(){
     if(tok!==rToken)return;
@@ -1142,8 +1270,8 @@ function reveal(L,tok,fallback){
   })();
 }
 function hideResult(){$('modal').hidden=true;rToken++}
-$('mAgain').onclick=()=>{hideResult();againFn&&againFn()};
-$('mMenu').onclick=()=>{hideResult();location.hash='menu'};
+$('mAgain').onclick=()=>{if(NET.on){if(NET.host)NET.send({t:'again',seed:(Math.random()*4294967296)>>>0});return}hideResult();againFn&&againFn()};
+$('mMenu').onclick=()=>{if(NET.on){if(NET.host)NET.start('menu');else hideResult();return}hideResult();location.hash='menu'};
 function syncPunish(){const lbl=cfg.pmode==='sushi'?'สุ่มซูชิวาซาบิตอนจบ':'สุ่มคนรับกรรมตอนจบ';
   document.querySelectorAll('.ptog').forEach(b=>{b.setAttribute('aria-checked',cfg.punish?'true':'false');const t=b.querySelector('span:not(.sw)');if(t)t.textContent=lbl});$('sPunish').checked=cfg.punish}
 function setPunish(v){cfg.punish=!!v;save();syncPunish();if(!$('sModal').hidden)renderS()}
@@ -1200,17 +1328,17 @@ G.croc=(()=>{
   const mouth=$('mouth'),center=$('center');
   let turn=0,st='roll',left=0,face=1,bad=-1,pressed=new Set(),els=[],iv=null,to=[];
   TEETH.forEach(([x,y,k],i)=>{const b=document.createElement('button');b.className='tooth '+k;b.style.left=x+'%';b.style.top=y+'%';
-    b.setAttribute('aria-label','ฟันซี่ที่ '+(i+1));b.onclick=()=>press(i);(k==='u'?$('upper'):$('lower')).appendChild(b);els.push(b)});
+    b.setAttribute('aria-label','ฟันซี่ที่ '+(i+1));b.onclick=()=>tapTooth(i);(k==='u'?$('upper'):$('lower')).appendChild(b);els.push(b)});
   function drawOdds(){const w=cfg.dice,sm=w.reduce((a,b)=>a+b,0)||1;$('odds').innerHTML=w.map((v,i)=>`<span><i style="height:${Math.max(2,Math.round(v/sm*48))}px"></i>${i+1}</span>`).join('')}
   drawOdds();
-  function weighted(){const w=cfg.dice,sm=w.reduce((a,b)=>a+b,0);if(!sm)return 1+rnd(6);let r=Math.random()*sm;for(let i=0;i<6;i++){r-=w[i];if(r<0)return i+1}return 6}
+  function weighted(){const w=cfg.dice,sm=w.reduce((a,b)=>a+b,0);if(!sm)return 1+grnd(6);let r=gr()*sm;for(let i=0;i<6;i++){r-=w[i];if(r<0)return i+1}return 6}
   function dieHTML(n,cls){return `<button class="die ${n===1?'one':''} ${cls}" id="die" ${st!=='roll'?'disabled':''} aria-label="ทอยลูกเต๋า">`+
     Array.from({length:9},(_,i)=>`<span class="pip ${FACES[n].includes(i)?'on':''}"></span>`).join('')+`</button>`}
   function render(msg){
     mouth.classList.toggle('locked',st!=='press');mouth.classList.toggle('ready',st==='press');
     let s=st==='roll'?(msg||'แตะลูกเต๋าเพื่อทอย'):st==='rolling'?'กำลังทอย…':`<span class="big-n">${left}</span>ซี่ที่ต้องกด`;
     center.innerHTML=`<div class="turn">ตาของ<b>${nameH(turn)}</b></div>${dieHTML(face,st==='roll'?'attn':'')}<div class="status">${s}</div>`;
-    if(st==='roll')$('die').onclick=roll;
+    if(st==='roll')$('die').onclick=()=>{if(!mayAct(turn))return;act('croc','roll',{},()=>roll())};
   }
   function roll(){
     if(st!=='roll')return;st='rolling';render();
@@ -1219,6 +1347,7 @@ G.croc=(()=>{
       d.querySelectorAll('.pip').forEach((p,i)=>p.classList.toggle('on',FACES[face].includes(i)));tone(500+Math.random()*400,.04,'triangle',.05);
       if(++t>=9){clearInterval(iv);face=weighted();left=Math.min(face,TEETH.length-pressed.size);st='press';tone(880,.15,'triangle',.08);render()}},75);
   }
+  function tapTooth(i){if(st!=='press'){press(i);return}if(!mayAct(turn))return;act('croc','press',{i},d=>press(d.i))}
   function press(i){
     if(st!=='press'){if(st==='roll'){const s=center.querySelector('.status');if(s)s.innerHTML='<span class="warn">ทอยลูกเต๋าก่อนนะ</span>'}return}
     if(i===bad)return bite(i);
@@ -1232,42 +1361,43 @@ G.croc=(()=>{
     to.push(setTimeout(()=>{mouth.classList.remove('shake');st='lost';
       showResult({word:'งับ!',who:name(turn)+' โดนจระเข้งับ',loser:turn,again:()=>start((turn+1)%players)})},700));
   }
-  function start(s){stop();pressed.clear();bad=rnd(TEETH.length);turn=s%players;face=1;st='roll';
+  function start(s){stop();pressed.clear();bad=grnd(TEETH.length);turn=s%players;face=1;st='roll';
     mouth.classList.remove('bite','shake');els.forEach(t=>t.classList.remove('pressed','bitten'));render()}
   function stop(){clearInterval(iv);to.forEach(clearTimeout);to=[]}
-  $('crocReset').onclick=()=>start(0);
-  return {init:()=>start(0),stop,drawOdds,refresh:()=>{if(st==='roll'||st==='press')render()}};
+  $('crocReset').onclick=()=>doReset(()=>start(0));
+  return {init:()=>start(0),stop,drawOdds,refresh:()=>{if(st==='roll'||st==='press')render()},net:(a,d)=>{if(a==='press')press(d.i);else if(a==='roll')roll()},turn:()=>st==='lost'||st==='biting'?null:turn};
 })();
 
 /* ---------- 2. Bomb ---------- */
 G.bomb=(()=>{
   const CATS=['ผลไม้','สัตว์','จังหวัดในไทย','อาหารไทย','ยี่ห้อรถ','ประเทศ','อาชีพ','ขนม','ยี่ห้อมือถือ','กีฬา','เครื่องดื่ม','ของในห้องน้ำ','สิ่งที่เป็นสีแดง','ของในครัว','ผัก','ตัวการ์ตูน','ชื่อเพลงไทย','ร้านสะดวกซื้อมีขาย','ยี่ห้อเสื้อผ้า','สถานที่เที่ยวในไทย','คำที่ขึ้นต้นด้วย ก','คำที่ลงท้ายด้วย ง','สิ่งที่บินได้','ของที่พกไปทะเล','วิชาเรียน','อวัยวะในร่างกาย','เครื่องดนตรี','สีต่างๆ'];
   const bomb=$('bomb'),main=$('bMain');
-  let st='idle',holder=0,t0=0,fuse=0,tt=null,raf=0,flip=false,cat='';
-  function newCat(){let c;do{c=pick(CATS)}while(c===cat);cat=c;$('bPrompt').innerHTML=`พูดชื่อ<b>${cat}</b>1 อย่าง ห้ามซ้ำ แล้วกดส่งต่อ`}
+  let st='idle',holder=0,t0=0,fuse=0,tt=null,raf=0,flip=false,cat='',sentBoom=false;
+  function newCat(){let c;do{c=CATS[grnd(CATS.length)]}while(c===cat);cat=c;$('bPrompt').innerHTML=`พูดชื่อ<b>${cat}</b>1 อย่าง ห้ามซ้ำ แล้วกดส่งต่อ`}
   function paint(){$('bHolder').textContent=name(holder);main.textContent=st==='idle'?'จุดชนวน':'ส่งต่อ →';main.disabled=st==='boom';
     $('bCat').disabled=st!=='idle';bomb.classList.toggle('lit',st==='run')}
   function tick(){
-    if(st!=='run')return;const e=performance.now()-t0;if(e>=fuse)return boom();
+    if(st!=='run')return;const e=performance.now()-t0;if(e>=fuse){if(!NET.on)return boom();if(NET.host){if(!sentBoom){sentBoom=true;act('bomb','boom',{h:holder})}return}}
     flip=!flip;tone(flip?1250:950,.035,'square',.045);
     bomb.classList.remove('tk');void bomb.offsetWidth;bomb.classList.add('tk');
     tt=setTimeout(tick,Math.max(110,620-e/1000*20));
   }
   function loop(){if(st!=='run')return;const e=performance.now()-t0;bomb.style.setProperty('--k',Math.min(1,e/35000).toFixed(3));raf=requestAnimationFrame(loop)}
-  main.onclick=()=>{
-    if(st==='idle'){st='run';t0=performance.now();fuse=(12+Math.random()*28)*1000;tick();loop();paint();tone(300,.3,'sawtooth',.06,900)}
-    else if(st==='run'){holder=(holder+1)%players;paint();tone(520,.05,'triangle',.06);buzz(15);
-      $('bHolder').animate([{transform:'scale(1.35)',color:'#ffd04d'},{transform:'none'}],{duration:350})}
-  };
-  $('bCat').onclick=newCat;
-  function boom(){
+  function light(f){if(st!=='idle')return;st='run';sentBoom=false;t0=performance.now();fuse=f;tick();loop();paint();tone(300,.3,'sawtooth',.06,900)}
+  function pass(){if(st!=='run')return;holder=(holder+1)%players;paint();tone(520,.05,'triangle',.06);buzz(15);
+    $('bHolder').animate([{transform:'scale(1.35)',color:'#ffd04d'},{transform:'none'}],{duration:350})}
+  main.onclick=()=>{if(!mayAct(holder))return;
+    if(st==='idle')act('bomb','light',{f:(12+Math.random()*28)*1000},d=>light(d.f));
+    else if(st==='run')act('bomb','pass',{},()=>pass())};
+  $('bCat').onclick=()=>{if(!mayAct(holder))return;act('bomb','cat',{},()=>{if(st==='idle')newCat()})};
+  function boom(){if(st==='boom')return;
     st='boom';clearTimeout(tt);cancelAnimationFrame(raf);bomb.classList.remove('lit','tk');bomb.classList.add('boom');paint();
     noise(1.3,.8,900);tone(90,.7,'sawtooth',.22,30);buzz([250,80,300]);flash('#ffe8b0');
     tt=setTimeout(()=>showResult({word:'ตูม!',who:name(holder)+' ถือระเบิดอยู่',loser:holder,again:()=>init((holder+1)%players)}),900);
   }
   function init(s=0){stop();st='idle';holder=s%players;bomb.classList.remove('boom','lit','tk');bomb.style.setProperty('--k',0);newCat();paint()}
   function stop(){clearTimeout(tt);cancelAnimationFrame(raf);if(st==='run')st='idle'}
-  return {init:()=>init(0),stop,refresh:paint};
+  return {init:()=>init(0),stop,refresh:paint,net:(a,d)=>{if(a==='light')light(d.f);else if(a==='pass')pass();else if(a==='cat'){if(st==='idle')newCat()}else if(a==='boom'&&st==='run'){holder=d.h;boom()}},turn:()=>st==='boom'?null:holder};
 })();
 
 /* ---------- 3. Finger chooser ---------- */
@@ -1325,9 +1455,9 @@ G.bottle=(()=>{
   function layout(){table.querySelectorAll('.seat').forEach(s=>s.remove());
     angles().forEach((a,i)=>{const s=document.createElement('div'),r=a*Math.PI/180;s.className='seat';s.textContent=i+1;const l=document.createElement('span');l.textContent=name(i);s.appendChild(l);
       s.style.left=(50+41*Math.sin(r))+'%';s.style.top=(50-41*Math.cos(r))+'%';table.appendChild(s)})}
-  function spin(){
+  function spin(delta){
     if(spinning)return;spinning=true;btn.disabled=true;table.querySelectorAll('.seat').forEach(s=>s.classList.remove('hit'));
-    rot+=360*(4+rnd(3))+Math.random()*360;const D=4600;
+    rot+=delta;const D=4600;
     bottle.style.transition=`transform ${D}ms cubic-bezier(.15,.62,.1,1)`;bottle.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
     let d=45,t=0;(function tk(){if(!spinning)return;t+=d;if(t>D-200)return;tone(900,.025,'square',.04);d*=1.085;to.push(setTimeout(tk,d))})();
     to.push(setTimeout(done,D+80));
@@ -1338,9 +1468,9 @@ G.bottle=(()=>{
     table.querySelectorAll('.seat')[best].classList.add('hit');tone(523,.12,'triangle',.09);to.push(setTimeout(()=>tone(784,.25,'triangle',.09),130));buzz([40,30,80]);
     to.push(setTimeout(()=>showResult({word:'ชี้แล้ว!',who:'ขวดชี้ไปที่ '+name(best),loser:best,again:()=>{spinning=false;btn.disabled=false;table.querySelectorAll('.seat').forEach(s=>s.classList.remove('hit'))}}),1000));
   }
-  btn.onclick=spin;bottle.onclick=spin;
+  const trySpin=()=>{if(spinning)return;act('bottle','spin',{r:360*(4+rnd(3))+Math.random()*360},d=>spin(d.r))};btn.onclick=trySpin;bottle.onclick=trySpin;
   function stop(){to.forEach(clearTimeout);to=[];spinning=false}
-  return {init:()=>{stop();btn.disabled=false;layout()},stop,refresh:()=>{if(!spinning)layout()}};
+  return {init:()=>{stop();rot=0;bottle.style.transition='none';bottle.style.transform='translate(-50%,-50%) rotate(0deg)';btn.disabled=false;layout()},stop,refresh:()=>{if(!spinning)layout()},net:(a,d)=>{if(a==='spin')spin(d.r)}};
 })();
 
 /* ---------- 5. Card flip ---------- */
@@ -1356,13 +1486,14 @@ G.cards=(()=>{
   }
   function build(){
     const n=players<=4?12:16;deck=Array(n).fill('safe');
-    const slots=[...Array(n).keys()].sort(()=>Math.random()-.5);
+    const slots=[...Array(n).keys()];for(let i=n-1;i>0;i--){const j=grnd(i+1);[slots[i],slots[j]]=[slots[j],slots[i]]}
     deck[slots[0]]='skull';deck[slots[1]]='x2';if(players>2)deck[slots[2]]='rev';
     grid.style.setProperty('--rows',n/4);
     grid.innerHTML=deck.map((t,i)=>`<button class="pcard" data-i="${i}" aria-label="ไพ่ใบที่ ${i+1}"><div class="in"><div class="face cback">?</div>${front(t)}</div></button>`).join('');
-    grid.querySelectorAll('.pcard').forEach(c=>c.onclick=()=>flipCard(+c.dataset.i,c));
+    grid.querySelectorAll('.pcard').forEach(c=>c.onclick=()=>{if(busy||c.classList.contains('open'))return;if(!mayAct(turn))return;act('cards','flip',{i:+c.dataset.i},d=>flipAt(d.i))});
   }
   function paint(msg){info.innerHTML=(msg?msg+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เปิดอีก <b>${need}</b> ใบ`+(players>2?` · วน${dir===1?'ตามเข็ม':'ทวนเข็ม'}`:'')}
+  function flipAt(i){const c=grid.querySelector('.pcard[data-i="'+i+'"]');if(c)flipCard(i,c)}
   function flipCard(i,c){
     if(busy||c.classList.contains('open'))return;busy=true;c.classList.add('sus');
     for(let k=0;k<6;k++)to.push(setTimeout(()=>tone(300+k*60,.05,'triangle',.05),k*110));
@@ -1381,8 +1512,8 @@ G.cards=(()=>{
   }
   function init(s=0){stop();turn=s%players;dir=1;need=1;nextNeed=1;busy=false;build();paint()}
   function stop(){to.forEach(clearTimeout);to=[]}
-  $('cReset').onclick=()=>init(0);
-  return {init:()=>init(0),stop,refresh:()=>paint()};
+  $('cReset').onclick=()=>doReset(()=>init(0));
+  return {init:()=>init(0),stop,refresh:()=>paint(),net:(a,d)=>{if(a==='flip')flipAt(d.i)},turn:()=>turn};
 })();
 
 /* ---------- 6. Balloon ---------- */
@@ -1392,78 +1523,95 @@ G.balloon=(()=>{
   function size(){const p=Math.min(1,pumps/MAXREF);b.style.setProperty('--s',(.3+.7*p).toFixed(3));wrap.style.setProperty('--w',(p*p).toFixed(3))}
   function paint(msg){info.innerHTML=(msg?msg+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · สูบได้อีก <b>${3-mine}</b> ครั้ง`;
     pumpBtn.textContent=`สูบลม (${mine}/3)`;pumpBtn.disabled=st!=='play'||mine>=3;passBtn.disabled=st!=='play'||mine<1}
-  pumpBtn.onclick=()=>{
+  function pump(){
     if(st!=='play'||mine>=3)return;pumps++;mine++;
     noise(.22,.3,500+pumps*30);tone(180+pumps*14,.22,'sine',.05,320+pumps*18);buzz(12);
     if(pumps>=limit)return pop();size();paint();
-  };
-  passBtn.onclick=()=>{if(st!=='play'||mine<1)return;turn=(turn+1)%players;mine=0;tone(520,.06,'triangle',.06);paint('ส่งต่อแล้ว')};
+  }
+  function pass(){if(st!=='play'||mine<1)return;turn=(turn+1)%players;mine=0;tone(520,.06,'triangle',.06);paint('ส่งต่อแล้ว')}
+  pumpBtn.onclick=()=>{if(st!=='play'||mine>=3)return;if(!mayAct(turn))return;act('balloon','pump',{},()=>pump())};
+  passBtn.onclick=()=>{if(st!=='play'||mine<1)return;if(!mayAct(turn))return;act('balloon','pass',{},()=>pass())};
   function pop(){st='pop';b.classList.add('pop');wrap.classList.add('popped');noise(.5,.9,4000);tone(120,.3,'square',.15,40);buzz([120,40,200]);flash('#ffd0ca');paint();
     to.push(setTimeout(()=>showResult({word:'โป๊ะ!',who:name(turn)+' ทำลูกโป่งแตก',loser:turn,again:()=>init((turn+1)%players)}),800))}
-  function init(s=0){stop();pumps=0;mine=0;st='play';turn=s%players;limit=4+rnd(MAXREF-4);b.classList.remove('pop');wrap.classList.remove('popped');size();paint()}
+  function init(s=0){stop();pumps=0;mine=0;st='play';turn=s%players;limit=4+grnd(MAXREF-4);b.classList.remove('pop');wrap.classList.remove('popped');size();paint()}
   function stop(){to.forEach(clearTimeout);to=[]}
-  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:(a)=>{if(a==='pump')pump();else if(a==='pass')pass()},turn:()=>st==='play'?turn:null};
 })();
 
 /* ---------- 7. Stop at 10 s ---------- */
 G.stop10=(()=>{
   const clock=$('sClock'),sub=$('sSub'),btn=$('sBtn'),board=$('sBoard'),info=$('sInfo');
   const TARGET=10,HIDE=3;
-  let idx=0,st='ready',t0=0,raf=0,res=[],to=null,worstI=-1;
-  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
-    if(st==='ready'){clock.textContent='0.00';clock.className='clock';sub.textContent=`กดเริ่ม แล้วหยุดให้ตรง ${TARGET}.00 วินาที · ตัวเลขหายหลัง ${HIDE} วิ`;btn.textContent='เริ่ม'}}
+  let q=[],qi=0,st='ready',t0=0,raf=0,res=[],to=null,worstI=-1;
+  const idx=()=>q[qi];
+  function paint(){
+    if(st==='wait'){info.innerHTML=`ส่งผลแล้ว รอเครื่องอื่น · ครบ <b>${res.length}/${players}</b> คน`;sub.textContent='รอคนอื่นเล่นให้ครบ';btn.disabled=true;btn.textContent='รอเครื่องอื่น…';return}
+    if(st==='done')return;
+    info.innerHTML=`ตาของ <b>${nameH(idx())}</b> · คนที่ ${qi+1}/${q.length}`+(NET.on?' ในเครื่องนี้':'');
+    if(st==='ready'){clock.textContent='0.00';clock.className='clock';sub.textContent=`กดเริ่ม แล้วหยุดให้ตรง ${TARGET}.00 วินาที · ตัวเลขหายหลัง ${HIDE} วิ`;btn.disabled=false;btn.textContent='เริ่ม'}}
   function drawBoard(){const s=res.slice().sort((a,b)=>Math.abs(a.d)-Math.abs(b.d));
     board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${r.v.toFixed(2)}</span><span class="d">${r.d>=0?'+':''}${r.d.toFixed(2)}</span></li>`).join('')}
   function loop(){if(st!=='run')return;const e=(performance.now()-t0)/1000;
     if(e<HIDE)clock.textContent=e.toFixed(2);else if(!clock.classList.contains('hid')){clock.textContent='?.??';clock.classList.add('hid');tone(300,.08,'triangle',.05)}
     raf=requestAnimationFrame(loop)}
+  function score(d){if(res.some(r=>r.i===d.i))return;res.push(d);drawBoard();if(NET.on){if(st==='wait')paint();if(res.length>=players)finish()}}
   btn.onclick=()=>{
     if(st==='ready'){st='run';t0=performance.now();btn.textContent='หยุด!';sub.textContent='นับในใจ…';tone(660,.08,'triangle',.06);loop()}
-    else if(st==='run'){const v=(performance.now()-t0)/1000,d=v-TARGET,ad=Math.abs(d);st='shown';cancelAnimationFrame(raf);res.push({i:idx,v,d});
+    else if(st==='run'){const v=(performance.now()-t0)/1000,d=v-TARGET,ad=Math.abs(d);st='shown';cancelAnimationFrame(raf);
       clock.textContent=v.toFixed(2);clock.className='clock '+(ad<=.3?'good':ad>1?'bad':'');
       sub.textContent=ad<.005?'เป๊ะ!':`${d>0?'เกิน':'ขาด'}ไป ${ad.toFixed(2)} วินาที`;
-      tone(ad<=.3?880:440,.15,'triangle',.08);buzz(20);drawBoard();
-      btn.textContent=idx<players-1?`ส่งต่อให้ ${name(idx+1)} →`:'ดูผล'}
-    else if(st==='shown'){if(idx<players-1){idx++;st='ready';paint()}else finish()}
+      tone(ad<=.3?880:440,.15,'triangle',.08);buzz(20);
+      btn.textContent=qi<q.length-1?`ส่งต่อให้ ${name(q[qi+1])} →`:(NET.on?'เสร็จแล้ว':'ดูผล');
+      act('stop10','score',{i:idx(),v,d},score)}
+    else if(st==='shown'){if(qi<q.length-1){qi++;st='ready';paint()}else if(NET.on){st='wait';paint();if(res.length>=players)finish()}else finish()}
   };
-  function finish(){st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(Math.abs(r.d)>Math.abs(w.d))w=r});worstI=w.i;drawBoard();
+  function finish(){if(st==='done'||!res.length)return;st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(Math.abs(r.d)>Math.abs(w.d))w=r});worstI=w.i;drawBoard();
     to=setTimeout(()=>showResult({word:'ห่างสุด!',who:`${name(w.i)} ${w.d>0?'เกิน':'ขาด'}ไป ${Math.abs(w.d).toFixed(2)} วิ`,loser:w.i,again:init}),700)}
-  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';btn.disabled=false;paint()}
+  function init(){stop();q=myQueue();qi=0;st=q.length?'ready':'wait';res=[];worstI=-1;board.innerHTML='';clock.textContent='0.00';clock.className='clock';paint()}
   function stop(){cancelAnimationFrame(raf);clearTimeout(to)}
-  return {init,stop,refresh:()=>{paint();drawBoard()}};
+  return {init,stop,refresh:()=>{paint();drawBoard()},net:(a,d)=>{if(a==='score')score(d)}};
 })();
 
 /* ---------- 8. Reaction ---------- */
 G.react=(()=>{
   const pad=$('rPad'),big=$('rBig'),small=$('rSmall'),board=$('rBoard'),info=$('rInfo');
   const TRIES=2,FOUL=1000;
-  let idx=0,st='ready',tries=[],t0=0,tt=null,res=[],worstI=-1;
+  let q=[],qi=0,st='ready',tries=[],t0=0,tt=null,res=[],worstI=-1;
+  const idx=()=>q[qi];
   function set(cls,b,s){pad.className='rpad '+cls;big.textContent=b;small.textContent=s||''}
-  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
+  function paint(){
+    if(st==='waitall'){info.innerHTML=`ส่งผลแล้ว รอเครื่องอื่น · ครบ <b>${res.length}/${players}</b> คน`;return}
+    if(st==='done')return;
+    info.innerHTML=`ตาของ <b>${nameH(idx())}</b> · คนที่ ${qi+1}/${q.length}`+(NET.on?' ในเครื่องนี้':'');
     if(st==='ready')set('','แตะเพื่อเริ่ม',`รอจอเป็นสีเขียวแล้วแตะให้ไวที่สุด · เล่น ${TRIES} ครั้ง เอาค่าเฉลี่ย`)}
   function arm(){st='wait';set('wait','รอสีเขียว…','แตะก่อนเวลา = ฟาวล์');
     tt=setTimeout(()=>{st='go';t0=performance.now();set('go','แตะ!');tone(990,.08,'square',.06)},1500+Math.random()*3200)}
   function drawBoard(){const s=res.slice().sort((a,b)=>a.v-b.v);
     board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${Math.round(r.v)} ms</span><span class="d">${r.t.map(x=>x>=FOUL?'ฟาวล์':Math.round(x)).join(' / ')}</span></li>`).join('')}
+  function score(d){if(res.some(r=>r.i===d.i))return;res.push(d);drawBoard();if(NET.on){if(st==='waitall')paint();if(res.length>=players)finish()}}
   pad.addEventListener('pointerdown',e=>{e.preventDefault();actx();
     if(st==='ready'){tries=[];arm()}
     else if(st==='wait'){clearTimeout(tt);tries.push(FOUL);buzz(80);tone(150,.25,'sawtooth',.1);after('foul','ฟาวล์!','แตะก่อนขึ้นสีเขียว นับเป็น 1000 ms')}
     else if(st==='go'){const rt=performance.now()-t0;tries.push(rt);tone(660,.08,'triangle',.06);after('',Math.round(rt)+' ms','')}
     else if(st==='res')arm();
-    else if(st==='next'){idx++;st='ready';paint()}
+    else if(st==='next'){qi++;st='ready';paint()}
   });
   function after(cls,b,s){
     if(tries.length<TRIES){st='res';set(cls,b,(s?s+' · ':'')+'แตะเพื่อลองครั้งที่ 2');return}
-    const v=tries.reduce((a,c)=>a+c,0)/tries.length;res.push({i:idx,v,t:tries.slice()});drawBoard();
-    if(idx<players-1){st='lock';set(cls,b,(s?s+' · ':'')+`เฉลี่ย ${Math.round(v)} ms · ส่งมือถือให้ ${name(idx+1)} แล้วแตะ`);tt=setTimeout(()=>{st='next'},500)}
-    else{st='done';set(cls,b,`เฉลี่ย ${Math.round(v)} ms`);finish()}
+    const v=tries.reduce((a,c)=>a+c,0)/tries.length,me=idx();
+    if(qi<q.length-1){st='lock';set(cls,b,(s?s+' · ':'')+`เฉลี่ย ${Math.round(v)} ms · ส่งมือถือให้ ${name(q[qi+1])} แล้วแตะ`);tt=setTimeout(()=>{st='next'},500)}
+    else if(NET.on){st='waitall';set(cls,b,`เฉลี่ย ${Math.round(v)} ms · รอเครื่องอื่น…`)}
+    else{st='last';set(cls,b,`เฉลี่ย ${Math.round(v)} ms`)}
+    act('react','score',{i:me,v,t:tries.slice()},score);
+    if(st==='waitall')paint();
+    if(st==='last')finish();
   }
-  function finish(){let w=res[0];res.forEach(r=>{if(r.v>w.v)w=r});worstI=w.i;drawBoard();
+  function finish(){if(st==='done'||!res.length)return;st='done';let w=res[0];res.forEach(r=>{if(r.v>w.v)w=r});worstI=w.i;drawBoard();
     tt=setTimeout(()=>showResult({word:'ช้าสุด!',who:`${name(w.i)} เฉลี่ย ${Math.round(w.v)} ms`,loser:w.i,again:init}),900)}
-  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';paint()}
+  function init(){stop();q=myQueue();qi=0;st=q.length?'ready':'waitall';res=[];worstI=-1;board.innerHTML='';if(st==='waitall')set('','รอเครื่องอื่น…','');paint()}
   function stop(){clearTimeout(tt)}
-  $('rReset').onclick=init;
-  return {init,stop,refresh:()=>{paint();drawBoard()}};
+  $('rReset').onclick=()=>doReset(init);
+  return {init,stop,refresh:()=>{paint();drawBoard()},net:(a,d)=>{if(a==='score')score(d)}};
 })();
 
 /* ---------- 9. Simon ---------- */
@@ -1632,33 +1780,39 @@ G.odd=(()=>{
 G.schulte=(()=>{
   const N=16,PEN=1;
   const grid=$('scGrid'),clock=$('scClock'),sub=$('scSub'),board=$('scBoard'),info=$('scInfo'),btn=$('scBtn');
-  let idx=0,st='ready',want=1,pen=0,t0=0,raf=0,res=[],worstI=-1,to=null;
-  function paint(){info.innerHTML=`ตาของ <b>${nameH(idx)}</b> · คนที่ ${idx+1}/${players}`;
+  let q=[],qi=0,st='ready',want=1,pen=0,t0=0,raf=0,res=[],worstI=-1,to=null;
+  const idx=()=>q[qi];
+  function paint(){
+    if(st==='wait'){info.innerHTML=`ส่งผลแล้ว รอเครื่องอื่น · ครบ <b>${res.length}/${players}</b> คน`;grid.hidden=true;board.hidden=false;sub.textContent='รอคนอื่นเล่นให้ครบ';btn.disabled=true;btn.textContent='รอเครื่องอื่น…';return}
+    if(st==='done')return;
+    info.innerHTML=`ตาของ <b>${nameH(idx())}</b> · คนที่ ${qi+1}/${q.length}`+(NET.on?' ในเครื่องนี้':'');
     if(st==='ready'){clock.textContent='0.00';clock.className='clock sm';grid.hidden=true;board.hidden=false;sub.textContent=`แตะเลข 1 ถึง ${N} ตามลำดับ · แตะผิดบวก ${PEN} วินาที`;btn.disabled=false;btn.textContent='เริ่ม'}}
   function drawBoard(){const s=res.slice().sort((a,b)=>a.t-b.t);
     board.innerHTML=s.map((r,k)=>`<li class="${r.i===worstI?'worst':''}"><span class="rk">${k+1}</span><span class="nm">${nameH(r.i)}</span><span class="v">${r.t.toFixed(2)} วิ</span><span class="d">${r.p?'ผิด '+r.p:'ไม่ผิด'}</span></li>`).join('')}
   function loop(){if(st!=='run')return;clock.textContent=((performance.now()-t0)/1000+pen).toFixed(2);raf=requestAnimationFrame(loop)}
+  function score(d){if(res.some(r=>r.i===d.i))return;res.push(d);drawBoard();if(NET.on){if(st==='wait')paint();if(res.length>=players)finish()}}
   btn.onclick=()=>{
     if(st==='ready'){st='run';want=1;pen=0;board.hidden=true;grid.hidden=false;sub.textContent='ถัดไป: 1';
       const nums=[...Array(N)].map((_,i)=>i+1).sort(()=>Math.random()-.5);
       grid.innerHTML=nums.map(v=>`<button data-v="${v}">${v}</button>`).join('');
       grid.querySelectorAll('button').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();hit(+b.dataset.v,b)}));
       btn.disabled=true;btn.textContent='แตะ 1 → 16';tone(660,.08,'triangle',.06);t0=performance.now();loop()}
-    else if(st==='shown'){if(idx<players-1){idx++;st='ready';paint()}else finish()}
+    else if(st==='shown'){if(qi<q.length-1){qi++;st='ready';paint()}else if(NET.on){st='wait';paint();if(res.length>=players)finish()}else finish()}
   };
   function hit(v,b){if(st!=='run')return;
     if(v===want){b.classList.add('done');tone(400+v*30,.05,'triangle',.06);want++;sub.textContent=want<=N?'ถัดไป: '+want:'';
       if(want>N)done()}
     else{pen+=PEN;b.classList.add('err');setTimeout(()=>b.classList.remove('err'),250);tone(150,.12,'sawtooth',.08);buzz(40);
       clock.animate([{color:'#ff5a4e'},{color:'inherit'}],{duration:400})}}
-  function done(){cancelAnimationFrame(raf);const t=(performance.now()-t0)/1000+pen;st='shown';res.push({i:idx,t,p:pen/PEN});
-    clock.textContent=t.toFixed(2);sub.textContent=pen?`รวมโดนบวก ${pen} วินาที`:'ไม่ผิดเลย';grid.hidden=true;board.hidden=false;drawBoard();
-    tone(880,.15,'triangle',.08);buzz(20);btn.disabled=false;btn.textContent=idx<players-1?`ส่งต่อให้ ${name(idx+1)} →`:'ดูผล'}
-  function finish(){st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(r.t>w.t)w=r});worstI=w.i;drawBoard();
+  function done(){cancelAnimationFrame(raf);const t=(performance.now()-t0)/1000+pen;st='shown';
+    clock.textContent=t.toFixed(2);sub.textContent=pen?`รวมโดนบวก ${pen} วินาที`:'ไม่ผิดเลย';grid.hidden=true;board.hidden=false;
+    tone(880,.15,'triangle',.08);buzz(20);btn.disabled=false;btn.textContent=qi<q.length-1?`ส่งต่อให้ ${name(q[qi+1])} →`:(NET.on?'เสร็จแล้ว':'ดูผล');
+    act('schulte','score',{i:idx(),t,p:pen/PEN},score)}
+  function finish(){if(st==='done'||!res.length)return;st='done';btn.disabled=true;let w=res[0];res.forEach(r=>{if(r.t>w.t)w=r});worstI=w.i;drawBoard();
     to=setTimeout(()=>showResult({word:'ช้าสุด!',who:`${name(w.i)} ใช้เวลา ${w.t.toFixed(2)} วิ`,loser:w.i,again:init}),700)}
-  function init(){stop();idx=0;st='ready';res=[];worstI=-1;board.innerHTML='';paint()}
+  function init(){stop();q=myQueue();qi=0;st=q.length?'ready':'wait';res=[];worstI=-1;board.innerHTML='';paint()}
   function stop(){cancelAnimationFrame(raf);clearTimeout(to)}
-  return {init,stop,refresh:()=>{paint();drawBoard()}};
+  return {init,stop,refresh:()=>{paint();drawBoard()},net:(a,d)=>{if(a==='score')score(d)}};
 })();
 
 /* ---------- Mimon greeting on home ---------- */
@@ -1674,7 +1828,7 @@ G.mbox=(()=>{
   let turn=0,st='play',bad=-1,used=0,to=[];
   function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${N-used} ช่อง`;box.style.setProperty('--sh',(used/N).toFixed(2))}
   function build(){holes.innerHTML=Array.from({length:N},(_,i)=>`<button class="hole" data-i="${i}" aria-label="ช่องที่ ${i+1}"></button>`).join('');
-    holes.querySelectorAll('.hole').forEach(b=>b.addEventListener('click',()=>stick(+b.dataset.i,b)))}
+    holes.querySelectorAll('.hole').forEach(b=>b.addEventListener('click',()=>{if(st!=='play'||b.classList.contains('in'))return;if(!mayAct(turn))return;act('mbox','stick',{i:+b.dataset.i},d=>stick(d.i,holes.children[d.i]))}))}
   function stick(i,b){
     if(st!=='play'||b.classList.contains('in'))return;
     b.classList.add('in');b.style.setProperty('--pc',`hsl(${(turn*67+320)%360} 85% 66%)`);used++;
@@ -1683,9 +1837,9 @@ G.mbox=(()=>{
     tone(300+used*25,.07,'triangle',.07);buzz(10);
     box.classList.remove('jolt');void box.offsetWidth;box.classList.add('jolt');
     const prev=turn;turn=(turn+1)%players;paint(`${nameH(prev)} รอด`)}
-  function init(s=0){stop();turn=s%players;st='play';used=0;bad=rnd(N);box.classList.remove('open','jolt');build();paint()}
+  function init(s=0){stop();turn=s%players;st='play';used=0;bad=grnd(N);box.classList.remove('open','jolt');build();paint()}
   function stop(){to.forEach(clearTimeout);to=[]}
-  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:(a,d)=>{if(a==='stick'&&holes.children[d.i])stick(d.i,holes.children[d.i])},turn:()=>st==='play'?turn:null};
 })();
 
 /* ---------- 16. Number bomb (luck) ---------- */
@@ -1701,14 +1855,15 @@ G.numbomb=(()=>{
     wrap.style.setProperty('--heat',(1-(hi-lo)/(MAX-1)).toFixed(3));
     show.textContent=entry||'?';show.classList.toggle('empty',!entry);
   }
-  function press(k){if(st!=='play')return;
+  function press(k){if(st!=='play')return;if(!mayAct(turn))return;
     if(k==='ok')return guess();
     if(k==='del')entry=entry.slice(0,-1);else if(entry.length<3)entry=(entry+k).replace(/^0+/,'');
     tone(480+(+k||0)*30,.03,'triangle',.04);paint()}
   function guess(){
     const g=+entry;
     if(!entry||g<lo||g>hi){sub.textContent=`ต้องเป็นเลข ${lo} ถึง ${hi}`;show.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:250});tone(160,.12,'sawtooth',.07);return}
-    entry='';
+    entry='';paint();act('numbomb','guess',{g},d=>apply(d.g))}
+  function apply(g){if(st!=='play'||g<lo||g>hi)return;
     if(g===bomb){st='boom';paint();show.textContent=g;wrap.classList.add('boom');sub.textContent='บอมบ์!';noise(1,.8,900);tone(90,.6,'sawtooth',.2,30);buzz([200,60,260]);flash('#ff6b6b');
       to.push(setTimeout(()=>showResult({word:'บอมบ์!',who:`${name(turn)} ทายโดนเลขบอมบ์ ${bomb}`,loser:turn,again:()=>init((turn+1)%players)}),1100));return}
     if(g<bomb)lo=g+1;else hi=g-1;
@@ -1718,9 +1873,9 @@ G.numbomb=(()=>{
   }
   document.addEventListener('keydown',e=>{if(current!=='numbomb'||!$('modal').hidden||!$('pModal').hidden||!$('hModal').hidden)return;
     if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace')press('del');else if(e.key==='Enter'){e.preventDefault();press('ok')}});
-  function init(s=0){stop();lo=1;hi=MAX;bomb=1+rnd(MAX);entry='';turn=s%players;st='play';wrap.classList.remove('boom');paint();sub.textContent=`ทายเลขระหว่าง 1 ถึง ${MAX}`}
+  function init(s=0){stop();lo=1;hi=MAX;bomb=1+grnd(MAX);entry='';turn=s%players;st='play';wrap.classList.remove('boom');paint();sub.textContent=`ทายเลขระหว่าง 1 ถึง ${MAX}`}
   function stop(){to.forEach(clearTimeout);to=[]}
-  return {init:()=>init(0),stop,refresh:()=>paint()};
+  return {init:()=>init(0),stop,refresh:()=>paint(),net:(a,d)=>{if(a==='guess')apply(d.g)},turn:()=>st==='play'?turn:null};
 })();
 
 /* ---------- 17. Hi-Lo (luck) ---------- */
@@ -1728,7 +1883,7 @@ G.hilo=(()=>{
   const SU=[['♠',0],['♥',1],['♦',1],['♣',0]],RK=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
   const cur=$('hlCur'),nx=$('hlNext'),nxf=$('hlNextF'),info=$('hlInfo'),bLo=$('hlLo'),bHi=$('hlHi'),sub=$('hlSub');
   let deck=[],c=null,n=null,turn=0,streak=0,st='play',to=[];
-  function shuffle(){deck=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)deck.push({r,s});for(let i=deck.length-1;i>0;i--){const j=rnd(i+1);[deck[i],deck[j]]=[deck[j],deck[i]]}}
+  function shuffle(){deck=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)deck.push({r,s});for(let i=deck.length-1;i>0;i--){const j=grnd(i+1);[deck[i],deck[j]]=[deck[j],deck[i]]}}
   function draw(){if(!deck.length)shuffle();return deck.pop()}
   function face(cd){const red=SU[cd.s][1],rk=RK[cd.r-1],su=SU[cd.s][0];return `<div class="hlface${red?' red':''}"><span class="tl">${rk}<br>${su}</span><b>${rk}</b><i>${su}</i><span class="br">${rk}<br>${su}</span></div>`}
   function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b>`+(streak?` · รอดติดกัน ${streak}`:'');bLo.disabled=bHi.disabled=st!=='play'}
@@ -1739,10 +1894,10 @@ G.hilo=(()=>{
       else{st='over';tone(140,.4,'sawtooth',.14);buzz([80,40,120]);sub.textContent='ผิด!';
         to.push(setTimeout(()=>showResult({word:'เดาผิด!',who:`${name(turn)} เดา${up?'สูงกว่า':'ต่ำกว่า'} แต่ออก ${RK[n.r-1]}`,loser:turn,again:()=>init((turn+1)%players)}),900))}
     },620))}
-  bLo.onclick=()=>guess(false);bHi.onclick=()=>guess(true);
+  const tryG=up=>{if(st!=='play')return;if(!mayAct(turn))return;act('hilo','guess',{up},d=>guess(d.up))};bLo.onclick=()=>tryG(false);bHi.onclick=()=>tryG(true);
   function init(s=0){stop();shuffle();c=draw();cur.innerHTML=face(c);nx.classList.remove('open');turn=s%players;streak=0;st='play';sub.textContent='ใบต่อไปสูงหรือต่ำกว่า?';paint()}
   function stop(){to.forEach(clearTimeout);to=[]}
-  return {init:()=>init(0),stop,refresh:()=>paint()};
+  return {init:()=>init(0),stop,refresh:()=>paint(),net:(a,d)=>{if(a==='guess')guess(d.up)},turn:()=>st==='play'?turn:null};
 })();
 
 /* ---------- 18. Wave territory (skill, everyone at once) ---------- */
@@ -1919,17 +2074,17 @@ G.sushi=(()=>{
   let turn=0,st='play',bad=-1,left=0,N=12,to=[];
   function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${left} ชิ้น`}
   function build(){N=players>6?16:12;const cols=N===16?4:3;board.style.setProperty('--cols',cols);board.style.setProperty('--rows',N/cols);
-    board.innerHTML=Array.from({length:N},(_,i)=>`<button class="sushi" data-i="${i}" aria-label="ซูชิชิ้นที่ ${i+1}">${svg(rnd(T.length))}<i class="wasabi"></i></button>`).join('');
-    board.querySelectorAll('.sushi').forEach(b=>b.addEventListener('click',()=>eat(+b.dataset.i,b)))}
+    board.innerHTML=Array.from({length:N},(_,i)=>`<button class="sushi" data-i="${i}" aria-label="ซูชิชิ้นที่ ${i+1}">${svg(grnd(T.length))}<i class="wasabi"></i></button>`).join('');
+    board.querySelectorAll('.sushi').forEach(b=>b.addEventListener('click',()=>{if(st!=='play'||b.classList.contains('eat'))return;if(!mayAct(turn))return;act('sushi','eat',{i:+b.dataset.i},d=>{if(board.children[d.i])eat(d.i,board.children[d.i])})}))}
   function eat(i,b){if(st!=='play'||b.classList.contains('eat'))return;
     if(i===bad){st='hot';b.classList.add('hot');board.classList.add('hotboard');flash('#8be04e');noise(.8,.5,2600);tone(300,.8,'sawtooth',.12,1500);buzz([100,50,100,50,220]);paint();
       to.push(setTimeout(()=>showResult({word:'วาซาบิ!',who:`${name(turn)} กินโดนชิ้นวาซาบิ`,loser:turn,again:()=>init((turn+1)%players)}),1400));return}
     b.classList.add('eat');left--;tone(520,.06,'triangle',.07);setTimeout(()=>tone(390,.08,'triangle',.07),110);buzz(12);
     const prev=turn;turn=(turn+1)%players;paint(`${nameH(prev)} อร่อย รอด`)}
-  function init(s=0){stop();turn=s%players;st='play';build();left=N;bad=rnd(N);board.classList.remove('hotboard');paint()}
+  function init(s=0){stop();turn=s%players;st='play';build();left=N;bad=grnd(N);board.classList.remove('hotboard');paint()}
   function stop(){to.forEach(clearTimeout);to=[]}
-  $('suReset').onclick=()=>init(0);
-  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()}};
+  $('suReset').onclick=()=>doReset(()=>init(0));
+  return {init:()=>init(0),stop,refresh:()=>{if(st==='play')paint()},net:(a,d)=>{if(a==='eat'&&board.children[d.i])eat(d.i,board.children[d.i])},turn:()=>st==='play'?turn:null};
 })();
 
 /* ---------- how to play ---------- */
@@ -1964,7 +2119,7 @@ function openHelp(id){const h=HELP[id];if(!h)return;closeSheets();
 $('hDone').onclick=$('hClose').onclick=()=>{$('hModal').hidden=true};
 
 /* ---------- menu + routing ---------- */
-const VIEWS=['menu','croc','bomb','finger','bottle','cards','balloon','stop10','react','simon','aim','math','stroop','odd','schulte','mbox','numbomb','hilo','wave','stack','mcolor','sushi'];
+const VIEWS=['menu','croc','bomb','finger','bottle','cards','balloon','stop10','react','simon','aim','math','stroop','odd','schulte','mbox','numbomb','hilo','wave','stack','mcolor','sushi','watch'];
 let current=null;
 const PEOPLE_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.6" fill="currentColor"/><path d="M2.5 19.5c0-3.7 2.9-6.2 6.5-6.2s6.5 2.5 6.5 6.2z" fill="currentColor"/><circle cx="17.2" cy="9" r="2.8" fill="currentColor" opacity=".6"/><path d="M15.8 13.4c3.4-.5 6 1.8 6 5.6h-4.6c0-2.3-.5-4.1-1.4-5.6z" fill="currentColor" opacity=".6"/></svg>';
 function route(){
@@ -1973,14 +2128,14 @@ function route(){
   hideResult();closeSheets();
   document.querySelectorAll('.view').forEach(v=>v.hidden=v.id!=='v-'+id);
   updatePlayersUI();
-  current=id;if(G[id])G[id].init();
+  current=id;if(!NET.on)setSeed(null);if(G[id])G[id].init();updatePill();
 }
-function closeSheets(){if(!$('pModal').hidden)closePlayers();$('sModal').hidden=true;$('hModal').hidden=true}
-document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{actx();location.hash=b.dataset.go});
-document.querySelectorAll('.back').forEach(b=>b.onclick=()=>{location.hash='menu'});
+function closeSheets(){if(!$('pModal').hidden)closePlayers();$('sModal').hidden=true;$('hModal').hidden=true;$('rModal').hidden=true}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{actx();if(NET.on){NET.pick(b.dataset.go);return}location.hash=b.dataset.go});
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>{if(NET.on){NET.back();return}location.hash='menu'});
 document.querySelectorAll('.helpbtn').forEach(b=>b.onclick=()=>openHelp(current));
-document.querySelectorAll('button.pchip').forEach(c=>c.onclick=()=>openPlayers());
-$('openPlayers').onclick=()=>openPlayers();
+document.querySelectorAll('button.pchip').forEach(c=>c.onclick=()=>NET.on?openRoom():openPlayers());
+$('openPlayers').onclick=()=>NET.on?openRoom():openPlayers();
 $('openSettings').onclick=()=>openSettings();
 ['pModal','sModal','hModal'].forEach(id=>$(id).addEventListener('click',e=>{if(e.target.id===id){id==='pModal'?closePlayers():$(id).hidden=true}}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheets()});
@@ -2048,6 +2203,7 @@ function updatePlayersUI(){
   $('pbN').textContent=players+' คน';
   $('pbL').textContent=roster.map((_,i)=>name(i)).join(' · ');
   document.querySelectorAll('button.pchip').forEach(c=>c.innerHTML=PEOPLE_SVG+players);
+  if(NET.ui)NET.ui();
 }
 
 /* ---------- settings sheet ---------- */
@@ -2078,7 +2234,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.13';
+const APP_VERSION='1.14';
 $('verLine').textContent=`หาคนโดน เวอร์ชัน ${APP_VERSION} · ${document.querySelectorAll('.tile').length} เกม`;
 $('verSet').textContent=`เวอร์ชัน ${APP_VERSION}`;
 $('sCouple').onchange=e=>{cfg.couple=e.target.checked;save();renderS()};
@@ -2089,6 +2245,211 @@ $('sReset').onclick=()=>{const b=$('sReset');
   if(!resetArm){b.textContent='แตะอีกครั้งเพื่อยืนยัน';b.style.color='var(--danger)';resetArm=setTimeout(()=>{resetArm=null;b.textContent='คืนค่าเริ่มต้นของการตั้งค่า';b.style.color=''},3000);return}
   clearTimeout(resetArm);resetArm=null;cfg=defaults();save();renderS();syncPunish();G.croc.drawOdds();b.textContent='คืนค่าแล้ว';b.style.color='';
   setTimeout(()=>{b.textContent='คืนค่าเริ่มต้นของการตั้งค่า'},1500)};
+
+/* ---------- Co-op: rooms over Supabase Realtime (broadcast + presence) ---------- */
+// ค่าโปรเจกต์ Supabase (URL และ anon public key) ใส่ตรงนี้ หรือกรอกในหน้า "เล่นหลายเครื่อง"
+const SB_DEFAULT={url:'',key:''};
+const SB_LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';
+// SYNC: ทุกเครื่องเห็นกระดานเดียวกัน ตาใครคนนั้นกดที่เครื่องตัวเอง · SCORE: แต่ละเครื่องเล่นคนของตัวเองแล้วส่งคะแนน · เกมอื่นเล่นที่เครื่องหัวห้อง
+const SYNC=['croc','bomb','bottle','cards','balloon','mbox','numbomb','hilo','sushi'],SCORE=['stop10','react','schulte'];
+const gameName=id=>{const t=document.querySelector(`.tile[data-go="${id}"] .tn`);return t?t.textContent:id};
+function sbCfg(){try{const s=JSON.parse(localStorage.getItem('hk-sb')||'null');if(s&&s.url&&s.key)return s}catch(e){}return SB_DEFAULT.url&&SB_DEFAULT.key?SB_DEFAULT:null}
+NET.dev=(()=>{try{let d=sessionStorage.getItem('hk-dev');if(!d){d=uid()+uid();sessionStorage.setItem('hk-dev',d)}return d}catch(e){return uid()+uid()}})();
+let mine=(()=>{try{const m=JSON.parse(localStorage.getItem('hk-mine')||'null');if(Array.isArray(m)&&m.length)return m.slice(0,6).map(p=>({id:String(p&&p.id||uid()),n:String(p&&p.n||'').slice(0,20)}))}catch(e){}return[{id:uid(),n:''}]})();
+function saveMine(){try{localStorage.setItem('hk-mine',JSON.stringify(mine))}catch(e){}}
+Object.assign(NET,{tr:null,devs:{},hostDev:'',order:[],gen:0,playGen:-1,seed:0,game:'menu',lobby:[],late:false,synced:false,joinT:0,pending:null,resultGen:-2,watchGame:'',status:''});
+
+function toast(t){const el=$('toast');el.textContent=t;el.hidden=false;el.classList.remove('show');void el.offsetWidth;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>{el.hidden=true},2400)}
+function myQueue(){return NET.on?roster.map((r,i)=>r.dev===NET.dev?i:-1).filter(i=>i>=0):[...Array(players).keys()]}
+function mayAct(i){if(!NET.on)return true;if(roster[i]&&roster[i].dev===NET.dev)return true;toast(roster[i]?`ตาของ ${name(i)} ต้องกดที่เครื่องของเขา`:'รอสักครู่');return false}
+function act(g,a,d,apply){if(!NET.on){apply(d);return}NET.send({t:'act',g,a,d,gen:NET.playGen})}
+function doReset(fn){if(NET.on){if(NET.host)NET.start(current);else toast('ให้หัวห้องเป็นคนเริ่มใหม่');return}fn()}
+NET.send=m=>{if(!NET.tr)return;m.from=NET.dev;try{NET.tr.send(m)}catch(e){}};
+
+/* transports */
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=()=>rej(new Error('load'));document.head.appendChild(s)})}
+async function supaTransport(code,h){
+  const c=sbCfg();if(!c)throw new Error('nocfg');
+  if(!window.supabase)await loadScript(SB_LIB);
+  const client=window.supabase.createClient(c.url,c.key,{auth:{persistSession:false,autoRefreshToken:false},realtime:{params:{eventsPerSecond:20}}});
+  const ch=client.channel('hakhondon-'+code,{config:{broadcast:{self:true},presence:{key:NET.dev}}});
+  ch.on('broadcast',{event:'m'},({payload})=>h.msg(payload));
+  ch.on('presence',{event:'sync'},()=>h.presence(ch.presenceState()));
+  let ok=false;
+  await new Promise((res,rej)=>{const to=setTimeout(()=>rej(new Error('timeout')),12000);
+    ch.subscribe(s=>{if(s==='SUBSCRIBED'){if(!ok){ok=true;clearTimeout(to);res()}else h.status('ok')}
+      else if(!ok&&(s==='CHANNEL_ERROR'||s==='TIMED_OUT'||s==='CLOSED')){clearTimeout(to);rej(new Error(s))}
+      else if(ok)h.status(s)})});
+  return{send:m=>ch.send({type:'broadcast',event:'m',payload:m}),track:p=>ch.track(p),close:()=>{try{ch.unsubscribe();client.removeChannel(ch)}catch(e){}}};
+}
+// ใช้ทดสอบในเบราว์เซอร์เดียวหลายแท็บ: เปิดด้วย ?net=local
+function localTransport(code,h){
+  const bc=new BroadcastChannel('hk-'+code),peers={};let me=null;
+  const state=()=>{const o={};for(const k in peers)o[k]=[peers[k]];if(me)o[NET.dev]=[me];return o};
+  bc.onmessage=e=>{const m=e.data;if(m.k==='msg')h.msg(m.p);else if(m.k==='pres'){peers[m.dev]=m.p;h.presence(state());if(m.ask&&me)bc.postMessage({k:'pres',dev:NET.dev,p:me})}else if(m.k==='bye'){delete peers[m.dev];h.presence(state())}};
+  window.addEventListener('pagehide',()=>{try{bc.postMessage({k:'bye',dev:NET.dev})}catch(e){}});
+  return Promise.resolve({send:m=>{bc.postMessage({k:'msg',p:m});setTimeout(()=>h.msg(m),0)},track:p=>{me=p;bc.postMessage({k:'pres',dev:NET.dev,p,ask:true});h.presence(state())},close:()=>{bc.postMessage({k:'bye',dev:NET.dev});bc.close()}});
+}
+
+/* room lifecycle */
+const CODE_CH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const newCode=()=>Array.from({length:4},()=>CODE_CH[rnd(CODE_CH.length)]).join('');
+function errText(e){const m=String(e&&e.message||e);
+  if(m==='nocfg')return 'ยังไม่ได้ใส่ค่า Supabase เปิด "ตั้งค่า Supabase" ด้านล่างแล้วกรอก URL กับ anon key';
+  if(m==='load')return 'โหลดตัวเชื่อมต่อไม่ได้ เช็กอินเทอร์เน็ตแล้วลองใหม่';
+  return 'เข้าห้องไม่ได้ เช็กค่า Supabase และอินเทอร์เน็ต · ถ้าเปิดอยู่ใน claude.ai ให้เปิดจากเว็บ GitHub แทน'}
+function track(){if(NET.tr)NET.tr.track({dev:NET.dev,t:NET.joinT,players:mine.filter(p=>p.n.trim()).map(p=>({id:p.id,n:p.n.trim()})),v:APP_VERSION})}
+async function joinRoom(code){
+  code=String(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4);
+  if(code.length!==4){rErr('รหัสห้องต้องมี 4 ตัว');return}
+  if(!mine.some(p=>p.n.trim())){rErr('ใส่ชื่อคนที่เล่นเครื่องนี้อย่างน้อย 1 คน');$('rMine').querySelector('input')?.focus();return}
+  rErr('');rBusy(true);
+  const local=new URLSearchParams(location.search).get('net')==='local';
+  try{NET.tr=await (local?localTransport(code,{msg:onMsg,presence:onPresence,status:onStatus}):supaTransport(code,{msg:onMsg,presence:onPresence,status:onStatus}))}
+  catch(e){rBusy(false);rErr(errText(e));return}
+  Object.assign(NET,{on:true,code,joinT:Date.now(),localRoster:roster.map(r=>({id:r.id,n:r.n})),gen:0,playGen:-1,game:'menu',order:[],devs:{},hostDev:NET.dev,host:true,synced:false,late:false,pending:null,status:'ok'});
+  document.body.classList.add('coop');
+  try{const u=new URL(location.href);u.searchParams.set('room',code);history.replaceState(null,'',u.pathname+u.search+'#menu')}catch(e){}
+  track();rBusy(false);renderRoom();NET.ui();
+  if(current!=='menu')go('menu');
+  setTimeout(()=>{if(NET.on&&NET.host&&!NET.synced)hostSync()},1500);
+}
+function leaveRoom(){
+  if(!NET.on)return;try{NET.tr.close()}catch(e){}
+  Object.assign(NET,{tr:null,on:false,host:false,code:'',pending:null,devs:{},late:false});
+  roster=NET.localRoster||roster;players=roster.length;cleanPartners(partner,roster);setSeed(null);
+  document.body.classList.remove('coop','coop-host','coop-guest');
+  try{const u=new URL(location.href);u.searchParams.delete('room');history.replaceState(null,'',u.pathname+u.search+'#menu')}catch(e){}
+  hideResult();renderRoom();NET.ui();updatePlayersUI();route();toast('ออกจากห้องแล้ว');
+}
+function onStatus(s){NET.status=s==='ok'?'ok':'lost';if(s==='ok')track();renderRoom()}
+function onPresence(ps){
+  const devs={};for(const k in ps){const ms=ps[k];if(!ms||!ms.length)continue;const m=ms[ms.length-1];
+    if(m&&m.dev)devs[m.dev]={dev:m.dev,t:+m.t||0,players:Array.isArray(m.players)?m.players.slice(0,6):[],v:m.v}}
+  NET.devs=devs;
+  const ids=Object.keys(devs).sort((a,b)=>devs[a].t-devs[b].t||(a<b?-1:1));
+  const was=NET.host,prevHost=NET.hostDev;NET.hostDev=ids[0]||NET.dev;NET.host=NET.hostDev===NET.dev;
+  if(!NET.host&&NET.hostDev!==prevHost)NET.send({t:'need'}); // ขอสถานะห้องจากหัวห้องคนใหม่
+  document.body.classList.toggle('coop-host',NET.host);document.body.classList.toggle('coop-guest',!NET.host);
+  if(NET.host)hostSync();
+  if(NET.host&&!was&&NET.pending&&NET.resultGen!==NET.playGen){const p=NET.pending;NET.pending=null;showResult({...p,again:againFn})}
+  renderRoom();NET.ui();
+}
+// ลำดับที่นั่ง: ตามที่หัวห้องจัดไว้ คนที่เข้ามาใหม่ต่อท้ายตามเวลาเข้าห้อง
+function presentRoster(){
+  const all=[];Object.values(NET.devs).sort((a,b)=>a.t-b.t).forEach(d=>d.players.forEach(p=>all.push({id:String(p.id),n:String(p.n||'').slice(0,20),dev:d.dev})));
+  const by={};all.forEach(p=>{by[p.id]=p});
+  const ord=NET.order.filter(id=>by[id]);all.forEach(p=>{if(!ord.includes(p.id))ord.push(p.id)});
+  NET.order=ord;return ord.map(id=>by[id]);
+}
+function hostSync(){
+  if(!NET.on||!NET.host)return;
+  const r=presentRoster();NET.synced=true;
+  NET.send({t:'state',game:NET.game,gen:NET.gen,seed:NET.seed,roster:NET.game==='menu'?r:roster,lobby:r});
+}
+NET.start=g=>{if(!NET.on||!NET.host)return;const r=presentRoster();NET.gen++;NET.game=g;NET.seed=(Math.random()*4294967296)>>>0;
+  NET.send({t:'state',game:g,gen:NET.gen,seed:NET.seed,roster:r,lobby:r})};
+NET.pick=g=>{if(!NET.host){toast('ให้หัวห้องเป็นคนเลือกเกม');return}if(presentRoster().length<2){toast('ต้องมีผู้เล่นในห้องอย่างน้อย 2 คน');openRoom();return}NET.start(g)};
+NET.back=()=>{if(!NET.host){toast('ให้หัวห้องเป็นคนพากลับหน้าหลัก');return}NET.start('menu')};
+// เปลี่ยนหน้าแบบทันที (ไม่รอ hashchange) เพื่อให้ข้อความที่ตามมาเจอเกมที่ถูกต้อง
+function go(g){
+  const target=g==='menu'?'menu':NET.late?'watch':(SYNC.includes(g)||SCORE.includes(g)||NET.host)?g:'watch';
+  NET.watchGame=g;
+  if(target==='menu'&&current==='menu'){updatePlayersUI();return}
+  try{history.replaceState(null,'',location.pathname+location.search+'#'+target)}catch(e){location.hash=target;return}
+  route();
+}
+function onState(m){
+  if(m.from!==NET.hostDev)return;
+  NET.lobby=Array.isArray(m.lobby)?m.lobby:[];NET.gen=Math.max(NET.gen,m.gen|0);
+  const first=!NET.synced;NET.synced=true;
+  if(m.game==='menu'){NET.game='menu';NET.late=false;roster=m.roster||[];players=roster.length;updatePlayersUI();
+    if(m.gen!==NET.playGen||current!=='menu'){NET.playGen=m.gen;NET.pending=null;go('menu')}renderRoom();return}
+  if(m.gen===NET.playGen){renderRoom();return}
+  NET.playGen=m.gen;NET.game=m.game;NET.seed=m.seed;NET.pending=null;
+  if(first&&!NET.host){NET.late=true;go(m.game);renderRoom();return}
+  NET.late=false;roster=m.roster||[];players=roster.length;updatePlayersUI();setSeed(m.seed);go(m.game);renderRoom();
+}
+function onMsg(m){
+  if(!NET.on||!m)return;
+  if(m.t==='state')return onState(m);
+  if(m.t==='need'){if(NET.host)hostSync();return}
+  if(m.t==='act'){if(m.gen!==NET.playGen||NET.late)return;const g=G[current];if(current===m.g&&g&&g.net)g.net(m.a,m.d||{});return}
+  if(m.t==='result'){if(m.from!==NET.hostDev)return;NET.pending=null;NET.resultGen=NET.playGen;const tok=openResult(m.word,m.who);display(m.res,tok);return}
+  if(m.t==='again'){if(m.from!==NET.hostDev)return;hideResult();NET.pending=null;NET.resultGen=-2;setSeed(m.seed);if(NET.late)return;
+    if(againFn&&lastGame===current)againFn();else if(G[current]&&G[current].init)G[current].init();return}
+}
+
+/* watch screen for games that run on the host's phone */
+G.watch={init(){if(!NET.on){location.hash='menu';return}
+  const g=NET.watchGame,hostP=(NET.devs[NET.hostDev]?.players||[]).map(p=>p.n).join(', ');
+  $('wGame').textContent=gameName(g);
+  $('wMsg').textContent=NET.late?'รอบนี้เริ่มไปแล้ว รอรอบหน้านะ เดี๋ยวหัวห้องเริ่มใหม่ก็เข้าร่วมได้เลย':`เกมนี้เล่นที่เครื่องหัวห้อง${hostP?' ('+hostP+')':''} เวียนกันไปเล่นที่เครื่องนั้น ผลจะขึ้นที่นี่ด้วย`},stop(){}};
+
+/* status pill in every game */
+let wasMine=false;
+function updatePill(){const ps=document.querySelectorAll('.netpill');
+  if(!NET.on){ps.forEach(p=>p.hidden=true);wasMine=false;return}
+  let txt=`ห้อง ${NET.code}`,cls='';const g=G[current];
+  if(NET.status==='lost'){txt='การเชื่อมต่อหลุด กำลังต่อใหม่…';cls='lost'}
+  else if(current==='watch')txt+=' · ดูอยู่';
+  else if(g&&g.turn&&$('modal').hidden){const t=g.turn();if(t!=null&&roster[t]){if(roster[t].dev===NET.dev){txt=`ตาเครื่องนี้ · ${name(t)}`;cls='mine'}else txt=`รอ ${name(t)} ที่อีกเครื่อง`}}
+  else if(SCORE.includes(current))txt+=' · เล่นคนในเครื่องนี้ให้ครบ';
+  else if(current!=='menu'&&!SYNC.includes(current)&&NET.host)txt+=' · เล่นที่เครื่องนี้';
+  ps.forEach(p=>{p.hidden=false;p.textContent=txt;p.className='netpill'+(cls?' '+cls:'')});
+  const m=cls==='mine';if(m&&!wasMine){buzz([30,40,30]);tone(880,.1,'triangle',.07)}wasMine=m}
+setInterval(updatePill,400);
+
+/* room sheet */
+function rErr(t){$('rErr').textContent=t}
+function rBusy(b){['rCreate','rJoin'].forEach(id=>{$(id).disabled=b});$('rCreate').textContent=b?'กำลังเชื่อมต่อ…':'สร้างห้องใหม่'}
+let trackT=null;
+function renderMine(){
+  const el=$('rMine');
+  el.innerHTML=mine.map((p,i)=>`<div class="mrow"><input id="rm${i}" maxlength="20" autocomplete="off" value="${esc(p.n)}" placeholder="${i?'ชื่ออีกคนที่ใช้เครื่องนี้':'ชื่อของคุณ'}" aria-label="ชื่อคนที่เล่นเครื่องนี้ คนที่ ${i+1}"><button data-i="${i}" aria-label="ลบชื่อนี้"${mine.length<=1?' disabled':''}>×</button></div>`).join('');
+  el.querySelectorAll('input').forEach((inp,i)=>inp.oninput=()=>{mine[i].n=inp.value;saveMine();if(NET.on){clearTimeout(trackT);trackT=setTimeout(track,500)}});
+  el.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(mine.length<=1)return;mine.splice(+b.dataset.i,1);saveMine();renderMine();if(NET.on)track()});
+  $('rMineAdd').disabled=mine.length>=6;
+}
+const rSeat=seatMap($('rSeats'),()=>NET.host?presentRoster():NET.lobby,a=>{if(!NET.host){toast('ให้หัวห้องเป็นคนจัดที่นั่ง');rSeat.draw();return}NET.order=a.map(p=>p.id);hostSync();rSeat.draw()},null);
+function renderRoom(){
+  if(!$('rModal'))return;
+  const on=NET.on;$('rOnTop').hidden=!on;$('rOnBot').hidden=!on;$('rOffAct').hidden=on;
+  $('rTitle').textContent=on?'ห้องออนไลน์':'เล่นหลายเครื่อง';
+  if(on){
+    $('rCodeBig').textContent=NET.code;
+    const devs=Object.values(NET.devs).sort((a,b)=>a.t-b.t),n=devs.reduce((a,d)=>a+d.players.length,0);
+    $('rStat').textContent=NET.status==='lost'?'การเชื่อมต่อหลุด กำลังต่อใหม่…':`${n} คน · ${devs.length} เครื่อง · ${NET.host?'คุณเป็นหัวห้อง เลือกเกมได้':'หัวห้องเป็นคนเลือกเกม'}`;
+    $('rDevs').innerHTML=devs.map(d=>`<div class="rdev">${d.dev===NET.hostDev?'<i class="tag h">หัวห้อง</i>':''}${d.dev===NET.dev?'<i class="tag">เครื่องนี้</i>':''}<span>${d.players.map(p=>esc(p.n)).join(' · ')||'ยังไม่ใส่ชื่อ'}</span></div>`).join('');
+    $('rSeatNote').textContent=NET.host?'ลากหรือแตะ 2 คนเพื่อสลับที่ · มีผลตั้งแต่เกมถัดไป':'หัวห้องเป็นคนจัดที่นั่ง';
+    rSeat.draw();
+  }
+  if(!$('rCfg').open){const c=sbCfg();$('rUrl').value=c?c.url:'';$('rKey').value=c?c.key:''}
+  $('rCfgNote').textContent=sbCfg()?'ตั้งค่าแล้ว':'ยังไม่ได้ตั้งค่า';
+}
+function openRoom(){closeSheets();renderMine();renderRoom();$('rModal').hidden=false}
+NET.ui=()=>{const c=$('coopCard');if(!c)return;c.classList.toggle('on',NET.on);
+  $('coopT').textContent=NET.on?`ห้อง ${NET.code}`:'เล่นหลายเครื่อง';
+  $('coopS').textContent=NET.on?`${Object.keys(NET.devs).length} เครื่อง · ${NET.host?'คุณเป็นหัวห้อง':'หัวห้องเลือกเกม'}`:'สร้างห้องหรือเข้าห้องเพื่อนผ่านเน็ต';
+  $('coopE').textContent=NET.on?'ดูห้อง':'เปิด';updatePill()};
+$('coopCard').onclick=openRoom;
+$('rClose').onclick=()=>{$('rModal').hidden=true};
+$('rModal').addEventListener('click',e=>{if(e.target.id==='rModal')$('rModal').hidden=true});
+$('rMineForm').onsubmit=e=>{e.preventDefault();const inp=$('rMineNew'),n=inp.value.trim().slice(0,20);if(!n||mine.length>=6)return;
+  const empty=mine.findIndex(p=>!p.n.trim());if(empty>=0)mine[empty].n=n;else mine.push({id:uid(),n});inp.value='';saveMine();renderMine();if(NET.on)track()};
+$('rMineAdd').onclick=()=>{const v=$('rMineNew').value.trim();if(v){$('rMineForm').requestSubmit?$('rMineForm').requestSubmit():$('rMineForm').onsubmit(new Event('submit'))}else $('rMineNew').focus()};
+$('rCreate').onclick=()=>{actx();joinRoom(newCode())};
+$('rJoin').onclick=()=>{actx();joinRoom($('rCode').value)};
+$('rCode').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('rJoin').click()}});
+$('rLeave').onclick=leaveRoom;
+$('rSave').onclick=()=>{const url=$('rUrl').value.trim().replace(/\/+$/,''),key=$('rKey').value.trim();
+  if(!/^https:\/\/.+/.test(url)||key.length<20){rErr('URL ต้องขึ้นต้นด้วย https:// และ anon key ต้องครบทั้งชุด');return}
+  try{localStorage.setItem('hk-sb',JSON.stringify({url,key}))}catch(e){}rErr('');$('rCfg').open=false;renderRoom();toast('บันทึกค่า Supabase แล้ว')};
+$('rCopy').onclick=async()=>{const link=location.origin+location.pathname+'?room='+NET.code;
+  if(navigator.share){try{await navigator.share({title:'หาคนโดน',text:`มาเล่นด้วยกัน ห้อง ${NET.code}`,url:link});return}catch(e){}}
+  try{await navigator.clipboard.writeText(link);toast('คัดลอกลิงก์แล้ว')}catch(e){toast(link)}};
+(()=>{const q=new URLSearchParams(location.search).get('room');if(q){$('rCode').value=q.toUpperCase().slice(0,4);setTimeout(openRoom,300)}})();
+NET.ui();
 
 (()=>{const d=document,el=d.documentElement,b=$('fsBtn');
   const can=(d.fullscreenEnabled||d.webkitFullscreenEnabled)&&(el.requestFullscreen||el.webkitRequestFullscreen);
