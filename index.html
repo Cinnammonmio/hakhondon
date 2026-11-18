@@ -697,8 +697,8 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 .parea{position:relative;width:100%;flex:1 1 auto;min-height:0;container-type:size;border-radius:24px;background:radial-gradient(circle at 50% 40%,#2a1650,#140a26);border:1px solid var(--line);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .parea button{-webkit-tap-highlight-color:transparent}
 .pmid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;text-align:center;padding:12px}
-.pmid.top{justify-content:flex-start;padding-top:9%}
-.pmid.bottom{justify-content:flex-end;padding-bottom:5%}
+.pmid.at-top{justify-content:flex-start;padding-top:9%}
+.pmid.at-bottom{justify-content:flex-end;padding-bottom:5%}
 .pmid b{font-size:min(7cqw,26px)}
 .pmid small{color:var(--muted);font-size:15px}
 .pmid .pbig{font-size:min(20cqw,18cqh,96px);line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 4px 24px rgba(0,0,0,.5)}
@@ -729,7 +729,7 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 .gaknob{position:relative;width:40%;aspect-ratio:1;border-radius:50%;border:0;padding:0;background:radial-gradient(circle at 40% 35%,#fff,#e6dcf5 60%,#b9a8d6);box-shadow:0 5px 0 #8a76ad,0 8px 14px rgba(0,0,0,.35);touch-action:manipulation}
 .gaknob:active{transform:translateY(3px);box-shadow:0 2px 0 #8a76ad,0 4px 10px rgba(0,0,0,.35)}
 .gaknob i{position:absolute;left:43%;top:10%;width:14%;height:80%;border-radius:6px;background:#c2185b}
-.gaknob.turn i{animation:gknob .7s ease-in-out}
+.gaknob.gturn i{animation:gknob .7s ease-in-out}
 @keyframes gknob{to{transform:rotate(360deg)}}
 .gatray{position:relative;width:34%;aspect-ratio:1;border-radius:16px;background:#2a0f22;box-shadow:inset 0 6px 12px rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center}
 .tcap{position:relative;width:68%;aspect-ratio:1;animation:gdrop .45s cubic-bezier(.3,1.6,.5,1)}
@@ -753,13 +753,15 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 .whole::after{content:"";position:absolute;left:6%;right:6%;bottom:6%;height:26%;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#05020c,#1e0f36 70%);box-shadow:inset 0 4px 8px rgba(0,0,0,.6),0 2px 0 rgba(255,255,255,.08)}
 .wclip{position:absolute;z-index:1;left:0;right:0;top:0;bottom:19%;overflow:hidden}
 .wpop{position:absolute;left:12%;right:12%;bottom:0;height:88%;transform:translateY(105%);transition:transform .14s ease-out}
-.whole.up .wpop{transform:none}
+.whole.wk-up .wpop{transform:none}
 .wpop .mimon,.wpop .wbomb{position:absolute;inset:0;width:100%;height:100%}
 .wpop .wbomb{display:none}
-.whole.bomb .wpop .mimon{display:none}
-.whole.bomb .wpop .wbomb{display:block}
-.whole.hit .wpop .mimon{color:#ffe066}
-.whole.boom::after{background:radial-gradient(#ff8a3d,#8a1f18)}
+.whole.wk-bomb .wpop .mimon{display:none}
+.whole.wk-bomb .wpop .wbomb{display:block}
+.whole.wk-hit .wpop .mimon{color:#ffe066}
+.whole.wk-boom::after{background:radial-gradient(#ff8a3d,#8a1f18)}
+.whhud .whs{display:inline-block}
+.whs.wk-pop{animation:pop .2s}
 /* pour */
 .stream{position:absolute;left:50%;top:0;width:12px;height:0;margin-left:-6px;background:linear-gradient(90deg,#3db2ff,#a8ecff,#3db2ff);border-radius:0 0 6px 6px;opacity:.9;transition:height .15s}
 .stream.on{height:94%}
@@ -2590,7 +2592,7 @@ G.gacha=(()=>{
   function paint(m){info.innerHTML=(m?m+' · ':'')+`ตาของ <b>${nameH(turn)}</b> · เหลือ ${caps.length} แคปซูล`+(players>2?` · วน${dir===1?'ตามเข็ม':'ทวนเข็ม'}`:'')}
   function spin(){if(st!=='play'||!caps.length)return;st='spin';const c=caps.shift();card.hidden=true;caps.forEach(k=>{k.x=14+rnd(72);k.y=42+rnd(40);k.r=rnd(360)});const out=dome.firstElementChild;if(out)out.remove();
     [...dome.children].forEach((e,k)=>{const p=caps[k];if(!p)return;e.style.left=p.x+'%';e.style.top=p.y+'%';e.style.transform=`translate(-50%,-50%) rotate(${p.r}deg)`});
-    knob.classList.remove('turn');void knob.offsetWidth;knob.classList.add('turn');mach.classList.remove('shake');void mach.offsetWidth;mach.classList.add('shake');
+    knob.classList.remove('gturn');void knob.offsetWidth;knob.classList.add('gturn');mach.classList.remove('shake');void mach.offsetWidth;mach.classList.add('shake');
     for(let k=0;k<5;k++)to.push(setTimeout(()=>tone(260+k*40,.05,'square',.04),k*120));
     to.push(setTimeout(()=>{tray.innerHTML=`<i class="tcap" style="--cc:${c.c}"><b></b><b></b></i>`;tone(500,.08,'triangle',.07)},700));
     to.push(setTimeout(()=>{const tc=tray.firstElementChild;if(tc)tc.classList.add('open');const [h,s]=TXT[c.t];card.className='gacard '+c.t;card.innerHTML=`<b>${h}</b><small>${s}</small>`;card.hidden=false;
@@ -2610,15 +2612,17 @@ const BOMB_SVG='<svg class="wbomb" viewBox="0 0 48 48" aria-hidden="true"><circl
 G.whack=scoreGame('whack','wh',{better:'high',word:'ทุบน้อยสุด!',fmt:v=>`ทุบได้ ${v} ตัว`,hint:'มิมอนโผล่ตรงไหนรีบแตะ ห้ามแตะระเบิด (−2) · 12 วินาที',
   prep(a){a.innerHTML=`<div class="whhud"><b class="wht">12.0</b><span>คะแนน <b class="whs">0</b></span></div><div class="whgrid">${Array.from({length:9},(_,i)=>`<button class="whole" aria-label="หลุม ${i+1}"><span class="wclip"><span class="wpop">${MI_SVG()}${BOMB_SVG}</span></span></button>`).join('')}</div>`},
   play(a,done){const holes=[...a.querySelectorAll('.whole')],hud=a.querySelector('.wht'),sc=a.querySelector('.whs');let score=0,over=false;const t0=performance.now(),DUR=12;
-    holes.forEach(h=>{h.onpointerdown=e=>{e.preventDefault();if(over||!h.classList.contains('up'))return;h.classList.remove('up');
-      if(h.classList.contains('bomb')){score=Math.max(0,score-2);h.classList.add('boom');buzz(70);tone(150,.2,'sawtooth',.1);whT.push(setTimeout(()=>h.classList.remove('boom'),300))}
-      else{score++;h.classList.add('hit');tone(480+score*12,.06,'triangle',.07);buzz(10);whT.push(setTimeout(()=>h.classList.remove('hit'),250))}
-      sc.textContent=score}});
-    function spawn(){if(over)return;const e=(performance.now()-t0)/1000,iv=Math.max(360,820-e*42),free=holes.filter(h=>!h.classList.contains('up'));
-      if(free.length){const h=free[rnd(free.length)];h.classList.toggle('bomb',Math.random()<.2);h.classList.add('up');whT.push(setTimeout(()=>h.classList.remove('up'),iv*1.3))}
+    const isUp=h=>h.classList.contains('wk-up'),down=h=>{clearTimeout(h._t);if(isUp(h)){h.classList.remove('wk-up');h._d=performance.now()}};
+    holes.forEach(h=>{h._d=0;h.onpointerdown=e=>{e.preventDefault();if(over||!isUp(h))return;const bomb=h.classList.contains('wk-bomb');down(h);
+      if(bomb){score=Math.max(0,score-2);h.classList.add('wk-boom');buzz(70);tone(150,.2,'sawtooth',.1);whT.push(setTimeout(()=>h.classList.remove('wk-boom'),300))}
+      else{score++;h.classList.add('wk-hit');tone(480+score*12,.06,'triangle',.07);buzz(10);whT.push(setTimeout(()=>h.classList.remove('wk-hit'),250))}
+      sc.textContent=score;sc.classList.remove('wk-pop');void sc.offsetWidth;sc.classList.add('wk-pop')}});
+    function spawn(){if(over)return;const now=performance.now(),e=(now-t0)/1000,iv=Math.max(360,820-e*42),
+        free=holes.filter(h=>!isUp(h)&&now-h._d>260&&!h.classList.contains('wk-hit')&&!h.classList.contains('wk-boom'));
+      if(free.length){const h=free[rnd(free.length)];h.classList.toggle('wk-bomb',Math.random()<.2);h.classList.add('wk-up');h._t=setTimeout(()=>down(h),iv*1.3);whT.push(h._t)}
       whT.push(setTimeout(spawn,iv*(.5+Math.random()*.5)))}
     (function tick(){const left=DUR-(performance.now()-t0)/1000;hud.textContent=Math.max(0,left).toFixed(1);
-      if(left<=0){over=true;holes.forEach(h=>h.classList.remove('up'));done(score,`ทุบได้ ${score} ตัว`);return}whRaf=requestAnimationFrame(tick)})();
+      if(left<=0){over=true;holes.forEach(down);done(score,`ทุบได้ ${score} ตัว`);return}whRaf=requestAnimationFrame(tick)})();
     spawn()},
   stop(){whT.forEach(clearTimeout);whT=[];cancelAnimationFrame(whRaf)}});
 
@@ -2645,7 +2649,7 @@ G.circle=scoreGame('circle','ci',{better:'high',word:'วงเบี้ยว�
 /* ---------- 26. Pour to the line (skill, score) ---------- */
 let poRaf=0;
 G.pour=scoreGame('pour','po',{better:'low',word:'เทพลาดสุด!',fmt:v=>`ห่างเส้น ${v.toFixed(1)}%`,hint:'กดค้างที่แก้วเพื่อเทน้ำ ปล่อยให้น้ำหยุดตรงเส้นที่สุด · เทได้ครั้งเดียว',
-  prep(a){const tg=35+rnd(45);a.dataset.tg=tg;a.innerHTML=`<div class="stream"></div><div class="glass"><div class="water"><i></i></div><div class="gline" style="bottom:${tg}%"><span>${tg}%</span></div></div><div class="pmid top"><b>กดค้างเพื่อเท</b></div>`},
+  prep(a){const tg=35+rnd(45);a.dataset.tg=tg;a.innerHTML=`<div class="stream"></div><div class="glass"><div class="water"><i></i></div><div class="gline" style="bottom:${tg}%"><span>${tg}%</span></div></div><div class="pmid at-top"><b>กดค้างเพื่อเท</b></div>`},
   play(a,done){const tg=+a.dataset.tg,w=a.querySelector('.water'),sm=a.querySelector('.stream'),mid=a.querySelector('.pmid');let lv=0,pour=false,used=false,fin=false,last=0,v=0;
     const finish=()=>{if(fin)return;fin=true;pour=false;a.onpointerdown=a.onpointerup=a.onpointercancel=a.onpointerleave=null;const extra=Math.min(3,v*.07),from=lv,t1=performance.now();
       (function drain(){const k=Math.min(1,(performance.now()-t1)/260);lv=from+extra*k;w.style.height=Math.min(100,lv)+'%';if(k<1){poRaf=requestAnimationFrame(drain);return}
@@ -2714,7 +2718,7 @@ G.countflash=elimGame('countflash','cf',{word:'นับผิด!',hint:'มิ
 /* ---------- 31. Go / no-go (hard, elimination) ---------- */
 let gnT=[];
 G.gonogo=elimGame('gonogo','gn',{word:'พลาด!',hint:'มิมอนเขียวรีบแตะ มิมอนแดงห้ามแตะ ผ่านครบ 8 ครั้งแล้วส่งต่อ',
-  prep(a){a.innerHTML=`<div class="gnhud">${'<i></i>'.repeat(8)}</div><div class="gnmon">${MI_SVG()}</div><div class="pmid bottom"><small>เขียว = แตะ · แดง = ห้ามแตะ</small></div>`},
+  prep(a){a.innerHTML=`<div class="gnhud">${'<i></i>'.repeat(8)}</div><div class="gnmon">${MI_SVG()}</div><div class="pmid at-bottom"><small>เขียว = แตะ · แดง = ห้ามแตะ</small></div>`},
   round(L,a,pass,fail){const m=a.querySelector('.gnmon'),hud=a.querySelector('.gnhud'),win=Math.max(300,760-L*50),pRed=.3+Math.min(.2,L*.02);let k=0,state='blank',over=false;
     const setHud=()=>hud.innerHTML=Array.from({length:8},(_,i)=>`<i class="${i<k?'ok':''}"></i>`).join('');setHud();m.className='gnmon';
     const end=(ok,why)=>{over=true;gnT.forEach(clearTimeout);gnT=[];a.onpointerdown=null;ok?pass():fail(why)};
@@ -2798,7 +2802,7 @@ G.dodge=scoreGame('dodge','do',{better:'high',word:'หลบได้น้อ�
 /* ---------- 36. Steady finger (hard, score) ---------- */
 let sdRaf=0;
 G.steady=scoreGame('steady','sd',{better:'high',word:'หลุดวงบ่อยสุด!',fmt:v=>`อยู่ในวง ${v.toFixed(0)}%`,hint:'แตะค้างที่วงแล้วลากตามให้นิ้วอยู่ในวงตลอด 8 วินาที',
-  prep(a){a.innerHTML='<div class="sdt"></div><div class="pmid top"><b>แตะวงเพื่อเริ่ม</b></div>'},
+  prep(a){a.innerHTML='<div class="sdt"></div><div class="pmid at-top"><b>แตะวงเพื่อเริ่ม</b></div>'},
   play(a,done){const tg=a.querySelector('.sdt'),mid=a.querySelector('.pmid'),r=a.getBoundingClientRect(),W=r.width,H=r.height,RAD=Math.min(W,H)*.11;
     tg.style.width=tg.style.height=RAD*2+'px';let fx=-999,fy=-999,touching=false,started=false,t0=0,last=0,inside=0;
     const at=e=>{const sp=.7+e*.12;return[W/2+(W/2-RAD-6)*Math.sin(e*sp*1.3),H/2+(H/2-RAD-6)*Math.sin(e*sp*1.7)]};
@@ -2977,7 +2981,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.21';
+const APP_VERSION='1.22';
 // iOS 26 home-screen apps with a see-through status bar get a page that is short by the
 // status-bar height and never draw the strip below it. When that happens the strip
 // already keeps content clear of the home bar, so the extra bottom padding is dropped.
