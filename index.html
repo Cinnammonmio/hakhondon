@@ -679,13 +679,17 @@ html{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100
 .pchip2 .pe{padding:6px 10px}
 .menu-wrap{gap:12px}
 .menu-wrap>.gwrap{--gap:min(10px,2.2cqh)}
-.ggrid{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:var(--gap) 10px;grid-template:none}
+.ggrid{display:flex;flex-wrap:wrap;justify-content:flex-start;align-content:flex-start;gap:var(--gap) 10px;grid-template:none}
 .ggrid .tile{flex:none;width:calc((100% - 20px) / 3);height:calc((100cqh - 3 * var(--gap)) / 4)}
 .gfoot{flex-direction:column;gap:2px;min-height:0}
 .dots{gap:0;align-items:center}
 .pdot.gapL{margin-left:10px}
 .gfoot .ver{position:static;transform:none;font-size:11px;opacity:.55}
 @media (max-height:700px){.hello .mbtn{width:56px;height:56px}.bline span{font-size:15px}}
+.vbug .menu-wrap{padding-bottom:2px}
+.vbug .controls{padding-bottom:8px}
+.vbug .view>.stage:last-child{margin-bottom:8px}
+.vbug .gfoot{gap:0}
 @media (max-width:360px){.tiles{grid-auto-columns:calc((100% - 10px) / 2.3)}}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
@@ -2298,7 +2302,18 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.19';
+const APP_VERSION='1.20';
+// iOS 26 home-screen apps with a see-through status bar get a page that is short by the
+// status-bar height and never draw the strip below it. When that happens the strip
+// already keeps content clear of the home bar, so the extra bottom padding is dropped.
+(()=>{function check(){let bug=false;
+  if(window.navigator.standalone===true){
+    const pr=document.createElement('div');pr.style.cssText='position:absolute;visibility:hidden;padding-top:env(safe-area-inset-top,0px)';document.body.appendChild(pr);
+    const it=parseFloat(getComputedStyle(pr).paddingTop)||0;pr.remove();
+    const land=matchMedia('(orientation: landscape)').matches,full=land?Math.min(screen.width,screen.height):Math.max(screen.width,screen.height);
+    bug=it>0&&Math.abs(full-innerHeight-it)<=4}
+  document.documentElement.classList.toggle('vbug',bug)}
+  check();addEventListener('resize',check);addEventListener('orientationchange',()=>setTimeout(check,300))})();
 /* home: 3 modes, 12 games per page, dots + swipe between pages */
 const PER_PAGE=12;
 let gMode=(()=>{try{return localStorage.getItem('hk-mode')||'luck'}catch(e){return'luck'}})(),gPage=0,gSwiped=false;
