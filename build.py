@@ -15,7 +15,7 @@ HEAD = """<!doctype html>
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="description" content="หาคนโดน: รวมเกมวงเพื่อน ลุ้นว่าใครโดน เล่นเครื่องเดียวหรือหลายเครื่องก็ได้">
 <meta name="theme-color" content="#13091f">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -28,11 +28,12 @@ HEAD = """<!doctype html>
 <style>:root{color-scheme:dark;background:#13091f}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}</style>
 """
 
-# iPhone home-screen mode with a translucent status bar reports a viewport that is
-# short by the status-bar height, which leaves an empty strip at the bottom of the
-# screen. The script measures the missing height (iOS home-screen mode only) and the
-# fixed body stretches by that much. Safe-area padding keeps content clear of the
-# notch and is kept tight above the home bar.
+# iPhone home-screen mode (iOS 26) with a translucent status bar reports a viewport
+# that is short by the status-bar height, which leaves an empty strip at the bottom.
+# iOS 26 also refuses to draw position:fixed content below that short viewport, so
+# the page uses normal flow instead: the script measures the missing height (iOS
+# home-screen mode only) and <html> grows by that much. Safe-area padding keeps
+# content clear of the notch and is kept tight above the home bar.
 STANDALONE = """<script>
 (function(){
   function fix(){
@@ -48,8 +49,8 @@ STANDALONE = """<script>
 })();
 </script>
 <style>
-html{height:100%}
-body{position:fixed;top:0;left:0;right:0;bottom:auto;height:calc(100% + var(--vfix,0px));padding-top:env(safe-area-inset-top,0px)}
+html{height:calc(100% + var(--vfix,0px));overflow:hidden}
+body{position:relative;height:100%;overflow:hidden;padding-top:env(safe-area-inset-top,0px)}
 .menu-wrap{padding-bottom:calc(12px + env(safe-area-inset-bottom,0px) / 2)}
 .controls{padding-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
 .view>.stage:last-child{margin-bottom:max(10px,calc(env(safe-area-inset-bottom,0px) - 18px))}
