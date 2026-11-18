@@ -2248,7 +2248,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.15';
+const APP_VERSION='1.16';
 $('verLine').textContent=`หาคนโดน เวอร์ชัน ${APP_VERSION} · ${document.querySelectorAll('.tile').length} เกม`;
 $('verSet').textContent=`เวอร์ชัน ${APP_VERSION}`;
 $('sCouple').onchange=e=>{cfg.couple=e.target.checked;save();renderS()};
@@ -2262,8 +2262,8 @@ $('sReset').onclick=()=>{const b=$('sReset');
 
 /* ---------- Co-op: rooms over Supabase Realtime (broadcast + presence) ---------- */
 // ค่าโปรเจกต์ Supabase (URL และ anon public key) ใส่ตรงนี้ หรือกรอกในหน้า "เล่นหลายเครื่อง"
-const SB_DEFAULT={url:'',key:''};
-const SB_LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';
+const SB_DEFAULT={url:'https://ylvzzoqjwbkksyhqobbl.supabase.co',key:'sb_publishable_fzUJO66zEMnEa-Gmmq2Prw_qwxDTsRs'};
+const SB_LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.97.0';
 // SYNC: ทุกเครื่องเห็นกระดานเดียวกัน ตาใครคนนั้นกดที่เครื่องตัวเอง · SCORE: แต่ละเครื่องเล่นคนของตัวเองแล้วส่งคะแนน · เกมอื่นเล่นที่เครื่องหัวห้อง
 const SYNC=['croc','bomb','bottle','cards','balloon','mbox','numbomb','hilo','sushi'],SCORE=['stop10','react','schulte'];
 const gameName=id=>{const t=document.querySelector(`.tile[data-go="${id}"] .tn`);return t?t.textContent:id};
@@ -2311,7 +2311,7 @@ const newCode=()=>Array.from({length:4},()=>CODE_CH[rnd(CODE_CH.length)]).join('
 function errText(e){const m=String(e&&e.message||e);
   if(m==='nocfg')return 'ยังไม่ได้ใส่ค่า Supabase เปิด "ตั้งค่า Supabase" ด้านล่างแล้วกรอก URL กับ anon key';
   if(m==='load')return 'โหลดตัวเชื่อมต่อไม่ได้ เช็กอินเทอร์เน็ตแล้วลองใหม่';
-  return 'เข้าห้องไม่ได้ เช็กค่า Supabase และอินเทอร์เน็ต · ถ้าเปิดอยู่ใน claude.ai ให้เปิดจากเว็บ GitHub แทน'}
+  return `เข้าห้องไม่ได้ (${m}) เช็กอินเทอร์เน็ตแล้วลองใหม่ · ถ้าเปิดอยู่ใน claude.ai ให้เปิดจากเว็บ GitHub แทน`}
 function track(){if(NET.tr)NET.tr.track({dev:NET.dev,t:NET.joinT,players:mine.filter(p=>p.n.trim()).map(p=>({id:p.id,n:p.n.trim()})),v:APP_VERSION})}
 async function joinRoom(code){
   code=String(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,4);
