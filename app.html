@@ -367,6 +367,8 @@ input{user-select:text;-webkit-user-select:text}
 .wrow .bar{grid-column:1/-1;height:4px;border-radius:2px;background:var(--panel2);overflow:hidden}
 .wrow .bar i{display:block;height:100%;background:var(--grad);transition:width .2s}
 .wrow.off{opacity:.4}
+.wgrp{margin:14px 0 2px;font-size:13px;font-weight:500;color:var(--accent);letter-spacing:.02em}
+#sRates .wgrp:first-child{margin-top:6px}
 .sgroup.dim #sRates{opacity:.4;pointer-events:none}
 .presets{display:flex;flex-wrap:wrap;gap:8px}
 .presets button{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:10px 14px;font-size:14px;min-height:46px}
@@ -1532,20 +1534,31 @@ const MAXP=12;
 
 /* ---------- settings ---------- */
 // ตัวเลือก "คนรับกรรม" และน้ำหนักเริ่มต้น (0–10)
+// g = กลุ่มในหน้าตั้งค่า, w = น้ำหนักเริ่มต้น (0–10)
 const POPTS=[
-  {k:'self',label:'ตัวเอง',w:4},
-  {k:'left',label:'คนทางซ้าย',w:3},
-  {k:'right',label:'คนทางขวา',w:3},
-  {k:'opp',label:'คนตรงข้าม',w:2,note:'เล่น 4 คนขึ้นไป'},
-  {k:'both',label:'ซ้ายและขวา',w:2,note:'เล่น 3 คนขึ้นไป'},
-  {k:'others',label:'ทุกคนยกเว้นตัวเอง',w:1},
-  {k:'all',label:'ทุกคน',w:1},
-  {k:'pick',label:'คนแพ้เลือกเอง 1 คน',w:2},
-  {k:'partner',label:'แฟนโดนแทน',w:3,couple:true},
-  {k:'withp',label:'โดนคู่กับแฟน',w:2,couple:true}];
+  {k:'self',label:'ตัวเอง',w:4,g:'one'},
+  {k:'x2',label:'ตัวเองโดน 2 เท่า',w:1,g:'one'},
+  {k:'left',label:'คนทางซ้าย',w:3,g:'sub'},
+  {k:'right',label:'คนทางขวา',w:3,g:'sub'},
+  {k:'opp',label:'คนตรงข้าม',w:2,g:'sub',note:'เล่น 4 คนขึ้นไป'},
+  {k:'both',label:'ซ้ายและขวา',w:2,g:'sub',note:'เล่น 3 คนขึ้นไป'},
+  {k:'rand',label:'สุ่มใครก็ได้ 1 คน',w:2,g:'sub',note:'อาจวนกลับมาที่ตัวเอง'},
+  {k:'pick',label:'คนแพ้เลือกเอง 1 คน',w:2,g:'sub'},
+  {k:'others',label:'ทุกคนยกเว้นตัวเอง',w:1,g:'sub'},
+  {k:'partner',label:'แฟนโดนแทน',w:3,g:'sub',couple:true},
+  {k:'selfL',label:'ตัวเองกับคนทางซ้าย',w:1,g:'with',note:'เล่น 3 คนขึ้นไป'},
+  {k:'selfR',label:'ตัวเองกับคนทางขวา',w:1,g:'with',note:'เล่น 3 คนขึ้นไป'},
+  {k:'selfOpp',label:'ตัวเองกับคนตรงข้าม',w:1,g:'with',note:'เล่น 4 คนขึ้นไป'},
+  {k:'selfBoth',label:'ตัวเองกับคนซ้ายขวา',w:1,g:'with',note:'โดน 3 คน · เล่น 4 คนขึ้นไป'},
+  {k:'selfRand',label:'ตัวเองกับเพื่อนที่สุ่มได้',w:2,g:'with',note:'เล่น 3 คนขึ้นไป'},
+  {k:'selfPick',label:'ตัวเองชี้เพื่อนมาโดนด้วย',w:2,g:'with',note:'เล่น 3 คนขึ้นไป'},
+  {k:'withp',label:'โดนคู่กับแฟน',w:2,g:'with',couple:true},
+  {k:'all',label:'ตัวเองกับทุกคน',w:1,g:'with',note:'โดนทั้งวง'},
+  {k:'safe',label:'รอดตัว ไม่มีใครโดน',w:1,g:'luck'}];
+const PGRP={one:'ตัวเองโดน',sub:'คนอื่นโดนแทน',with:'ตัวเองกับคนอื่น',luck:'ดวงดี'};
 const DICE_PRESETS=[{n:'1–3 ออกบ่อย',w:[25,25,25,9,8,8]},{n:'เท่ากันหมด',w:[10,10,10,10,10,10]},{n:'ออกน้อยๆ',w:[40,30,15,8,4,3]},{n:'ออกเยอะๆ',w:[3,4,8,15,30,40]}];
 // โหมดซูชิวาซาบิ: ผลลัพธ์ตอนจบและน้ำหนักเริ่มต้น (0–10)
-const SOPTS=[{k:'wasabi',label:'กินซูชิใส่วาซาบิ',w:5},{k:'plain',label:'กินซูชิธรรมดา',w:3,note:'รอดตัว'},{k:'side',label:'เพื่อนข้างๆ กินวาซาบิแทน',w:3,note:'สุ่มซ้ายหรือขวา'},{k:'double',label:'วาซาบิ 2 คำ',w:1}];
+const SOPTS=[{k:'wasabi',label:'กินซูชิใส่วาซาบิ',w:5},{k:'plain',label:'กินซูชิธรรมดา',w:3,note:'รอดตัว'},{k:'side',label:'เพื่อนข้างๆ กินวาซาบิแทน',w:3,note:'สุ่มซ้ายหรือขวา'},{k:'double',label:'วาซาบิ 2 คำ',w:1},{k:'pair',label:'ตัวเองกับเพื่อนข้างๆ กินวาซาบิ',w:2,note:'สุ่มซ้ายหรือขวา'},{k:'pickw',label:'ชี้เพื่อนมากินวาซาบิด้วย',w:1,note:'เล่น 3 คนขึ้นไป'},{k:'allw',label:'ทุกคนกินวาซาบิพร้อมกัน',w:1}];
 function defaults(){return{punish:true,pmode:'people',couple:false,pw:Object.fromEntries(POPTS.map(o=>[o.k,o.w])),sw:Object.fromEntries(SOPTS.map(o=>[o.k,o.w])),dice:DICE_PRESETS[0].w.slice()}}
 let cfg=defaults(),roster=[{id:uid(),n:''},{id:uid(),n:''}],partner={};
 try{const s=JSON.parse(localStorage.getItem('hakhondon')||'{}');
@@ -1586,17 +1599,16 @@ let rToken=0,againFn=null;
 // ที่นั่งเรียงตามเข็มนาฬิกา (มองจากด้านบน) คนที่นั่งหันเข้ากลางวง: ซ้ายมือ = คนถัดไปตามเข็ม, ขวามือ = คนก่อนหน้า
 const leftOf=i=>(i+1)%players, rightOf=i=>(i-1+players)%players, oppOf=i=>(i+Math.floor(players/2))%players;
 function optApplies(k,L){
-  if(k==='opp')return players>=4;
-  if(k==='both')return players>=3;
+  if(k==='opp'||k==='selfOpp'||k==='selfBoth')return players>=4;
+  if(k==='both'||k==='selfL'||k==='selfR'||k==='selfRand'||k==='selfPick'||k==='pickw')return players>=3;
   if(k==='partner'||k==='withp')return cfg.couple&&(L==null||partnerIdx(L)>=0);
   return true;
 }
 function relOptions(L){
-  const all=[...Array(players).keys()],P=partnerIdx(L),o=[];
-  const add=(k,ids)=>{const w=cfg.pw[k]||0;if(w>0&&optApplies(k,L))o.push({k,ids,w})};
-  add('self',[L]);add('left',[leftOf(L)]);add('right',[rightOf(L)]);add('opp',[oppOf(L)]);
-  add('both',[leftOf(L),rightOf(L)]);add('others',all.filter(i=>i!==L));add('all',all);add('pick',[L]);
-  if(P>=0){add('partner',[P]);add('withp',[L,P])}
+  const all=[...Array(players).keys()],others=all.filter(i=>i!==L),P=partnerIdx(L),any=a=>a[Math.floor(Math.random()*a.length)];
+  const IDS={self:[L],x2:[L],left:[leftOf(L)],right:[rightOf(L)],opp:[oppOf(L)],both:[leftOf(L),rightOf(L)],rand:[any(all)],pick:[L],others,partner:[P],
+    selfL:[L,leftOf(L)],selfR:[L,rightOf(L)],selfOpp:[L,oppOf(L)],selfBoth:[rightOf(L),L,leftOf(L)],selfRand:[L,any(others.length?others:[L])],selfPick:[L],withp:[L,P],all,safe:[]};
+  const o=[];POPTS.forEach(({k})=>{const w=cfg.pw[k]||0;if(w>0&&optApplies(k,L))o.push({k,ids:IDS[k],w})});
   if(!o.length)o.push({k:'self',ids:[L],w:1});
   return o;
 }
@@ -1605,6 +1617,9 @@ function sushiOptions(L){const o=[],w=k=>cfg.sw[k]||0;
   if(w('plain'))o.push({k:'plain',ids:[L],w:w('plain')});
   if(w('side')){if(players<=2)o.push({k:'sideL',ids:[leftOf(L)],w:w('side')});else o.push({k:'sideL',ids:[leftOf(L)],w:w('side')/2},{k:'sideR',ids:[rightOf(L)],w:w('side')/2})}
   if(w('double'))o.push({k:'double',ids:[L],w:w('double')});
+  if(w('pair')){if(players<=2)o.push({k:'pairL',ids:[L,leftOf(L)],w:w('pair')});else o.push({k:'pairL',ids:[L,leftOf(L)],w:w('pair')/2},{k:'pairR',ids:[L,rightOf(L)],w:w('pair')/2})}
+  if(w('pickw')&&optApplies('pickw',L))o.push({k:'pickw',ids:[L],w:w('pickw')});
+  if(w('allw'))o.push({k:'allw',ids:[...Array(players).keys()],w:w('allw')});
   if(!o.length)o.push({k:'wasabi',ids:[L],w:1});
   return o}
 function weightedPick(o){const sm=o.reduce((a,b)=>a+b.w,0);let r=Math.random()*sm;for(const x of o){r-=x.w;if(r<0)return x}return o[o.length-1]}
@@ -1613,7 +1628,16 @@ function describe(o,L){
   if(o.k==='plain')return{rule:'กินซูชิธรรมดา รอดตัว!',big:name(L),sushi:'plain'};
   if(o.k==='double')return{rule:'กินซูชิใส่วาซาบิ 2 คำ',big:name(L),sushi:'double'};
   if(o.k==='sideL'||o.k==='sideR')return{rule:`เพื่อน${players<=2?'ข้างๆ':o.k==='sideL'?'ทางซ้าย':'ทางขวา'}ของ ${name(L)} กินวาซาบิแทน`,big:name(o.ids[0]),sushi:'wasabi'};
-  if(o.k==='all')return{rule:'ทุกคน รวมตัวเองด้วย',big:'ทุกคน!'};
+  if(o.k==='pairL'||o.k==='pairR')return{rule:`${name(L)} กินวาซาบิคู่กับเพื่อน${players<=2?'ข้างๆ':o.k==='pairL'?'ทางซ้าย':'ทางขวา'}`,big:o.ids.map(name).join(' + '),sushi:'wasabi'};
+  if(o.k==='pickw')return{rule:name(L)+' กินวาซาบิ แล้วชี้เพื่อน 1 คนมากินด้วย',big:name(L)+' + ?',sushi:'wasabi'};
+  if(o.k==='allw')return{rule:'ทุกคนกินวาซาบิพร้อมกัน',big:'ทุกคน!',sushi:'wasabi'};
+  if(o.k==='all')return{rule:'ตัวเองกับทุกคน โดนทั้งวง',big:'ทุกคน!'};
+  if(o.k==='x2')return{rule:'โดนเอง 2 เท่า!',big:name(L)};
+  if(o.k==='rand')return{rule:'สุ่มจากทุกคนในวง',big:name(o.ids[0])};
+  if(o.k==='safe')return{rule:'ดวงดี ไม่มีใครโดน',big:'รอดตัว!'};
+  if(o.k==='selfPick')return{rule:name(L)+' ชี้เพื่อน 1 คนมาโดนด้วยกัน',big:name(L)+' + ?'};
+  const wl={selfL:'คนทางซ้าย',selfR:'คนทางขวา',selfOpp:'คนตรงข้าม',selfBoth:'คนซ้ายและขวา',selfRand:'เพื่อนที่สุ่มได้'}[o.k];
+  if(wl)return{rule:name(L)+' โดนพร้อม'+wl,big:o.ids.map(name).join(' + ')};
   if(o.k==='others')return{rule:'ทุกคน ยกเว้น '+name(L),big:o.ids.length<=3?o.ids.map(name).join(' + '):'ทุกคนที่เหลือ'};
   if(o.k==='pick')return{rule:'ให้คนนี้ชี้เลือกเอง 1 คน',big:name(L)};
   if(o.k==='self')return{rule:'โดนเองเต็มๆ',big:name(L)};
@@ -2936,14 +2960,15 @@ const sum=a=>a.reduce((x,y)=>x+y,0);
 function renderS(){
   $('sPunish').checked=cfg.punish;$('sCouple').checked=cfg.couple;$('sPair').hidden=!cfg.couple;
   $('sgRates').classList.toggle('dim',!cfg.punish);$('sRN').textContent=players;
-  const sushi=cfg.pmode==='sushi',WT=sushi?cfg.sw:cfg.pw,okf=o=>sushi||optApplies(o.k,null);
+  const sushi=cfg.pmode==='sushi',WT=sushi?cfg.sw:cfg.pw,okf=o=>sushi?o.k!=='pickw'||optApplies('pickw',null):optApplies(o.k,null);
   document.querySelectorAll('#sMode button').forEach(b=>b.classList.toggle('on',b.dataset.m===cfg.pmode));
   $('sRatesT').textContent=sushi?'อัตราซูชิวาซาบิ':'อัตราการโดน';
   const shown=sushi?SOPTS:POPTS.filter(o=>!o.couple||cfg.couple);
   const tot=shown.filter(okf).reduce((a,o)=>a+WT[o.k],0)||1;
+  let lastG='';const grp=o=>{if(sushi||o.g===lastG)return'';lastG=o.g;return `<h5 class="wgrp">${PGRP[o.g]}</h5>`};
   $('sRates').innerHTML=shown.map(o=>{const ok=okf(o),v=WT[o.k],p=ok?Math.round(v/tot*100):0;
     const note=o.note||(o.couple?'เฉพาะคนที่มีแฟนในวง':'');
-    return `<div class="wrow${ok?'':' off'}"><span class="wl">${o.label}${note?`<small>${note}</small>`:''}</span><button data-k="${o.k}" data-d="-1" aria-label="ลด ${o.label}">−</button><output>${v}</output><button data-k="${o.k}" data-d="1" aria-label="เพิ่ม ${o.label}">+</button><span class="pct">${ok?p+'%':'—'}</span><span class="bar"><i style="width:${p}%"></i></span></div>`}).join('');
+    return grp(o)+`<div class="wrow${ok?'':' off'}"><span class="wl">${o.label}${note?`<small>${note}</small>`:''}</span><button data-k="${o.k}" data-d="-1" aria-label="ลด ${o.label}">−</button><output>${v}</output><button data-k="${o.k}" data-d="1" aria-label="เพิ่ม ${o.label}">+</button><span class="pct">${ok?p+'%':'—'}</span><span class="bar"><i style="width:${p}%"></i></span></div>`}).join('');
   $('sRates').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.k;WT[k]=Math.max(0,Math.min(10,WT[k]+ +b.dataset.d));save();renderS();tone(560,.03,'triangle',.04)});
   const ds=sum(cfg.dice)||1;
   $('sPresets').innerHTML=DICE_PRESETS.map((p,i)=>`<button data-p="${i}" class="${p.w.join()===cfg.dice.join()?'on':''}">${p.n}</button>`).join('');
@@ -2956,7 +2981,7 @@ function renderS(){
 }
 $('sPunish').onchange=e=>setPunish(e.target.checked);
 document.querySelectorAll('#sMode button').forEach(b=>b.onclick=()=>{cfg.pmode=b.dataset.m;save();renderS();syncPunish();tone(660,.06,'triangle',.06)});
-const APP_VERSION='1.22';
+const APP_VERSION='1.23';
 // iOS 26 home-screen apps with a see-through status bar get a page that is short by the
 // status-bar height and never draw the strip below it. When that happens the strip
 // already keeps content clear of the home bar, so the extra bottom padding is dropped.
